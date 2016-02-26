@@ -2,7 +2,7 @@ package main;
 //this is ronny pushing
 /**
  *
-t * @author David
+ * @author David
  */
 import javafx.application.Application;
 import javafx.application.Platform;
