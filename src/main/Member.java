@@ -8,7 +8,7 @@ public abstract class Member {
 	private String phoneNumber;
 	private MemberType type;
 	
-	public Member(String lastName, String firstName, Address address, LoginInformation loginInfo, String phoneNumber, MemberType type){
+	public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
 		this.loginInfo = loginInfo;
 		this.lastName = lastName;
 		this.firstName = firstName;

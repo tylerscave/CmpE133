@@ -2,7 +2,7 @@ package main;
 
 public class Faculty extends Member {
 	
-	public Faculty(String lastName, String firstName, Address address, LoginInformation loginInfo, String phoneNumber, MemberType type){
-		super(lastName, firstName, address, loginInfo, phoneNumber, type);
+	public Faculty(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
+		super(loginInfo, lastName, firstName, address, phoneNumber, type);
 	}
 }
