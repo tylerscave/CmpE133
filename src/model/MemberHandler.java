@@ -8,25 +8,25 @@ package model;
 
 public class MemberHandler {
 	
-	private void handlePersonalInfo(String firstName, String lastName, String status, boolean drive) {
+	public void handlePersonalInfo(String firstName, String lastName, String status, boolean drive) {
 		//TODO
 		//the drive variable will be true if member indicated ride or drive
 	}
 	
-	private void handleContactInfo(String email, int phone) {
+	public void handleContactInfo(String email, String phone) {
 		//TODO
 	}
 	
-	private void handleAddressInfo(String street, String city, int zipCode) {
+	public void handleAddressInfo(String street, String city, String zipCode) {
 		//TODO
 	}
 	
-	private void handleVehicleInfo(int year, String make, String model, String color, int seats) {
+	public void handleVehicleInfo(int year, String make, String model, String color, int seats) {
 		//TODO
 		// make Vehicle Object for this member
 	}
 	
-	private void handlePaymentInfo() {
+	public void handlePaymentInfo() {
 		//TODO
 		//make PaymentType object for this member
 	}

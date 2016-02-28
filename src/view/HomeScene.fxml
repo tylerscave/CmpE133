@@ -6,10 +6,10 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeSceneController">
    <children>
-      <Button mnemonicParsing="false" text="Maintain member info" />
+      <Button mnemonicParsing="false" text="Update member info" onAction="#handleUpdateInfo"/>
       <Separator opacity="0.0" orientation="VERTICAL" prefHeight="30.0" prefWidth="0.0" />
-      <Button mnemonicParsing="false" text="Maintain member schedule" />
+      <Button mnemonicParsing="false" text="Update member schedule" onAction="#handleUpdateSchedule"/>
       <Separator opacity="0.0" orientation="VERTICAL" prefHeight="30.0" prefWidth="0.0" />
-      <Button mnemonicParsing="false" text="Maintain ride schedule" />
+      <Button mnemonicParsing="false" text="View ride schedule" onAction="#handleViewSchedule"/>
    </children>
 </VBox>

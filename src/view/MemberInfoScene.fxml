@@ -5,12 +5,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MemberInfoSceneController">
    <children>
       <GridPane prefHeight="625.0" prefWidth="600.0">
         <columnConstraints>
@@ -23,6 +24,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -87,9 +89,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <RadioButton fx:id="faculty" mnemonicParsing="false" onAction="#handleStatusRadio" text="Faculty" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                  <RadioButton fx:id="student" mnemonicParsing="false" onAction="#handleStatusRadio" text="Student" GridPane.halignment="CENTER" />
-                  <RadioButton fx:id="staff" mnemonicParsing="false" onAction="#handleStatusRadio" text="Staff" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <RadioButton fx:id="faculty" mnemonicParsing="false" onAction="#handleStatusRadio" text="Faculty" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="statusGroup" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="student" mnemonicParsing="false" onAction="#handleStatusRadio" text="Student" toggleGroup="$statusGroup" GridPane.halignment="CENTER" />
+                  <RadioButton fx:id="staff" mnemonicParsing="false" onAction="#handleStatusRadio" text="Staff" toggleGroup="$statusGroup" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
@@ -101,12 +106,29 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <RadioButton fx:id="drive" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride and Drive" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <RadioButton fx:id="ride" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride Only" GridPane.halignment="CENTER" />
+                  <RadioButton fx:id="drive" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride and Drive" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="ridePreferenceGroup" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="ride" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride Only" toggleGroup="$ridePreferenceGroup" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
             <Button mnemonicParsing="false" onAction="#handleVehicleButton" prefWidth="360.0" text="Click to Enter Vehicle Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
             <Button mnemonicParsing="false" onAction="#handlePaymentButton" prefWidth="360.0" text="Click to Enter Payment Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="11">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleReturnButton" text="Return" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSubmitReturnButton" text="Submit &amp; Return" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+               </children>
+            </GridPane>
          </children>
       </GridPane>
    </children>

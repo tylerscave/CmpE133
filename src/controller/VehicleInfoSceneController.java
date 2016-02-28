@@ -6,6 +6,6 @@ package controller;
  * @author Tyler Jones,
 */
 
-public class VehicleSceneController {
+public class VehicleInfoSceneController {
 
 }

@@ -17,6 +17,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Context;
 
 /**
  * FXML Controller class
@@ -32,12 +33,14 @@ public class LoginSceneController implements Initializable {
     @FXML
     private TextField usernameField;
     
+    private Context context;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        context = Context.getInstance();
     }    
     
     @FXML

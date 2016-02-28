@@ -7,6 +7,6 @@ package controller;
 */
 
 
-public class PaymentSceneController {
+public class PaymentInfoSceneController {
 
 }
