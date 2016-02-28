@@ -1,6 +1,6 @@
 package main;
 
-public  class Member {
+public abstract class Member {
 	private LoginInformation loginInfo;
 	private String lastName;
 	private String firstName;
