@@ -24,9 +24,10 @@ public class Main extends Application
     public static final String APP_TITLE = "CarPool System";
 
     public static void main(String[] args) {
-        launch(args);
+        launch(args);	//call start(javafx.stage.Stage) method
     }
 
+    //start(Stage stage) main entry point for application
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle(APP_TITLE);
