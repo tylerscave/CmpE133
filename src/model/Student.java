@@ -1,4 +1,4 @@
-package main;
+package model;
 
 public class Student extends Member {
 	private String studentID;

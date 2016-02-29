@@ -1,4 +1,4 @@
-package main;
+package model;
 
 public class Driver extends MemberType {
 	private String DriverLicenseNumber;

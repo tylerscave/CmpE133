@@ -1,4 +1,4 @@
-package main;
+package model;
 
 public abstract class Member {
 	private LoginInformation loginInfo;
