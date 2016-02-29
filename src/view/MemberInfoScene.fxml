@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,125 +12,154 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MemberInfoSceneController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MemberInfoSceneController">
    <children>
-      <GridPane prefHeight="625.0" prefWidth="600.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="152.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="448.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="First Name: " GridPane.halignment="RIGHT" />
-            <Label text="Last Name: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-            <Label text="Street: " GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-            <Label text="City: " GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-            <Label text="Zip Code: " GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-            <Label text="Status: " GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
-            <Label text="Ride Preference: " GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
-            <Label text="Vehicle: " GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
-            <Label text="Payment: " GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
-            <TextField fx:id="firstName" onAction="#onEnter" prefHeight="26.0" prefWidth="368.0" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets left="50.0" right="50.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="lastName" onAction="#onEnter" prefHeight="26.0" prefWidth="368.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="50.0" right="50.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="street" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets left="50.0" right="50.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="city" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <GridPane.margin>
-                  <Insets left="50.0" right="50.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="zipCode" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <GridPane.margin>
-                  <Insets left="50.0" right="50.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="phone" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets left="50.0" right="50.0" />
-               </GridPane.margin>
-            </TextField>
-            <Label text="Phone Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-            <Label text="Email: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-            <TextField fx:id="email" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="50.0" right="50.0" />
-               </GridPane.margin>
-            </TextField>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+      <ScrollPane>
+         <content>
+            <GridPane prefWidth="600.0" vgap="15.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="152.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="448.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <RadioButton fx:id="faculty" mnemonicParsing="false" onAction="#handleStatusRadio" text="Faculty" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="statusGroup" />
-                     </toggleGroup></RadioButton>
-                  <RadioButton fx:id="student" mnemonicParsing="false" onAction="#handleStatusRadio" text="Student" toggleGroup="$statusGroup" GridPane.halignment="CENTER" />
-                  <RadioButton fx:id="staff" mnemonicParsing="false" onAction="#handleStatusRadio" text="Staff" toggleGroup="$statusGroup" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Label text="First Name: " GridPane.halignment="RIGHT" />
+                  <Label text="Last Name: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label text="Street: " GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                  <Label text="City: " GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                  <Label text="Zip Code: " GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                  <Label text="Status: " GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+                  <Label text="Ride Preference: " GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+                  <Label text="Vehicle: " GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
+                  <Label text="Payment: " GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
+                  <TextField fx:id="firstName" onAction="#onEnter" prefHeight="26.0" prefWidth="368.0" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="lastName" onAction="#onEnter" prefHeight="26.0" prefWidth="368.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="street" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="city" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="zipCode" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="phone" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Phone Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                  <Label text="Email: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <TextField fx:id="email" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <RadioButton fx:id="faculty" mnemonicParsing="false" onAction="#handleStatusRadio" text="Faculty" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="statusGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="student" mnemonicParsing="false" onAction="#handleStatusRadio" text="Student" toggleGroup="$statusGroup" GridPane.halignment="CENTER" />
+                        <RadioButton fx:id="staff" mnemonicParsing="false" onAction="#handleStatusRadio" text="Staff" toggleGroup="$statusGroup" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <RadioButton fx:id="drive" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride and Drive" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="ridePreferenceGroup" />
+                           </toggleGroup>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="ride" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride Only" toggleGroup="$ridePreferenceGroup" GridPane.halignment="CENTER" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <Button mnemonicParsing="false" onAction="#handleVehicleButton" prefWidth="360.0" text="Click to Enter Vehicle Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handlePaymentButton" prefWidth="360.0" text="Click to Enter Payment Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="11">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleReturnButton" text="Return" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSubmitReturnButton" text="Submit &amp; Return" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </GridPane>
                </children>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
             </GridPane>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <RadioButton fx:id="drive" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride and Drive" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="ridePreferenceGroup" />
-                     </toggleGroup></RadioButton>
-                  <RadioButton fx:id="ride" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride Only" toggleGroup="$ridePreferenceGroup" GridPane.halignment="CENTER" />
-               </children>
-            </GridPane>
-            <Button mnemonicParsing="false" onAction="#handleVehicleButton" prefWidth="360.0" text="Click to Enter Vehicle Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-            <Button mnemonicParsing="false" onAction="#handlePaymentButton" prefWidth="360.0" text="Click to Enter Payment Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="11">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleReturnButton" text="Return" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSubmitReturnButton" text="Submit &amp; Return" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-               </children>
-            </GridPane>
-         </children>
-      </GridPane>
+         </content>
+      </ScrollPane>
    </children>
 </VBox>

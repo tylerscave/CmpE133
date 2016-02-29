@@ -15,80 +15,67 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="302.0" prefWidth="353.9999000000025" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginSceneController">
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginSceneController">
   <children>
-    <GridPane alignment="CENTER" prefHeight="303.0" prefWidth="401.0">
+    <GridPane alignment="CENTER" vgap="15.0">
       <children>
         <Text id="welcome-text" text="Welcome To SpartanPool" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
           <font>
             <Font size="16.0" />
           </font>
         </Text>
-        <Label text="User Name:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <TextField fx:id="usernameField" onAction="#onEnter" prefHeight="19.3125" prefWidth="96.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <PasswordField fx:id="passwordField" onAction="#onEnter" prefHeight="26.0" prefWidth="96.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-        <Text fx:id="loginMessage" GridPane.columnIndex="0" GridPane.rowIndex="12" />
-        <Button onAction="#handleSubmitButton" prefHeight="0.0" prefWidth="72.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="11" GridPane.rowSpan="1" />
-        <Group id="Group" GridPane.columnIndex="0" GridPane.rowIndex="16" />
-        <Label prefWidth="178.0" text="Don't have an account yet?" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="13" />
-        <GridPane id="GridPane" prefHeight="21.0" GridPane.columnIndex="0" GridPane.rowIndex="14">
-          <children>
-            <Group id="Group" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-          </children>
-          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-          </columnConstraints>
-          <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-          </rowConstraints>
-        </GridPane>
-        <Button mnemonicParsing="false" onAction="#handleCreateAccountButton" prefHeight="26.0" prefWidth="116.0" text="Create Account" GridPane.columnIndex="3" GridPane.rowIndex="13" />
-        <Button mnemonicParsing="false" onAction="#handleCreateAccountButton" prefHeight="26.0" prefWidth="116.0" text="Retrieve Account" GridPane.columnIndex="3" GridPane.rowIndex="15" />
-        <Group id="Group" GridPane.columnIndex="0" GridPane.rowIndex="15">
-          <children>
-            <Label layoutX="0.0" layoutY="-11.0" prefHeight="27.0" prefWidth="178.0" text="Forgot password?" />
-          </children>
-        </Group>
-        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-        <ImageView id="McLxp8Gbi.gif" fitHeight="164.5078125" fitWidth="152.9998779296875" GridPane.columnIndex="3" GridPane.rowIndex="3">
+        <Label text="User Name:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+        <TextField fx:id="usernameField" onAction="#onEnter" prefHeight="19.3125" prefWidth="96.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+        <PasswordField fx:id="passwordField" onAction="#onEnter" prefHeight="26.0" prefWidth="96.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></PasswordField>
+        <Text fx:id="loginMessage" GridPane.rowIndex="6" />
+        <Button onAction="#handleSubmitButton" prefHeight="0.0" prefWidth="72.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.rowSpan="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Button>
+        <Group id="Group" GridPane.rowIndex="9" />
+        <Label prefWidth="178.0" text="Don't have an account yet?" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <Button mnemonicParsing="false" onAction="#handleCreateAccountButton" prefHeight="26.0" prefWidth="116.0" text="Create Account" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+        <Button mnemonicParsing="false" onAction="#handleCreateAccountButton" prefHeight="26.0" prefWidth="116.0" text="Retrieve Account" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+        <Group id="Group" GridPane.rowIndex="8" />
+        <Label text="Password:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+        <ImageView id="McLxp8Gbi.gif" fitHeight="164.5078125" fitWidth="152.9998779296875" GridPane.columnIndex="3" GridPane.rowIndex="2">
           <image>
             <Image preserveRatio="true" smooth="true" url="@McLxp8Gbi.gif" />
           </image>
         </ImageView>
-        <ImageView id="McLxp8Gbi.gif" fitHeight="138.78662109375" fitWidth="128.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+        <ImageView id="McLxp8Gbi.gif" fitHeight="138.78662109375" fitWidth="128.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
           <image>
             <Image url="@../images/McLxp8Gbi.gif" />
           </image>
         </ImageView>
+      <Label prefHeight="27.0" prefWidth="178.0" text="Forgot password?" GridPane.columnIndex="1" GridPane.rowIndex="8" />
       </children>
       <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" maxWidth="117.0" minWidth="10.0" prefWidth="62.0" />
-        <ColumnConstraints hgrow="NEVER" maxWidth="138.0" minWidth="10.0" prefWidth="85.0" />
+        <ColumnConstraints hgrow="NEVER" maxWidth="117.0" minWidth="10.0" />
+        <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
         <ColumnConstraints hgrow="NEVER" maxWidth="138.0" minWidth="10.0" prefWidth="53.0" />
-        <ColumnConstraints hgrow="NEVER" maxWidth="138.0" minWidth="10.0" prefWidth="104.0" />
+        <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
       </columnConstraints>
       <padding>
-        <Insets bottom="10.0" left="25.0" right="25.0" top="25.0" />
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
       </padding>
       <rowConstraints>
         <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="48.0" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="48.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="48.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="48.0" minHeight="0.0" prefHeight="3.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="48.0" minHeight="0.0" prefHeight="5.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="48.0" minHeight="0.0" prefHeight="3.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="58.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="67.0" prefHeight="19.0" />
         <RowConstraints maxHeight="60.0" prefHeight="18.0" />
         <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="35.0" />
-        <RowConstraints maxHeight="30.0" minHeight="6.0" prefHeight="6.0" />
         <RowConstraints maxHeight="49.0" minHeight="0.0" prefHeight="23.0" />
         <RowConstraints maxHeight="57.0" minHeight="8.0" prefHeight="21.0" />
-        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="16.0" />
       </rowConstraints>
     </GridPane>
   </children>

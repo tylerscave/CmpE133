@@ -14,6 +14,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Context;
+import model.LoginHandler;
 
 /**
  *
@@ -21,9 +23,11 @@ import javafx.stage.Stage;
  */
 public class HomeSceneController implements Initializable {
     
+    private Context context;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO 
+        context = Context.getInstance();
     }    
     
     @FXML
@@ -58,6 +62,21 @@ public class HomeSceneController implements Initializable {
         try {
             //currently links to info scene, must change to appropriate scene when it's implemented
             Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    } 
+    
+    @FXML
+    protected void handleLogoutButton(ActionEvent event) {
+        context.setLogin(new LoginHandler());
+        context.getLogin().handleLogout();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/LoginScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);

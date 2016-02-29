@@ -62,8 +62,8 @@ public class LoginSceneController implements Initializable {
     }
     
     private void login(ActionEvent event) {
-        LoginHandler handler = new LoginHandler();
-        handler.handleLogin(usernameField.getText(), passwordField.getText());
+        context.setLogin(new LoginHandler());
+        context.getLogin().handleLogin(usernameField.getText(), passwordField.getText());
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
             Scene scene = new Scene(root);
