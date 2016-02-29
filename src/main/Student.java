@@ -3,7 +3,7 @@ package main;
 public class Student extends Member {
 	private String studentID;
 
-	public Student(String lastName, String firstName, Address address, LoginInformation loginInfo, String phoneNumber, MemberType type){
+	public Student(String lastName, String firstName, Address address, LoginInformation loginInfo, String phoneNumber, MemberType type, String studentID){
 		super(loginInfo, lastName, firstName, address, phoneNumber, type);
 		this.studentID = studentID;
 	}
