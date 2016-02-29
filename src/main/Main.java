@@ -16,10 +16,10 @@ import javafx.stage.WindowEvent;
 //This is Tyler pushing on new eclipse build
 public class Main extends Application
 {
-    public static final int PREF_WIDTH = 550;
-    public static final int PREF_HEIGHT = 350;
+    public static final int PREF_WIDTH = 600;
+    public static final int PREF_HEIGHT = 400;
     public static final int MIN_WIDTH = 300;
-    public static final int MIN_HEIGHT = 350;
+    public static final int MIN_HEIGHT = 200;
     public static final double OPACITY = 1;
     public static final String APP_TITLE = "CarPool System";
 
