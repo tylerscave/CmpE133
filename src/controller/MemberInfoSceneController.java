@@ -7,8 +7,6 @@ package controller;
 */
 
 import java.io.IOException;
-import model.LoginHandler;
-import model.MemberHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -20,20 +18,36 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Address;
 import model.Context;
+import model.Member;
+import model.MemberType;
 
 public class MemberInfoSceneController implements Initializable {
 	
     private Context context;
-    private MemberHandler member;
+    private Member member;
     
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
             context = Context.getInstance();
             member = context.getMember();
+            email.setText(member.getEmail());
+            password.setText(member.getPassword());
+            firstName.setText(member.getFirstName());
+            lastName.setText(member.getLastName());
+            //TODO: fix ID numbers
+            phone.setText(member.getPhoneNumber());
+            setMemberRadio();
+            setDriverRadio();
+            Address address = member.getAddress();
+            street.setText(address.getStreet1());
+            city.setText(address.getCity());
+            zipCode.setText(address.getZipCode());
 	}
 	
     @FXML
@@ -41,7 +55,11 @@ public class MemberInfoSceneController implements Initializable {
     @FXML
     private TextField lastName;
     @FXML
-    private TextField email;    
+    private TextField idNum;    
+    @FXML
+    private TextField email;
+    @FXML
+    private PasswordField password;    
     @FXML
     private TextField phone;
     @FXML
@@ -114,20 +132,36 @@ public class MemberInfoSceneController implements Initializable {
     }
 
     private void maintainMemberInfo() {
-        member.handlePersonalInfo(firstName.getText(), lastName.getText(), getStatus(), drive.isSelected());
-        member.handleContactInfo(email.getText(), phone.getText());
-        member.handleAddressInfo(street.getText(), city.getText(), zipCode.getText());
+        //member.handlePersonalInfo(firstName.getText(), lastName.getText(), getStatus(), drive.isSelected());
+        //member.handleContactInfo(email.getText(), phone.getText());
+        //member.handleAddressInfo(street.getText(), city.getText(), zipCode.getText());
         //member.handleVehicleInfo(0, null, null, null, 0);
         //member.handlePaymentInfo();
+        member.setEmail(email.getText());
+        member.setPassword(password.getText());
+        member.setFirstName(firstName.getText());
+        member.setLastName(lastName.getText());
+        member.setPhoneNumber(phone.getText());
+        member.setMemberType(getMemberType());
+        member.setAddress(new Address(street.getText(), "", city.getText(), "CA", zipCode.getText()));
     }
     
-    private String getStatus() {
+    private MemberType getMemberType() {
+        //TODO: get the appropriate member type based on radio button
         if (student.isSelected())
-            return "Student";
+            return null;
         else if (staff.isSelected())
-            return "Staff";
+            return null;
         else
-            return "Faculty";
+            return null;
+    }
+
+    private void setMemberRadio() {
+        //TODO: make the appropriate radiobutton get automatically selected
+    }
+
+    private void setDriverRadio() {
+        //TODO: make the appropriate radiobutton get automatically selected    
     }
 
 }
