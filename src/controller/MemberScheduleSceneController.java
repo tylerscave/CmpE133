@@ -9,7 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import model.Context;
-import model.MemberHandler;
+import model.Member;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -18,10 +18,10 @@ import model.MemberHandler;
  * @author Tyler Jones,
 */
 
-public class MemSchedSceneController implements Initializable{
+public class MemberScheduleSceneController implements Initializable{
 	
     private Context context;
-    private MemberHandler member;
+    private Member member;
     
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
