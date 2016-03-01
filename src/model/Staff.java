@@ -4,8 +4,8 @@ public class Staff extends Member{
 	
 	private String sjsuID;
 
-	public Staff(String lastName, String firstName, Address address, LoginInformation loginInfo, String phoneNumber, MemberType type, String sjsuID){
-		super(loginInfo, lastName, firstName, address, phoneNumber, type);
+	public Staff(String email, String password, String lastName, String firstName, Address address, String phoneNumber, MemberType type, String sjsuID){
+		super(email, password, lastName, firstName, address, phoneNumber, type);
 		this.setSjsuID(sjsuID);
 	}
 

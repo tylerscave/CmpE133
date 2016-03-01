@@ -46,8 +46,7 @@ public class HomeSceneController implements Initializable {
     @FXML
     protected void handleUpdateSchedule(ActionEvent event) {
         try {
-            //currently links to info scene, must change to appropriate scene when it's implemented
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MemberScheduleScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);

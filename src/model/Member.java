@@ -1,15 +1,18 @@
 package model;
 
 public abstract class Member {
-	private LoginInformation loginInfo;
+	private String email;
+        private String password;
 	private String lastName;
 	private String firstName;
 	private Address address;
 	private String phoneNumber;
 	private MemberType type;
+        private PaymentMethod payMethod;
 	
-	public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
-		this.loginInfo = loginInfo;
+	public Member(String email, String password, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
+		this.email = email;
+                this.password = password;
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.address = address;
@@ -49,14 +52,36 @@ public abstract class Member {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public MemberType getType() {
+	public MemberType getMemberType() {
 		return type;
 	}
 
-	public void setType(MemberType type) {
+	public void setMemberType(MemberType type) {
 		this.type = type;
 	}
 
+    public PaymentMethod getPayMethod() {
+        return payMethod;
+    }
 
+    public void setPayMethod(PaymentMethod payMethod) {
+        this.payMethod = payMethod;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 		
 }

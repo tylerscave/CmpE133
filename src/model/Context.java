@@ -7,7 +7,7 @@ package model;
  */
 public class Context {
     private static Context instance = null;
-    private MemberHandler member;
+    private Member member;
     private LoginHandler login;
     
     private Context() {
@@ -21,13 +21,13 @@ public class Context {
         return instance;
     }
 
-    public void setMember(MemberHandler member) {
+    public void setMember(Member member) {
         this.member = member;
     }
     
-    public MemberHandler getMember() {
+    public Member getMember() {
         if (this.member == null)
-            this.member = new MemberHandler();
+            this.member = new Student("", "", "", "", new Address("", "", "", "", ""), "", new Passenger(), "");
         return this.member;
     }
 
