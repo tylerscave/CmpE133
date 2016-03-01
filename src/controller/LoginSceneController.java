@@ -1,6 +1,8 @@
 package controller;
 
 import model.LoginHandler;
+import model.LoginInformation;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -63,7 +65,7 @@ public class LoginSceneController implements Initializable {
     
     private void login(ActionEvent event) {
         context.setLogin(new LoginHandler());
-        context.getLogin().handleLogin(emailField.getText(), passwordField.getText());
+        context.getLogin().handleLogin(new LoginInformation(emailField.getText(), passwordField.getText()));
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
             Scene scene = new Scene(root);

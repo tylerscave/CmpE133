@@ -19,10 +19,10 @@ public class LoginHandler {
      * @param email
      * @param password
      */
-    public void handleLogin(String email, String password) {
+    public void handleLogin(LoginInformation loginInfo) {
         loggedIn = true;
         //stub
-        Context.getInstance().setMember(new Student(email, password, "", "", new Address("", "", "", "", ""), "", new Passenger(), ""));
+        Context.getInstance().setMember(new Student(loginInfo, "", "", new Address("", "", "", "", ""), "", new Passenger(), ""));
     }
     
     public void handleLogout() {

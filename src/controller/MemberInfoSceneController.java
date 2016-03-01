@@ -36,8 +36,8 @@ public class MemberInfoSceneController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
             context = Context.getInstance();
             member = context.getMember();
-            email.setText(member.getEmail());
-            password.setText(member.getPassword());
+            email.setText(member.getLoginInfo().getEmail());
+            password.setText(member.getLoginInfo().getPassword());
             firstName.setText(member.getFirstName());
             lastName.setText(member.getLastName());
             //TODO: fix ID numbers
@@ -137,8 +137,8 @@ public class MemberInfoSceneController implements Initializable {
         //member.handleAddressInfo(street.getText(), city.getText(), zipCode.getText());
         //member.handleVehicleInfo(0, null, null, null, 0);
         //member.handlePaymentInfo();
-        member.setEmail(email.getText());
-        member.setPassword(password.getText());
+        member.getLoginInfo().setEmail(email.getText());
+        member.getLoginInfo().setPassword(password.getText());
         member.setFirstName(firstName.getText());
         member.setLastName(lastName.getText());
         member.setPhoneNumber(phone.getText());

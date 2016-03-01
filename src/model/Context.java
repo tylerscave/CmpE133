@@ -18,7 +18,7 @@ public class Context {
         if(instance == null) {
             instance = new Context();
         }
-        return instance;
+        return instance;	
     }
 
     public void setMember(Member member) {
@@ -27,7 +27,7 @@ public class Context {
     
     public Member getMember() {
         if (this.member == null)
-            this.member = new Student("", "", "", "", new Address("", "", "", "", ""), "", new Passenger(), "");
+            this.member = new Student(new LoginInformation("", ""), "", "", new Address("", "", "", "", ""), "", new Passenger(), "");
         return this.member;
     }
 

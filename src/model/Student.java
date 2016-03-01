@@ -3,8 +3,8 @@ package model;
 public class Student extends Member {
 	private String studentID;
 
-	public Student(String email, String password, String lastName, String firstName, Address address, String phoneNumber, MemberType type, String studentID){
-		super(email, password, lastName, firstName, address, phoneNumber, type);
+	public Student(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type, String studentID){
+		super(loginInfo, lastName, firstName, address, phoneNumber, type);
 		this.studentID = studentID;
 	}
 	
