@@ -24,8 +24,8 @@
             <Font size="16.0" />
           </font>
         </Text>
-        <Label text="User Name:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-        <TextField fx:id="usernameField" onAction="#onEnter" prefHeight="19.3125" prefWidth="96.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Label text="Email:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+        <TextField fx:id="emailField" onAction="#onEnter" prefHeight="19.3125" prefWidth="96.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></TextField>

@@ -16,13 +16,13 @@ public class LoginHandler {
      * Currently a stub. Creates a new account with the given username and password
      * TODO: Make this access a database of members
      *
-     * @param username
+     * @param email
      * @param password
      */
-    public void handleLogin(String username, String password) {
+    public void handleLogin(String email, String password) {
         loggedIn = true;
         //stub
-        Context.getInstance().setMember(new Student(username, password, "", "", new Address("", "", "", "", ""), "", new Passenger(), ""));
+        Context.getInstance().setMember(new Student(email, password, "", "", new Address("", "", "", "", ""), "", new Passenger(), ""));
     }
     
     public void handleLogout() {

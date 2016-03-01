@@ -31,7 +31,7 @@ public class LoginSceneController implements Initializable {
     @FXML
     private PasswordField passwordField;
     @FXML
-    private TextField usernameField;
+    private TextField emailField;
     
     private Context context;
     
@@ -63,7 +63,7 @@ public class LoginSceneController implements Initializable {
     
     private void login(ActionEvent event) {
         context.setLogin(new LoginHandler());
-        context.getLogin().handleLogin(usernameField.getText(), passwordField.getText());
+        context.getLogin().handleLogin(emailField.getText(), passwordField.getText());
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
             Scene scene = new Scene(root);
