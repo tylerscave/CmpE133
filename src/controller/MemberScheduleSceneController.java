@@ -38,7 +38,7 @@ public class MemberScheduleSceneController implements Initializable{
 	}
 	
 	@FXML
-    private ComboBox location;        
+    private ComboBox<String> location;        
     @FXML
     private ComboBox monArrive;
     @FXML
@@ -90,12 +90,18 @@ public class MemberScheduleSceneController implements Initializable{
      */
     @FXML
     protected void handleLocationDrop(ActionEvent event) {
-    	//TODO
+    	location.getItems().addAll(
+                "jacob.smith@example.com",
+                "isabella.johnson@example.com",
+                "ethan.williams@example.com",
+                "emma.jones@example.com",
+                "michael.brown@example.com"
+    			);
     }
     
     @FXML
     protected void handleMonArriveDrop(ActionEvent event) {
-    	//TODO
+    	getComboTimes(monArrive);
     }
     
     @FXML
@@ -146,6 +152,13 @@ public class MemberScheduleSceneController implements Initializable{
     @FXML
     protected void handleRadioButtons(ActionEvent event) {
     	//TODO
+    }
+    
+    private void getComboTimes(ComboBox<String> timeComboBox) {
+    	timeComboBox.getItems().addAll(
+    			"6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12PM", "1PM", "2PM",
+    			"3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM"
+    			);			
     }
 
 }
