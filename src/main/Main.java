@@ -1,4 +1,6 @@
 package main;
+import java.io.FileNotFoundException;
+
 //this is ronny pushing
 //shubaan wuz here
 /**
@@ -13,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.Database;
 //This is Tyler pushing on new eclipse build
 public class Main extends Application
 {
@@ -24,6 +27,13 @@ public class Main extends Application
     public static final String APP_TITLE = "CarPool System";
 
     public static void main(String[] args) {
+    	Database database = new Database();
+    	try {
+			database.load();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         launch(args);	//call start(javafx.stage.Stage) method
     }
 
