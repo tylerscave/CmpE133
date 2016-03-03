@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,7 @@ import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import model.Context;
 import model.Member;
+import model.PickupLocation;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -30,15 +33,10 @@ public class MemberScheduleSceneController implements Initializable{
 	
     private Context context;
     private Member member;
-    
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-            context = Context.getInstance();
-            member = context.getMember();
-	}
-	
-	@FXML
-    private ComboBox<String> location;        
+    private ObservableList<PickupLocation> locations = FXCollections.observableArrayList();
+    private ObservableList<String> times = FXCollections.observableArrayList();
+    @FXML
+    private ComboBox<PickupLocation> location;
     @FXML
     private ComboBox monArrive;
     @FXML
@@ -69,6 +67,24 @@ public class MemberScheduleSceneController implements Initializable{
     private RadioButton thursDrive;        
     @FXML
     private RadioButton friDrive;
+    
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+            context = Context.getInstance();
+            member = context.getMember();
+            
+            //set up the location ComboBox
+            locations.add(new PickupLocation("location1"));
+            locations.add(new PickupLocation("location2"));
+            locations.add(new PickupLocation("location3"));
+            locations.add(new PickupLocation("location4"));
+            locations.add(new PickupLocation("location5"));
+            location.setItems(locations);
+            
+            //setup Arrival and Departure ComboBoxes
+	}
+	
+
 	
     @FXML
     protected void handleReturnButton(ActionEvent event) {
@@ -80,7 +96,8 @@ public class MemberScheduleSceneController implements Initializable{
             primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        }
+    	System.out.println("Return Button Pressed");
     }
     
     /* After thinking about this for a little while we may be able to
@@ -88,20 +105,17 @@ public class MemberScheduleSceneController implements Initializable{
      * be to have two methods, one for arrival and one for departure,
      * Then do if/else or case based on id.
      */
+
     @FXML
-    protected void handleLocationDrop(ActionEvent event) {
-    	location.getItems().addAll(
-                "jacob.smith@example.com",
-                "isabella.johnson@example.com",
-                "ethan.williams@example.com",
-                "emma.jones@example.com",
-                "michael.brown@example.com"
-    			);
+    void handleLocationDrop(ActionEvent event) {
+    	PickupLocation selectedLocation = location.getSelectionModel().getSelectedItem();
+    	System.out.print("test new location box");
+    	System.out.print(selectedLocation);
     }
-    
+   
     @FXML
     protected void handleMonArriveDrop(ActionEvent event) {
-    	getComboTimes(monArrive);
+    	//TODO
     }
     
     @FXML
@@ -152,13 +166,7 @@ public class MemberScheduleSceneController implements Initializable{
     @FXML
     protected void handleRadioButtons(ActionEvent event) {
     	//TODO
-    }
-    
-    private void getComboTimes(ComboBox<String> timeComboBox) {
-    	timeComboBox.getItems().addAll(
-    			"6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12PM", "1PM", "2PM",
-    			"3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM"
-    			);			
+    	System.out.println("A Radio button was selected");
     }
 
 }
