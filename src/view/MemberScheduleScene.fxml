@@ -45,7 +45,7 @@
               </rowConstraints>
                <children>
                   <ComboBox fx:id="monArrive" onAction="#handleMonArriveCombo" prefWidth="150.0" promptText="Select Time" GridPane.halignment="CENTER" />
-                  <ComboBox fx:id="monDepart" onAction="#handleDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <ComboBox fx:id="monDepart" onAction="#handleMonDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -71,7 +71,7 @@
                </rowConstraints>
                <children>
                   <ComboBox fx:id="wedArrive" onAction="#handleWedArriveCombo" prefWidth="150.0" promptText="Select Time" GridPane.halignment="CENTER" />
-                  <ComboBox fx:id="wedDepart" onAction="#handleDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <ComboBox fx:id="wedDepart" onAction="#handleWedDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -84,7 +84,7 @@
                </rowConstraints>
                <children>
                   <ComboBox fx:id="tuesArrive" onAction="#handleTuesArriveCombo" prefWidth="150.0" promptText="Select Time" GridPane.halignment="CENTER" />
-                  <ComboBox fx:id="tuesDepart" onAction="#handleDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <ComboBox fx:id="tuesDepart" onAction="#handleTuesDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
@@ -97,7 +97,7 @@
                </rowConstraints>
                <children>
                   <ComboBox fx:id="friArrive" onAction="#handleFriArriveCombo" prefWidth="150.0" promptText="Select Time" GridPane.halignment="CENTER" />
-                  <ComboBox fx:id="friDepart" onAction="#handleDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <ComboBox fx:id="friDepart" onAction="#handleFriDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
@@ -110,7 +110,7 @@
                </rowConstraints>
                <children>
                   <ComboBox fx:id="thursArrive" onAction="#handleThursArriveCombo" prefWidth="150.0" promptText="Select Time" GridPane.halignment="CENTER" />
-                  <ComboBox fx:id="thursDepart" onAction="#handleDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <ComboBox fx:id="thursDepart" onAction="#handleThursDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
             <RadioButton fx:id="monDrive" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
