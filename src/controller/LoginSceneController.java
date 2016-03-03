@@ -8,6 +8,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import ErrorCheck.LoginErrorChecker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,10 +48,14 @@ public class LoginSceneController implements Initializable {
     }    
     
     @FXML
-    protected void handleSubmitButton(ActionEvent event) {
-        loginMessage.setText("Sign in successful");
+    protected void handleSubmitButton(ActionEvent event) throws Exception {
+        LoginErrorChecker.invalidEmail(emailField);
+        LoginErrorChecker.invalidPass(passwordField);
+    	loginMessage.setText("Sign in successful");
         System.out.println("Sign in button pressed");
         login(event);
+
+        
     }   
 
     @FXML
