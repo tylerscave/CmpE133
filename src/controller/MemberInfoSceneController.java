@@ -31,25 +31,6 @@ public class MemberInfoSceneController implements Initializable {
 	
     private Context context;
     private Member member;
-    
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-            context = Context.getInstance();
-            member = context.getMember();
-            email.setText(member.getLoginInfo().getEmail());
-            password.setText(member.getLoginInfo().getPassword());
-            firstName.setText(member.getFirstName());
-            lastName.setText(member.getLastName());
-            //TODO: fix ID numbers
-            phone.setText(member.getPhoneNumber());
-            setMemberRadio();
-            setDriverRadio();
-            Address address = member.getAddress();
-            street.setText(address.getStreet1());
-            city.setText(address.getCity());
-            zipCode.setText(address.getZipCode());
-	}
-	
     @FXML
     private TextField firstName;
     @FXML
@@ -78,6 +59,25 @@ public class MemberInfoSceneController implements Initializable {
     private RadioButton drive;        
     @FXML
     private RadioButton ride;
+    
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+            context = Context.getInstance();
+            member = context.getMember();
+            email.setText(member.getLoginInfo().getEmail());
+            password.setText(member.getLoginInfo().getPassword());
+            firstName.setText(member.getFirstName());
+            lastName.setText(member.getLastName());
+            //TODO: fix ID numbers
+            phone.setText(member.getPhoneNumber());
+            setMemberRadio();
+            setDriverRadio();
+            Address address = member.getAddress();
+            street.setText(address.getStreet1());
+            city.setText(address.getCity());
+            zipCode.setText(address.getZipCode());
+	}
+	
     
     @FXML
     protected void onEnter(ActionEvent event) {

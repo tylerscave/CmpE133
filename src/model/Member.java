@@ -1,5 +1,10 @@
 package model;
-
+/**
+ *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
+ * The model for the member
+ * Solves CmpE133 Assignment 2
+ * @author Tyler Jones, Hyesung Ko,
+*/
 public abstract class Member {
 	private LoginInformation loginInfo;
 	private String lastName;
