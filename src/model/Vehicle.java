@@ -10,6 +10,11 @@ public class Vehicle {
 	private String plateNumber;
 	private int capacity;
 	
+	public Vehicle(String plateNumber, int capacity){
+		this.plateNumber = plateNumber;
+		this.capacity = capacity;
+	}
+	
 	public String getPlateNumber() {
 		return plateNumber;
 	}
