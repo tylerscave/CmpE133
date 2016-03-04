@@ -51,7 +51,9 @@ public class LoginSceneController implements Initializable {
     
     @FXML
     protected void handleSubmitButton(ActionEvent event) {
-    	//loginInfo = new LoginInformation(emailField.getText(), passwordField.getText());
+    	loginInfo = new LoginInformation(emailField.getText(), passwordField.getText());
+    	
+    	//
     	//getting members from database to check the one who tries to login is registered.
     	//member.add();
     	//for(int i = 0; i < member.size(); i++){
@@ -109,7 +111,7 @@ public class LoginSceneController implements Initializable {
     
     private void login(ActionEvent event) {
         context.setLogin(new LoginHandler());
-        context.getLogin().handleLogin(new LoginInformation(emailField.getText(), passwordField.getText()));
+        context.getLogin().handleLogin(loginInfo);
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
             Scene scene = new Scene(root);

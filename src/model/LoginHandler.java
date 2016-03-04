@@ -22,7 +22,7 @@ public class LoginHandler {
     public void handleLogin(LoginInformation loginInfo) {
         loggedIn = true;
         //stub
-        //Context.getInstance().setMember(new Student(loginInfo, "", "", new Address("", "", "", "", ""), "", new Passenger(), ""));
+        Context.getInstance().setMember(new Student(loginInfo, "", "", new Address("", "", "", "", ""), "", new Passenger(), ""));
     }
     
     public void handleLogout() {
