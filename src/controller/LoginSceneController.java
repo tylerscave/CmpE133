@@ -2,6 +2,7 @@ package controller;
 
 import model.LoginHandler;
 import model.LoginInformation;
+import model.Member;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,6 +39,7 @@ public class LoginSceneController implements Initializable {
     private TextField emailField;
     
     private Context context;
+    private LoginInformation loginInfo;
     
     /**
      * Initializes the controller class.
@@ -54,9 +56,13 @@ public class LoginSceneController implements Initializable {
     	loginMessage.setText("Sign in successful");
         System.out.println("Sign in button pressed");
         login(event);
+<<<<<<< HEAD
 
         
     }   
+=======
+    }
+>>>>>>> branch 'master' of https://github.com/tylerscave/CmpE133.git
 
     @FXML
     protected void onEnter(ActionEvent event) {
