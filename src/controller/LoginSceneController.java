@@ -6,6 +6,7 @@ import model.Member;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +39,7 @@ public class LoginSceneController implements Initializable {
     
     private Context context;
     private LoginInformation loginInfo;
+    private ArrayList<Member> member;
     
     /**
      * Initializes the controller class.
@@ -49,14 +51,57 @@ public class LoginSceneController implements Initializable {
     
     @FXML
     protected void handleSubmitButton(ActionEvent event) {
-        loginMessage.setText("Sign in successful");
-        System.out.println("Sign in button pressed");
-        login(event);
+    	loginInfo = new LoginInformation(emailField.getText(), passwordField.getText());
+    	
+    	//getting members from database to check the one who tries to login is registered.
+    	//member.add();
+    	
+    	for(int i = 0; i < member.size(); i++){
+    		if(loginInfo.getEmail() == member.get(i).getLoginInfo().getEmail()){
+    			if(loginInfo.getPassword() == member.get(i).getLoginInfo().getPassword()){
+    				context.setMember(member.get(i));
+    				login(event);
+    			}
+    			else {
+    				//wrong password
+    			}
+    		}
+    		else{
+    			//Email not registered
+    		}
+    		
+    	}
+    	
+    	
+        //loginMessage.setText("Sign in successful");
+        //System.out.println("Sign in button pressed");
+        //login(event);
     }
 
     @FXML
     protected void onEnter(ActionEvent event) {
-        System.out.println("Enter key pressed");
+    	loginInfo = new LoginInformation(emailField.getText(), passwordField.getText());
+    	
+    	//getting members from database to check the one who tries to login is registered.
+    	//member.add();
+    	
+    	for(int i = 0; i < member.size(); i++){
+    		if(loginInfo.getEmail() == member.get(i).getLoginInfo().getEmail()){
+    			if(loginInfo.getPassword() == member.get(i).getLoginInfo().getPassword()){
+    				context.setMember(member.get(i));
+    				login(event);
+    			}
+    			else {
+    				//wrong password
+    			}
+    		}
+    		else{
+    			//Email not registered
+    		}
+    		
+    	}
+    	
+    	System.out.println("Enter key pressed");
         login(event);
     }
     
@@ -67,7 +112,7 @@ public class LoginSceneController implements Initializable {
     
     private void login(ActionEvent event) {
         context.setLogin(new LoginHandler());
-        context.getLogin().handleLogin(new LoginInformation(emailField.getText(), passwordField.getText()));
+        context.getLogin().handleLogin(loginInfo);
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
             Scene scene = new Scene(root);
