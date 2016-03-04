@@ -24,11 +24,13 @@ public class LoginErrorChecker {
 	
 	public static void invalidPass(PasswordField pass) throws Exception
 	{
-		if (pass.equals(null) || pass.getText().equals(""))
+		if (pass.getText().equals(""))
+		{
 			JOptionPane.showMessageDialog(null,
 				    "Please Enter a Valid Password",
 				    "Error",
 				    JOptionPane.ERROR_MESSAGE);
 		throw new Exception();
+		}
 	}
 }
