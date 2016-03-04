@@ -7,18 +7,22 @@ package model;
 */
 public class MemberSchedule {
 	//declare all variables for member schedule
-	private PickupLocation pickupLocation;
+	private Location pickupLocation;
 	private String monArrive, tuesArrive, wedArrive, thursArrive, friArrive;
 	private String monDepart, tuesDepart, wedDepart, thursDepart, friDepart;
-	private boolean monDrive, tuesDrive, wedDrive, thursDrive, friDrive;
+	private boolean monDrive = false; 
+	private boolean tuesDrive = false;
+	private boolean wedDrive = false; 
+	private boolean thursDrive = false;
+	private boolean friDrive = false;
 	
 	//using default constructor for now...
 	
-	public PickupLocation getPickupLocation() {
+	public Location getPickupLocation() {
 		return pickupLocation;
 	}
 	
-	public void setPickupLocation(PickupLocation pickupLocation) {
+	public void setPickupLocation(Location pickupLocation) {
 		this.pickupLocation = pickupLocation;
 	}
 //*********************************MONDAY*************************************
@@ -46,6 +50,8 @@ public class MemberSchedule {
 	
 	public void setMonDrive(boolean drive) {
 		this.monDrive = drive;
+		//test - remove later
+		System.out.println("Monday drive radio is " + drive);
 	}
 //*********************************TUESDAY*************************************
 	
@@ -146,6 +152,8 @@ public class MemberSchedule {
 	
 	public void setFriDrive(boolean drive) {
 		this.friDrive = drive;
+		//test - remove later
+		System.out.println("Friday drive set to " + drive);
 	}
 
 }

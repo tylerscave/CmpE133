@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import ErrorCheck.MemberInfoErrorChecker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -118,8 +120,9 @@ public class MemberInfoSceneController implements Initializable {
     }
     
     @FXML
-    protected void handleSubmitReturnButton(ActionEvent event) {
-        maintainMemberInfo();
+    protected void handleSubmitReturnButton(ActionEvent event) throws Exception {
+    	MemberInfoErrorChecker.invalidBlank(firstName,lastName,idNum, email,phone, street, city, zipCode);
+    	maintainMemberInfo();
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
             Scene scene = new Scene(root);

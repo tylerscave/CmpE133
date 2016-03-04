@@ -12,7 +12,6 @@ public abstract class Member {
 	private Address address;
 	private String phoneNumber;
 	private MemberType type;
-    private PaymentMethod payMethod;
 	
 	public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
 		this.setLoginInfo(loginInfo);
@@ -62,14 +61,6 @@ public abstract class Member {
 	public void setMemberType(MemberType type) {
 		this.type = type;
 	}
-
-    public PaymentMethod getPayMethod() {
-        return payMethod;
-    }
-
-    public void setPayMethod(PaymentMethod payMethod) {
-        this.payMethod = payMethod;
-    }
 
 	public LoginInformation getLoginInfo() {
 		return loginInfo;
