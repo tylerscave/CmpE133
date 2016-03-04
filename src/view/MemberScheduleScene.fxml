@@ -113,11 +113,11 @@
                   <ComboBox fx:id="thursDepart" onAction="#handleThursDepartCombo" prefWidth="150.0" promptText="Select Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
-            <RadioButton fx:id="monDrive" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <RadioButton fx:id="tuesDrive" layoutX="483.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <RadioButton fx:id="wedDrive" layoutX="483.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <RadioButton fx:id="thursDrive" layoutX="483.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <RadioButton fx:id="friDrive" layoutX="483.0" layoutY="253.0" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <RadioButton fx:id="monDriveRadio" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <RadioButton fx:id="tuesDriveRadio" layoutX="483.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <RadioButton fx:id="wedDriveRadio" layoutX="483.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <RadioButton fx:id="thursDriveRadio" layoutX="483.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <RadioButton fx:id="friDriveRadio" layoutX="483.0" layoutY="253.0" mnemonicParsing="false" onAction="#handleRadioButtons" text="Available to Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <Button mnemonicParsing="false" onAction="#handleReturnButton" text="Return to Menu" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
          </children>
       </GridPane>

@@ -10,7 +10,11 @@ public class MemberSchedule {
 	private PickupLocation pickupLocation;
 	private String monArrive, tuesArrive, wedArrive, thursArrive, friArrive;
 	private String monDepart, tuesDepart, wedDepart, thursDepart, friDepart;
-	private boolean monDrive, tuesDrive, wedDrive, thursDrive, friDrive;
+	private boolean monDrive = false; 
+	private boolean tuesDrive = false;
+	private boolean wedDrive = false; 
+	private boolean thursDrive = false;
+	private boolean friDrive = false;
 	
 	//using default constructor for now...
 	
@@ -46,6 +50,8 @@ public class MemberSchedule {
 	
 	public void setMonDrive(boolean drive) {
 		this.monDrive = drive;
+		//test - remove later
+		System.out.println("Monday drive radio is " + drive);
 	}
 //*********************************TUESDAY*************************************
 	
