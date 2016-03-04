@@ -58,15 +58,15 @@ public class MemberScheduleSceneController implements Initializable{
     @FXML
     private ComboBox<String> friDepart;
     @FXML
-    private RadioButton monDrive;        
+    private RadioButton monDriveRadio;        
     @FXML
-    private RadioButton tuesDrive;        
+    private RadioButton tuesDriveRadio;        
     @FXML
-    private RadioButton wedDrive; 
+    private RadioButton wedDriveRadio; 
     @FXML
-    private RadioButton thursDrive;        
+    private RadioButton thursDriveRadio;        
     @FXML
-    private RadioButton friDrive;
+    private RadioButton friDriveRadio;
     
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -101,6 +101,7 @@ public class MemberScheduleSceneController implements Initializable{
     private void handleLocationCombo(ActionEvent event) {
     	PickupLocation selectedLocation = location.getSelectionModel().getSelectedItem();
     	memberSchedule.setPickupLocation(selectedLocation);
+    	//test - remove later
     	System.out.println(selectedLocation);
     }
    
@@ -108,6 +109,7 @@ public class MemberScheduleSceneController implements Initializable{
     private void handleMonArriveCombo(ActionEvent event) {
     	String monArriveTime = monArrive.getSelectionModel().getSelectedItem();
     	memberSchedule.setMonArrive(monArriveTime);
+    	//test - remove later
     	System.out.println(monArriveTime);
     }
     
@@ -166,7 +168,17 @@ public class MemberScheduleSceneController implements Initializable{
      
     @FXML
     private void handleRadioButtons(ActionEvent event) {
-    	//TODO
+    	if (monDriveRadio.isSelected()) {
+    		memberSchedule.setMonDrive(true);
+    	} else if (tuesDriveRadio.isSelected()) {
+    		memberSchedule.setTuesDrive(true);
+    	} else if (wedDriveRadio.isSelected()) {
+    		memberSchedule.setWedDrive(true);
+    	} else if (thursDriveRadio.isSelected()) {
+    		memberSchedule.setThursDrive(true);
+    	} else if (friDriveRadio.isSelected()) {
+    		memberSchedule.setFriDrive(true);
+    	}
     	System.out.println("A Radio button was selected");
     }
     
