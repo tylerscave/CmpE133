@@ -56,14 +56,7 @@ public class LoginSceneController implements Initializable {
     	loginMessage.setText("Sign in successful");
         System.out.println("Sign in button pressed");
         login(event);
-<<<<<<< HEAD
-
-        
-    }   
-=======
     }
->>>>>>> branch 'master' of https://github.com/tylerscave/CmpE133.git
-
     @FXML
     protected void onEnter(ActionEvent event) {
         System.out.println("Enter key pressed");
