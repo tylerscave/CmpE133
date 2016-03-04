@@ -78,6 +78,7 @@ public class LoginSceneController implements Initializable {
 
     @FXML
     protected void onEnter(ActionEvent event) {
+    	
     	//loginInfo = new LoginInformation(emailField.getText(), passwordField.getText());
     	//getting members from database to check the one who tries to login is registered.
     	//member.add();
