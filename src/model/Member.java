@@ -1,4 +1,8 @@
 package model;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
  * The model for the member
@@ -12,6 +16,9 @@ public abstract class Member {
 	private Address address;
 	private String phoneNumber;
 	private MemberType type;
+        private List<Drive> drives;
+        private List<Ride> rides;
+        private List<RideRequest> rideRequests;
 	
 	public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
 		this.setLoginInfo(loginInfo);
@@ -20,6 +27,9 @@ public abstract class Member {
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.type = type;
+                this.drives = new ArrayList<>();
+                this.rides = new ArrayList<>();
+                this.rideRequests = new ArrayList<>();
 	}
 	
 	public Address getAddress() {
@@ -69,5 +79,18 @@ public abstract class Member {
 	public void setLoginInfo(LoginInformation loginInfo) {
 		this.loginInfo = loginInfo;
 	}
+
+    public List<Drive> getDrives() {
+        return drives;
+    }
+
+    public List<Ride> getRides() {
+        return rides;
+    }
+
+    public List<RideRequest> getRideRequests() {
+        return rideRequests;
+    }
 		
+        
 }

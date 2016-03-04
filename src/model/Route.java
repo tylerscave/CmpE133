@@ -1,6 +1,5 @@
 package model;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -47,8 +46,8 @@ public class Route {
     
     public List<Location> getStops() {
         ArrayList<Location> locations = new ArrayList<>();
-        for (int i = 0; i < stops.size(); i++) {
-            locations.add(stops.get(i).getLocation());
+        for (Stop stop : stops) {
+            locations.add(stop.getLocation());
         }
         return locations;
     }

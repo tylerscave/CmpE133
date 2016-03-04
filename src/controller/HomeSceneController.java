@@ -72,7 +72,6 @@ public class HomeSceneController implements Initializable {
     
     @FXML
     protected void handleLogoutButton(ActionEvent event) {
-        context.setLogin(new LoginHandler());
         context.getLogin().handleLogout();
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/LoginScene.fxml"));
