@@ -20,23 +20,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import model.Context;
 import model.Member;
 import model.MemberSchedule;
-import model.PickupLocation;
+import model.Location;
 
 public class MemberScheduleSceneController implements Initializable{
 	
     private Context context;
     private Member member;
     private MemberSchedule memberSchedule = new MemberSchedule();
-    private ObservableList<PickupLocation> locations = FXCollections.observableArrayList();
+    private ObservableList<Location> locations = FXCollections.observableArrayList();
     private ObservableList<String> times = FXCollections.observableArrayList();
     @FXML
-    private ComboBox<PickupLocation> location;
+    private ComboBox<Location> location;
     @FXML
     private ComboBox<String> monArrive;
     @FXML
@@ -58,15 +58,15 @@ public class MemberScheduleSceneController implements Initializable{
     @FXML
     private ComboBox<String> friDepart;
     @FXML
-    private RadioButton monDriveRadio;        
+    private CheckBox monDriveCheck;        
     @FXML
-    private RadioButton tuesDriveRadio;        
+    private CheckBox tuesDriveCheck;        
     @FXML
-    private RadioButton wedDriveRadio; 
+    private CheckBox wedDriveCheck; 
     @FXML
-    private RadioButton thursDriveRadio;        
+    private CheckBox thursDriveCheck;        
     @FXML
-    private RadioButton friDriveRadio;
+    private CheckBox friDriveCheck;
     
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -75,11 +75,11 @@ public class MemberScheduleSceneController implements Initializable{
             //memberSchedule = context.getMemberSchedule();
             
             //set up the location ComboBox
-            locations.add(new PickupLocation("location1"));
-            locations.add(new PickupLocation("location2"));
-            locations.add(new PickupLocation("location3"));
-            locations.add(new PickupLocation("location4"));
-            locations.add(new PickupLocation("location5"));
+            locations.add(new Location("location1"));
+            locations.add(new Location("location2"));
+            locations.add(new Location("location3"));
+            locations.add(new Location("location4"));
+            locations.add(new Location("location5"));
             location.setItems(locations);
             
             //setup Arrival and Departure ComboBoxes
@@ -99,8 +99,8 @@ public class MemberScheduleSceneController implements Initializable{
 	
     @FXML
     private void handleLocationCombo(ActionEvent event) {
-    	PickupLocation selectedLocation = location.getSelectionModel().getSelectedItem();
-    	memberSchedule.setPickupLocation(selectedLocation);
+    	Location selectedLocation = location.getSelectionModel().getSelectedItem();
+    	//Location.setLocation(selectedLocation);
     	//test - remove later
     	System.out.println(selectedLocation);
     }
@@ -167,19 +167,19 @@ public class MemberScheduleSceneController implements Initializable{
     }
      
     @FXML
-    private void handleRadioButtons(ActionEvent event) {
-    	if (monDriveRadio.isSelected()) {
+    private void handleDriveChecks(ActionEvent event) {
+    	if (monDriveCheck.isSelected()) {
     		memberSchedule.setMonDrive(true);
-    	} else if (tuesDriveRadio.isSelected()) {
+    	} else if (tuesDriveCheck.isSelected()) {
     		memberSchedule.setTuesDrive(true);
-    	} else if (wedDriveRadio.isSelected()) {
+    	} else if (wedDriveCheck.isSelected()) {
     		memberSchedule.setWedDrive(true);
-    	} else if (thursDriveRadio.isSelected()) {
+    	} else if (thursDriveCheck.isSelected()) {
     		memberSchedule.setThursDrive(true);
-    	} else if (friDriveRadio.isSelected()) {
+    	} else if (friDriveCheck.isSelected()) {
     		memberSchedule.setFriDrive(true);
     	}
-    	System.out.println("A Radio button was selected");
+    	System.out.println("A check box was selected");
     }
     
     @FXML

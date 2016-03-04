@@ -7,7 +7,7 @@ package model;
 */
 public class MemberSchedule {
 	//declare all variables for member schedule
-	private PickupLocation pickupLocation;
+	private Location pickupLocation;
 	private String monArrive, tuesArrive, wedArrive, thursArrive, friArrive;
 	private String monDepart, tuesDepart, wedDepart, thursDepart, friDepart;
 	private boolean monDrive = false; 
@@ -18,11 +18,11 @@ public class MemberSchedule {
 	
 	//using default constructor for now...
 	
-	public PickupLocation getPickupLocation() {
+	public Location getPickupLocation() {
 		return pickupLocation;
 	}
 	
-	public void setPickupLocation(PickupLocation pickupLocation) {
+	public void setPickupLocation(Location pickupLocation) {
 		this.pickupLocation = pickupLocation;
 	}
 //*********************************MONDAY*************************************
@@ -152,6 +152,8 @@ public class MemberSchedule {
 	
 	public void setFriDrive(boolean drive) {
 		this.friDrive = drive;
+		//test - remove later
+		System.out.println("Friday drive set to " + drive);
 	}
 
 }
