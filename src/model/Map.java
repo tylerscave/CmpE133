@@ -9,7 +9,6 @@ import java.util.List;
  */
 public interface Map {
     
-    public List<Stop> getStops(Location start, Location stop, List<Location> inBetweens);
+    public List<Stop> getStops(GregorianCalendar startTime, Location start, Location stop, List<Location> inBetweens);
     
-    public GregorianCalendar getTimeofRoute(Location start, Location stop, GregorianCalendar startTime);
 }
