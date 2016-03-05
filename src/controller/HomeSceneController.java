@@ -42,11 +42,11 @@ public class HomeSceneController implements Initializable {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }     
     } 
-    
+
     @FXML
     protected void handleUpdateSchedule(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MemberScheduleScene.fxml"));
+        	Parent root = FXMLLoader.load(getClass().getResource("/view/MemberScheduleOptionScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);

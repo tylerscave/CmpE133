@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MemberOneTimeScheduleSceneController">
+   <children>
+      <GridPane prefHeight="386.0" prefWidth="250.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="84.0" minHeight="24.0" prefHeight="36.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="87.0" minHeight="21.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="101.0" minHeight="14.0" prefHeight="34.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="180.0" minHeight="30.0" prefHeight="33.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="180.0" minHeight="12.0" prefHeight="39.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="180.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="213.0" minHeight="68.0" prefHeight="69.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="213.0" minHeight="44.0" prefHeight="54.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="213.0" minHeight="35.0" prefHeight="50.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Ride or Drive: " GridPane.halignment="CENTER" />
+            <Label text="Date:" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+            <GridPane prefHeight="69.0" prefWidth="207.0" GridPane.rowIndex="6">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="73.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="107.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Arrive: " GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+                  <Label text="Depart: " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+                  <ComboBox fx:id="arriveCombo" onAction="#handleArriveCombo" promptText="Time" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </ComboBox>
+                  <ComboBox fx:id="departCombo" onAction="#handleDepartCombo" promptText="Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </ComboBox>
+               </children>
+            </GridPane>
+            <RadioButton fx:id="driveRadio" mnemonicParsing="false" onAction="#handleRidePrefRadios" text="Drive" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="group" />
+               </toggleGroup>
+            </RadioButton>
+            <DatePicker fx:id="datePicker" onAction="#handleDatePicker" prefHeight="26.0" prefWidth="145.0" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="26.0" text="Cancel" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmitButton" prefHeight="26.0" text="Submit and Return" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+            <Label text="Time:" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+            <GridPane GridPane.rowIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="92.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="158.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <RadioButton fx:id="RideRadio" mnemonicParsing="false" onAction="#handleRidePrefRadios" text="Ride" toggleGroup="$group">
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </RadioButton>
+                  <ComboBox fx:id="locationCombo" onAction="#handleLocationCombo" promptText="Pickup Location" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </children>
+</VBox>

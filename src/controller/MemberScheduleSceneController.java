@@ -1,7 +1,7 @@
 package controller;
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
- * The controller for the member information form 
+ * The controller for the Member Schedule Scene
  * Solves CmpE133 Assignment 2
  * @author Tyler Jones,
 */
@@ -32,9 +32,9 @@ import model.Location;
 
 public class MemberScheduleSceneController implements Initializable{
 	
+    private MemberSchedule memberSchedule = new MemberSchedule();
     private Context context;
     private Member member;
-    private MemberSchedule memberSchedule = new MemberSchedule();
     private Location selectedLocation;
     private GregorianCalendar monTime, monArriveTime, monDepartTime;
     private GregorianCalendar tuesTime, tuesArriveTime, tuesDepartTime;
@@ -86,7 +86,6 @@ public class MemberScheduleSceneController implements Initializable{
 	public void initialize(URL url, ResourceBundle rb) {
             context = Context.getInstance();
             member = context.getMember();
-            //memberSchedule = context.getMemberSchedule();
             
             //set up the location ComboBox
             locations.add(new Location("location1"));

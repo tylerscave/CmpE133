@@ -1,14 +1,14 @@
 package model;
-
-import java.util.GregorianCalendar;
-import java.util.Locale;
-
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
  * The model for the member schedule
  * Solves CmpE133 Assignment 2
  * @author Tyler Jones,
 */
+
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 public class MemberSchedule {
 	//declare all variables for member schedule
 	private Location pickupLocation;
