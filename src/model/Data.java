@@ -13,6 +13,19 @@ public class Data {
     private List<Drive> drives;
     private List<Ride> rides;
     private List<RideRequest> rideRequests;
+    
+    private static Data instance;
+    
+    private Data() {
+        // Exists only to defeat instantiation.
+    }
+    
+    public static Data getInstance() {
+        if(instance == null) {
+            instance = new Data();
+        }
+        return instance;	
+    }
 
     public void setMembers(List<Member> members) {
         this.members = members;
@@ -27,6 +40,18 @@ public class Data {
             rides.addAll(member.getRides());
             rideRequests.addAll(member.getRideRequests());
         }
+    }
+
+    public List<RideRequest> getRideRequests() {
+        return rideRequests;
+    }
+
+    public List<Ride> getRides() {
+        return rides;
+    }
+
+    public List<Drive> getDrives() {
+        return drives;
     }
     
 }

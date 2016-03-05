@@ -61,20 +61,21 @@ public class GraphMap implements Map {
         for (Location location : inBetweens) {
             remainingLocations.add(location);
         }
-        int timeCost = 0;
+        double timeCost = 0;
         for (DirectedEdge edge : edges) {
             timeCost += edge.weight();
             for (int i = 0; i < remainingLocations.size(); i++) {
-                if (remainingLocations.get(i) == getLocationFromIndex(edge.to())) {
+                if (getIndexFromLocation(remainingLocations.get(i)) == edge.to()) {
                     GregorianCalendar newTime = new GregorianCalendar(
                             startTime.get(GregorianCalendar.YEAR), 
                             startTime.get(GregorianCalendar.MONTH), 
                             startTime.get(GregorianCalendar.DAY_OF_MONTH), 
                             startTime.get(GregorianCalendar.HOUR_OF_DAY), 
                             startTime.get(GregorianCalendar.MINUTE));
-                    newTime.add(GregorianCalendar.MINUTE, timeCost);
+                    newTime.add(GregorianCalendar.MINUTE, (int)timeCost);
                     stops.add(new Stop(newTime, remainingLocations.get(i)));
                     remainingLocations.remove(i);
+                    break;
                 }
             }
         }
@@ -84,9 +85,22 @@ public class GraphMap implements Map {
                 startTime.get(GregorianCalendar.DAY_OF_MONTH), 
                 startTime.get(GregorianCalendar.HOUR_OF_DAY), 
                 startTime.get(GregorianCalendar.MINUTE));
-        newTime.add(GregorianCalendar.MINUTE, timeCost);
+        newTime.add(GregorianCalendar.MINUTE, (int)timeCost);
         stops.add(new Stop(newTime, stop));
         return stops;
+    }
+
+    @Override
+    public GregorianCalendar getStartTime(GregorianCalendar arrivalTime, Location start, Location stop) {
+        double timeCost = -dijkstra.dist(getIndexFromLocation(start), getIndexFromLocation(stop));
+        GregorianCalendar newTime = new GregorianCalendar(
+                arrivalTime.get(GregorianCalendar.YEAR), 
+                arrivalTime.get(GregorianCalendar.MONTH), 
+                arrivalTime.get(GregorianCalendar.DAY_OF_MONTH), 
+                arrivalTime.get(GregorianCalendar.HOUR_OF_DAY), 
+                arrivalTime.get(GregorianCalendar.MINUTE));
+        newTime.add(GregorianCalendar.MINUTE, (int)timeCost);
+        return newTime;
     }
     
     public int getIndexFromLocation(Location l) {
