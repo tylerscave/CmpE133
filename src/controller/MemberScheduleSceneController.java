@@ -216,6 +216,9 @@ public class MemberScheduleSceneController implements Initializable{
     	memberSchedule.setThursDrive(thursDrive);
     	memberSchedule.setFriDrive(friDrive);
     	
+    	//FOR TESTING REMOVE LATER
+    	memberSchedule.test();
+    	
     	//return to home screen
     	handleReturnButton(event);
     }

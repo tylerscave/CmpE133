@@ -25,7 +25,8 @@ public class Main extends Application
     public static final int MIN_HEIGHT = 200;
     public static final double OPACITY = 1;
     public static final String APP_TITLE = "CarPool System";
-
+    //Database database;
+    
     public static void main(String[] args) {
     	Database database = new Database();
     	try {
