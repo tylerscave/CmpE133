@@ -31,7 +31,7 @@ public class Route {
         endTime = stops.get(stops.size()-1).getTime();
     }
     
-    public Route CreateSubroute(Location start, Location end) {
+    public Route createSubroute(Location start, Location end) {
         List<Location> locations = getStops();
         GregorianCalendar leave = TimeOfStop(this.stops, start);
         GregorianCalendar arrive = TimeOfStop(this.stops, end);

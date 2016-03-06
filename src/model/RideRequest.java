@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class RideRequest {
     private Location endLocation;
     private TimeType startType;
     private TimeType endType;
+    
+    public static final int NEAR_TIME = 10; 
 
     public RideRequest(Member member, GregorianCalendar startTime, GregorianCalendar endTime, 
             Location startLocation, Location endLocation, TimeType startType, TimeType endType) {
@@ -75,7 +78,7 @@ public class RideRequest {
             return false;
         if (drive.getNumSeats() < 1)
             return false;
-        Route route = drive.getRoute().CreateSubroute(startLocation, endLocation);
+        Route route = drive.getRoute().createSubroute(startLocation, endLocation);
         if (route == null)
             return false;
         for (Drive d : member.getDrives()) {
@@ -100,8 +103,53 @@ public class RideRequest {
         return true;
     }
     
-    public List<Drive> getAvailableDrives() {
-        //TODO
-        return null;
+    public List<DriveChoice> getAvailableDriveChoices() {
+        Data data = Data.getInstance();
+        List<DriveChoice> availableDrives = new ArrayList<>();
+        for (Drive d : data.getDrives()) {
+            Route route = getRouteFromRequest(d);
+            if (route != null)
+                availableDrives.add(new DriveChoice(d, route));
+        }
+        return availableDrives;
+    }
+    
+    private Route getRouteFromRequest(Drive drive) {
+        Route route = drive.getRoute();
+        if (route.getEndTime().before(new GregorianCalendar()))
+            return null;
+        if (route.getEndTime().before(endTime) && (endType == TimeType.AFTER))
+            return null;
+        if (route.getStartTime().after(startTime) && (startType == TimeType.BEFORE))
+            return null;
+        
+        Route r = route.createSubroute(startLocation, endLocation);
+        if (r == null)
+            return null;
+        if (r.getEndTime().before(endTime) && (endType == TimeType.AFTER))
+            return null;
+        if (r.getStartTime().after(startTime) && (startType == TimeType.BEFORE))
+            return null;
+        if (r.getEndTime().after(endTime) && (endType == TimeType.BEFORE))
+            return null;
+        if (r.getStartTime().before(startTime) && (startType == TimeType.AFTER))
+            return null;
+        GregorianCalendar stlow = new GregorianCalendar();
+        GregorianCalendar sthigh = new GregorianCalendar();
+        GregorianCalendar etlow = new GregorianCalendar();
+        GregorianCalendar ethigh = new GregorianCalendar();
+        stlow.setTime(startTime.getTime());
+        sthigh.setTime(startTime.getTime());
+        etlow.setTime(startTime.getTime());
+        ethigh.setTime(startTime.getTime());
+        stlow.add(GregorianCalendar.MINUTE, -NEAR_TIME);
+        etlow.add(GregorianCalendar.MINUTE, -NEAR_TIME);
+        sthigh.add(GregorianCalendar.MINUTE, NEAR_TIME);
+        ethigh.add(GregorianCalendar.MINUTE, NEAR_TIME);
+        if ((r.getEndTime().after(ethigh) || r.getEndTime().before(etlow)) && (endType == TimeType.NEAR))
+            return null;
+        if ((r.getStartTime().after(sthigh) || r.getStartTime().before(stlow)) && (startType == TimeType.NEAR))
+            return null;
+        return r;
     }
 }

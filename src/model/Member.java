@@ -19,6 +19,18 @@ public abstract class Member {
         private List<Drive> drives;
         private List<Ride> rides;
         private List<RideRequest> rideRequests;
+
+        public Member() {
+                this.setLoginInfo(new LoginInformation("", ""));
+		this.lastName = "";
+		this.firstName = "";
+		this.address = new Address("", "", "", "", "");
+		this.phoneNumber = "";
+		this.type = new Passenger();
+                this.drives = new ArrayList<>();
+                this.rides = new ArrayList<>();
+                this.rideRequests = new ArrayList<>();
+        }
 	
 	public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
 		this.setLoginInfo(loginInfo);
