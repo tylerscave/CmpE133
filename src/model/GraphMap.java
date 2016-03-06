@@ -29,7 +29,7 @@ public class GraphMap implements Map {
         
         hash = new HashMap<>();
         for (int i = 0; i < locations.size(); i++) {
-            hash.put(locations.get(i).getName(), i);
+            hash.put(locations.get(i).toString(), i);
         }
         
         costMatrix = new int[locations.size()][locations.size()];
@@ -104,7 +104,7 @@ public class GraphMap implements Map {
     }
     
     public int getIndexFromLocation(Location l) {
-        return hash.get(l.getName());
+        return hash.get(l.toString());
     }
     
     public Location getLocationFromIndex(int i) {

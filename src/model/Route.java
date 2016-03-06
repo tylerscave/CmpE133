@@ -51,7 +51,7 @@ public class Route {
     
     private GregorianCalendar TimeOfStop(List<Stop> stops, Location location) {
         for (Stop stop : stops) {
-            if (stop.getLocation().getName().equals(location.getName())) {
+            if (stop.getLocation().equals(location)) {
                 return stop.getTime();
             }
         }
@@ -60,9 +60,9 @@ public class Route {
     
     private boolean inStops(List<Stop> stops, Location start, Location end) {
         for (int i = 0; i < stops.size(); i++) {
-            if (stops.get(i).getLocation().getName().equals(start.getName())) {
+            if (stops.get(i).getLocation().equals(start)) {
                 for (int j = i; j < stops.size(); j++) {
-                    if (stops.get(j).getLocation().getName().equals(end.getName()))
+                    if (stops.get(j).getLocation().equals(end))
                         return true;
                 }
                 break;
@@ -100,7 +100,7 @@ public class Route {
     
     public void addStopInRoute(Location location) {
         for (Stop stop : stops) {
-            if (stop.getLocation().getName().equals(location.getName()))
+            if (stop.getLocation().equals(location))
                 return;
         }
         List<Location> tempLocations = new ArrayList<>();
@@ -110,8 +110,17 @@ public class Route {
         tempLocations.add(location);
         stops = map.getStops(startTime, stops.get(0).getLocation(), stops.get(stops.size()-1).getLocation(), tempLocations);
     }
+
+    public GregorianCalendar getStartTime() {
+        return startTime;
+    }
+
+    public GregorianCalendar getEndTime() {
+        return endTime;
+    }
     
     public boolean conflicts(Route route) {
-        return (route.startTime.after(this.endTime) || route.endTime.before(this.startTime));
+        return ((route.getStartTime().after(this.startTime) && route.getStartTime().before(this.endTime)) 
+                ||(route.getEndTime().before(this.endTime) && route.getEndTime().after(this.startTime)));
     }
 }

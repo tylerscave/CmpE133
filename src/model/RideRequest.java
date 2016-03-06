@@ -44,11 +44,21 @@ public class RideRequest {
             return false;
         if (!(member.getMemberType() instanceof Driver))
             return false;
+        
         Context context = Context.getInstance();
-        Map map = context.getMap();
+        Map map = context.getMap(); 
+        Route route = new Route(map, map.getStartTime(endTime, startLocation, endLocation), startLocation, endLocation);
+        for (Drive d : member.getDrives()) {
+            if (d.getRoute().conflicts(route))
+                return false;
+        }
+        for (Ride r : member.getRides()) {
+            if (r.getRoute().conflicts(route))
+                return false;
+        }
+        
         Driver driver = (Driver) member.getMemberType();
         Drive drive = new Drive(driver.getVehicle().getCapacity(), member);
-        Route route = new Route(map, map.getStartTime(endTime, startLocation, endLocation), startLocation, endLocation);
         drive.setRoute(route);
         
         member.getDrives().add(drive);
@@ -68,6 +78,15 @@ public class RideRequest {
         Route route = drive.getRoute().CreateSubroute(startLocation, endLocation);
         if (route == null)
             return false;
+        for (Drive d : member.getDrives()) {
+            if (d.getRoute().conflicts(route))
+                return false;
+        }
+        for (Ride r : member.getRides()) {
+            if (r.getRoute().conflicts(route))
+                return false;
+        }
+        
         Ride ride = new Ride(member);
         ride.setRoute(route);
         member.getRides().add(ride);

@@ -12,13 +12,21 @@ public class Location {
         this.name = name;
     }
 
-    public String getName() {
+    /*public String getName() {
         return name;
-    }
+    }*/
     // toString for ComboBoxes
     @Override
     public String toString() {
     	return this.name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Location))
+            return false;
+        Location location = (Location)o;
+        return location.toString().equals(this.name);
     }
     
 }
