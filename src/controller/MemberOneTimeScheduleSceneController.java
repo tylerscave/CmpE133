@@ -9,6 +9,7 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -40,9 +41,8 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
     private Member member;
     private boolean drive;
     private Location selectedLocation;
-    private GregorianCalendar selectedDate, arriveTime, departTime, day;
-    //private LocalDate date = LocalDate.now();
-    private LocalDate date;
+    private GregorianCalendar arriveTime, departTime, day;
+    private LocalDate date = LocalDate.now();
     private ObservableList<Location> locations = FXCollections.observableArrayList();
     private ObservableList<GregorianCalendar> times;
 	
@@ -50,6 +50,8 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
     private RadioButton rideRadio;
     @FXML
     private RadioButton driveRadio;
+    @FXML
+    private ToggleGroup group;
     @FXML
     private ComboBox<Location> locationCombo;
     @FXML
@@ -73,21 +75,16 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
         locationCombo.setItems(locations);
         
         //setup Arrival and Departure ComboBoxes
-        //times = timesMaker(selectedDate);
-        //times = timesMaker(date);
-        //arriveCombo.setItems(times);
-        //departCombo.setItems(times);
+        //they are set up for todays date until a new date is picked from datePicker
+        times = timesMaker(date);
+        arriveCombo.setItems(times);
+        departCombo.setItems(times);
 	}
 	
     @FXML
     private void handleRidePrefRadios(ActionEvent event) {
-    	final ToggleGroup group = new ToggleGroup();
-    	rideRadio = new RadioButton();
-    	driveRadio = new RadioButton();
-    	rideRadio.setToggleGroup(group);
-    	driveRadio.setToggleGroup(group);
-    	group.getSelectedToggle();
-    	if (driveRadio.isSelected()) {
+    	RadioButton radio = (RadioButton) event.getSource();
+    	if (radio == driveRadio) {
     		drive = true;
     	} else {
     		drive = false;
@@ -102,21 +99,17 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
     @FXML
     private void handleDatePicker(ActionEvent event) {
         date = datePicker.getValue();
-        times = timesMaker(date);
-        //selectedDate = new GregorianCalendar();
-        // GregorianCalendar Sunday = 1, LocalDate Monday = 1
-        //int weekDay = date.getDayOfWeek().getValue() + 1;
         
-        //selectedDate.set(GregorianCalendar.DAY_OF_WEEK, weekDay);
-        //selectedDate.set(GregorianCalendar.DAY_OF_MONTH, date.getDayOfMonth());
-        //selectedDate.set(GregorianCalendar.DAY_OF_MONTH, date.getMonthValue());
-        //selectedDate.set(GregorianCalendar.YEAR, date.getYear());
+        //update the arrive and depart boxes with correct date from datePicker
+		times.clear();
+        times = timesMaker(date);
+        arriveCombo.setItems(times);
+        departCombo.setItems(times);
     }
     
     @FXML
     private void handleArriveCombo(ActionEvent event) {
     	arriveTime = arriveCombo.getSelectionModel().getSelectedItem();
-    	System.out.println("date picked = " + arriveTime.get(GregorianCalendar.DAY_OF_MONTH));
     }
     
     @FXML
@@ -137,29 +130,59 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
         }
     }
     
+    //NEED TO ADD ERROR CHECKING TO MAKE SURE ALL FIELDS ARE FILLED IN
     @FXML
-    private void handleSubmitButton(ActionEvent event) {
-
+    private void handleSubmitButton(ActionEvent event) {    	
+    	int weekDay = arriveTime.get(GregorianCalendar.DAY_OF_WEEK);
+    	if (weekDay == 2) {
+    		memberSchedule.setMonArrive(arriveTime);
+    		memberSchedule.setMonDepart(departTime);
+    		memberSchedule.setMonDrive(drive);
+    	} else if (weekDay == 3) {
+    		memberSchedule.setTuesArrive(arriveTime);
+    		memberSchedule.setTuesDepart(departTime);
+    		memberSchedule.setTuesDrive(drive);
+    	} else if (weekDay == 4) {
+    		memberSchedule.setWedArrive(arriveTime);
+    		memberSchedule.setWedDepart(departTime);
+    		memberSchedule.setWedDrive(drive);
+    	} else if (weekDay == 5) {
+    		memberSchedule.setThursArrive(arriveTime);
+    		memberSchedule.setThursDepart(departTime);
+    		memberSchedule.setThursDrive(drive);
+    	} else if (weekDay == 6) {
+    		memberSchedule.setFriArrive(arriveTime);
+    		memberSchedule.setFriDepart(departTime);
+    		memberSchedule.setFriDrive(drive);
+    	} else {
+    		System.err.println("Carpool only available on weekdays!");
+    	}
+    	
+    	if (!drive) {
+    		memberSchedule.setPickupLocation(selectedLocation);
+    	}
     	handleCancelButton(event);
+    	
+    	//TEST OUTPUT - ERASE LATER
+    	memberSchedule.test();
+    	System.out.println("arrivalTime picked = " +  arriveTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+    					GregorianCalendar.LONG, Locale.getDefault()) + " " +
+    					(arriveTime.get(GregorianCalendar.MONTH)+1) + "/" + //GregorianCalendar Jan=0
+    					arriveTime.get(GregorianCalendar.DAY_OF_MONTH) + "/" +
+    					arriveTime.get(GregorianCalendar.YEAR) + " " +
+    					arriveTime.get(GregorianCalendar.HOUR) + 
+    					arriveTime.getDisplayName(GregorianCalendar.AM_PM, 
+    							GregorianCalendar.LONG, Locale.getDefault()));
     }
 	
     /**
      * timesMaker is a helper method to add GregorianCalendar objects (representing week days 
      * with specific times) to the comboboxes with appropriate Strings printed in the dropdown list
-     * @param weekDay the int for that day of the week, Sunday=1,Saturday=7
-     * @param day the gregorian calendar week day that you are adding times to
+     * @param date the LocalDate from datePicker to be converted to a GregorianCalendar object
      * @return list of times for the Comboboxes with reference to their weekday
      */
 	private ObservableList<GregorianCalendar> timesMaker(LocalDate date) {
-        day = new GregorianCalendar();
-        // GregorianCalendar Sunday = 1, LocalDate Monday = 1
-        int weekDay = date.getDayOfWeek().getValue() + 1;
-        
-        day.set(GregorianCalendar.DAY_OF_WEEK, weekDay);
-        day.set(GregorianCalendar.DAY_OF_MONTH, date.getDayOfMonth());
-        day.set(GregorianCalendar.DAY_OF_MONTH, date.getMonthValue());
-        day.set(GregorianCalendar.YEAR, date.getYear());
-		ObservableList<GregorianCalendar> times = FXCollections.observableArrayList();
+		times = FXCollections.observableArrayList();
 		// get times for 6AM to 11AM
 		for (int i = 6; i <= 11; i++) {
 			day = new GregorianCalendar() {
@@ -170,7 +193,7 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
 	            	
 	            }
 	        };
-			//day.set(GregorianCalendar.DAY_OF_WEEK, weekDay);
+	        day.set((GregorianCalendar.DAY_OF_YEAR), date.getDayOfYear());
 			day.set(GregorianCalendar.AM_PM, GregorianCalendar.AM);
 			day.set(GregorianCalendar.HOUR, i);
 			day.clear(GregorianCalendar.MINUTE);
@@ -193,7 +216,7 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
 	            	}
 	            }
 	        };
-			//day.set(GregorianCalendar.DAY_OF_WEEK, weekDay);
+	        day.set((GregorianCalendar.DAY_OF_YEAR), date.getDayOfYear());	        
 			day.set(GregorianCalendar.AM_PM, GregorianCalendar.PM);
 			day.set(GregorianCalendar.HOUR_OF_DAY, i);
 			day.clear(GregorianCalendar.MINUTE);
@@ -203,5 +226,4 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
 		}
 		return times;
 	}
-
 }
