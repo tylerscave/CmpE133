@@ -153,38 +153,51 @@ public class MemberSchedule {
 	
 	public void setFriDrive(boolean drive) {
 		this.friDrive = drive;
-		
-		
+	}
+	
+	//TEST METHOD TO SEE WHATS BEING SAVED --- DELETE LATER
+	public void test() {
 		//test - remove later
+		if(pickupLocation!=null)
 		System.out.println("pickup loc = " + pickupLocation);
 		
+		if(monArrive != null)
 		System.out.println("mon arrive = " + monArrive + " " +
 				monArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
+		if(monDepart != null)
 		System.out.println("mon depart = " + monDepart + " " +
 				monDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
+		if(tuesArrive != null)
 		System.out.println("tues arrive = " + tuesArrive + " " +
 				tuesArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
+		if(tuesDepart != null)
 		System.out.println("tues depart = " + tuesDepart + " " +
 				tuesDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
+		if(wedArrive != null)
 		System.out.println("wed arrive = " + wedArrive + " " +
 				wedArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
+		if(wedDepart != null)
 		System.out.println("wed depart = " + wedDepart + " " +
 				wedDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
+		if(thursArrive != null)
 		System.out.println("thurs arrive = " + thursArrive + " " +
 				thursArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
+		if(thursDepart != null)
 		System.out.println("thurs depart = " + thursDepart + " " +
 				thursDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
+		if(friArrive != null)
 		System.out.println("fri arrive = " + friArrive + " " +
 				friArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
+		if(friDepart != null)
 		System.out.println("fri depart = " + friDepart + " " +
 				friDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
 				GregorianCalendar.LONG, Locale.getDefault()));
@@ -193,7 +206,7 @@ public class MemberSchedule {
 		System.out.println("tuesDriveCheck = " + tuesDrive);
 		System.out.println("wedDriveCheck = " + wedDrive);
 		System.out.println("thursDriveCheck = " + thursDrive);
-		System.out.println("friDriveCheck = " + friDrive);		
+		System.out.println("friDriveCheck = " + friDrive);	
 	}
 
 }

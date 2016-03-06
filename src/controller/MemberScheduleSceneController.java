@@ -191,6 +191,7 @@ public class MemberScheduleSceneController implements Initializable{
         }
     }
     
+    //NEED TO ADD ERROR CHECKING TO MAKE SURE ALL FIELDS HAVE BEEN FILLED IN
     @FXML
     private void handleSubmitButton(ActionEvent event) {
     	// set pickup location

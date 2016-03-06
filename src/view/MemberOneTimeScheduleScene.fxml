@@ -68,7 +68,7 @@
                </toggleGroup>
             </RadioButton>
             <DatePicker fx:id="datePicker" onAction="#handleDatePicker" prefHeight="26.0" prefWidth="145.0" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="26.0" text="Cancel" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="26.0" text="Return to Menu" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
             <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmitButton" prefHeight="26.0" text="Submit and Return" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
             <Label text="Time:" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
             <GridPane GridPane.rowIndex="1">
@@ -80,7 +80,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <RadioButton fx:id="RideRadio" mnemonicParsing="false" onAction="#handleRidePrefRadios" text="Ride" toggleGroup="$group">
+                  <RadioButton fx:id="rideRadio" mnemonicParsing="false" onAction="#handleRidePrefRadios" text="Ride" toggleGroup="$group">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
