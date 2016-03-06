@@ -5,11 +5,15 @@ package model;
  * Solves CmpE133 Assignment 2
  * @author Tyler Jones,
 */
+
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 public class MemberSchedule {
 	//declare all variables for member schedule
-	private PickupLocation pickupLocation;
-	private String monArrive, tuesArrive, wedArrive, thursArrive, friArrive;
-	private String monDepart, tuesDepart, wedDepart, thursDepart, friDepart;
+	private Location pickupLocation;
+	private GregorianCalendar monArrive, tuesArrive, wedArrive, thursArrive, friArrive;
+	private GregorianCalendar monDepart, tuesDepart, wedDepart, thursDepart, friDepart;
 	private boolean monDrive = false; 
 	private boolean tuesDrive = false;
 	private boolean wedDrive = false; 
@@ -18,29 +22,28 @@ public class MemberSchedule {
 	
 	//using default constructor for now...
 	
-	public PickupLocation getPickupLocation() {
+	public Location getPickupLocation() {
 		return pickupLocation;
 	}
 	
-	public void setPickupLocation(PickupLocation pickupLocation) {
+	public void setPickupLocation(Location pickupLocation) {
 		this.pickupLocation = pickupLocation;
 	}
 //*********************************MONDAY*************************************
 	
-	public String getMonArrive() {
+	public GregorianCalendar getMonArrive() {
 		return monArrive;
 	}
 	
-	public void setMonArrive(String monArrive) {
+	public void setMonArrive(GregorianCalendar monArrive) {
 		this.monArrive = monArrive;
-		System.out.println("set mondar arrive success");
 	}
 	
-	public String getmonDepart() {
+	public GregorianCalendar getmonDepart() {
 		return monDepart;
 	}
 	
-	public void setMonDepart(String monDepart) {
+	public void setMonDepart(GregorianCalendar monDepart) {
 		this.monDepart = monDepart;
 	}
 	
@@ -50,24 +53,22 @@ public class MemberSchedule {
 	
 	public void setMonDrive(boolean drive) {
 		this.monDrive = drive;
-		//test - remove later
-		System.out.println("Monday drive radio is " + drive);
 	}
 //*********************************TUESDAY*************************************
 	
-	public String getTuesArrive() {
+	public GregorianCalendar getTuesArrive() {
 		return tuesArrive;
 	}
 	
-	public void setTuesArrive(String tuesArrive) {
+	public void setTuesArrive(GregorianCalendar tuesArrive) {
 		this.tuesArrive = tuesArrive;
 	}
 	
-	public String getTuesDepart() {
+	public GregorianCalendar getTuesDepart() {
 		return tuesDepart;
 	}
 	
-	public void setTuesDepart(String tuesDepart) {
+	public void setTuesDepart(GregorianCalendar tuesDepart) {
 		this.tuesDepart = tuesDepart;
 	}
 	
@@ -80,19 +81,19 @@ public class MemberSchedule {
 	}
 //*********************************WEDNESDAY***********************************
 	
-	public String getWedArrive() {
+	public GregorianCalendar getWedArrive() {
 		return wedArrive;
 	}
 	
-	public void setWedArrive(String wedArrive) {
+	public void setWedArrive(GregorianCalendar wedArrive) {
 		this.wedArrive = wedArrive;
 	}
 	
-	public String getWedDepart() {
+	public GregorianCalendar getWedDepart() {
 		return wedDepart;
 	}
 	
-	public void setWedDepart(String wedDepart) {
+	public void setWedDepart(GregorianCalendar wedDepart) {
 		this.wedDepart = wedDepart;
 	}
 	
@@ -105,19 +106,19 @@ public class MemberSchedule {
 	}
 //*********************************THURSDAY***********************************
 
-	public String getThursArrive() {
+	public GregorianCalendar getThursArrive() {
 		return thursArrive;
 	}
 	
-	public void setThursArrive(String thursArrive) {
+	public void setThursArrive(GregorianCalendar thursArrive) {
 		this.thursArrive = thursArrive;
 	}
 	
-	public String getThursDepart() {
+	public GregorianCalendar getThursDepart() {
 		return thursDepart;
 	}
 	
-	public void setThursDepart(String thursDepart) {
+	public void setThursDepart(GregorianCalendar thursDepart) {
 		this.thursDepart = thursDepart;
 	}
 	
@@ -130,19 +131,19 @@ public class MemberSchedule {
 	}
 //*********************************FRIDAY*************************************
 	
-	public String getFriArrive() {
+	public GregorianCalendar getFriArrive() {
 		return friArrive;
 	}
 	
-	public void setFriArrive(String friArrive) {
+	public void setFriArrive(GregorianCalendar friArrive) {
 		this.friArrive = friArrive;
 	}
 	
-	public String getFriDepart() {
+	public GregorianCalendar getFriDepart() {
 		return friDepart;
 	}
 	
-	public void setFriDepart(String friDepart) {
+	public void setFriDepart(GregorianCalendar friDepart) {
 		this.friDepart = friDepart;
 	}
 	
@@ -152,6 +153,60 @@ public class MemberSchedule {
 	
 	public void setFriDrive(boolean drive) {
 		this.friDrive = drive;
+	}
+	
+	//TEST METHOD TO SEE WHATS BEING SAVED --- DELETE LATER
+	public void test() {
+		//test - remove later
+		if(pickupLocation!=null)
+		System.out.println("pickup loc = " + pickupLocation);
+		
+		if(monArrive != null)
+		System.out.println("mon arrive = " + monArrive + " " +
+				monArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		if(monDepart != null)
+		System.out.println("mon depart = " + monDepart + " " +
+				monDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		if(tuesArrive != null)
+		System.out.println("tues arrive = " + tuesArrive + " " +
+				tuesArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		if(tuesDepart != null)
+		System.out.println("tues depart = " + tuesDepart + " " +
+				tuesDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		if(wedArrive != null)
+		System.out.println("wed arrive = " + wedArrive + " " +
+				wedArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		if(wedDepart != null)
+		System.out.println("wed depart = " + wedDepart + " " +
+				wedDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		if(thursArrive != null)
+		System.out.println("thurs arrive = " + thursArrive + " " +
+				thursArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		if(thursDepart != null)
+		System.out.println("thurs depart = " + thursDepart + " " +
+				thursDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		if(friArrive != null)
+		System.out.println("fri arrive = " + friArrive + " " +
+				friArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		if(friDepart != null)
+		System.out.println("fri depart = " + friDepart + " " +
+				friDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+				GregorianCalendar.LONG, Locale.getDefault()));
+		
+		System.out.println("monDriveCheck = " + monDrive);
+		System.out.println("tuesDriveCheck = " + tuesDrive);
+		System.out.println("wedDriveCheck = " + wedDrive);
+		System.out.println("thursDriveCheck = " + thursDrive);
+		System.out.println("friDriveCheck = " + friDrive);	
 	}
 
 }

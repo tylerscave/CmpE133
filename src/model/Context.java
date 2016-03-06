@@ -9,9 +9,11 @@ public class Context {
     private static Context instance = null;
     private Member member;
     private LoginHandler login;
+    private Map map;
     
     private Context() {
         // Exists only to defeat instantiation.
+        map = new GraphMap();
     }
     
     public static Context getInstance() {
@@ -40,6 +42,9 @@ public class Context {
             this.login = new LoginHandler();
         return login;
     }
-    
+
+    public Map getMap() {
+        return map;
+    }
     
 }

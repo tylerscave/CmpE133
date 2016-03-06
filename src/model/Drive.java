@@ -42,6 +42,7 @@ public class Drive {
     
     public void addRide(Ride ride) {
         this.rides.add(ride);
+        numSeats --;
     }
     
     public void removeRide(Ride ride) {
