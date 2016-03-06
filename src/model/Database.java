@@ -6,20 +6,20 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Hashtable;
 import java.util.Scanner;
 
 /**
 *
 * Follows Singleton design pattern. Used to hold user information.
+* Reads elements from database file 
 * @author Shubaan
 */
 
 
 public class Database {
-		private int rows;//number of members
-		private int columns;//number of fields
-		private static String[][] database = new String[50][10];
+		private static int rows;//number of members
+		private static int columns;//number of fields
+		public static String[][] database = new String[50][10];
 		
 		public void load() throws FileNotFoundException{
 			Scanner countElementScanner = new Scanner(new FileReader("Database"));
@@ -28,14 +28,13 @@ public class Database {
 			while(countElementScanner.hasNext()){
 				countElementScanner.next();
 				 numOfElements++;}
-			System.out.println(numOfElements);	
-			setColumns(8);
-			setRows(numOfElements/getColumns());
+			columns = 8;
+			rows =numOfElements/columns;
 			BufferedReader br = new BufferedReader(new FileReader("Database"));
 			try {
-				for (int i=0;i<getRows();i++){
+				for (int i=0;i<rows;i++){
 					String splitArray[]=br.readLine().split(",");
-					for (int j=0; j<getColumns();j++){
+					for (int j=0; j<columns;j++){
 
 						database[i][j]=splitArray[j].trim();
 					}
@@ -53,29 +52,29 @@ public class Database {
 			}
 		
 
-		public void save() throws IOException{
+		public static void save() throws IOException{
 		    File outFile = new File ("Database");
 		    FileWriter fWriter = new FileWriter (outFile);
 		    PrintWriter pWriter = new PrintWriter (fWriter);
-		    for (int i = 0; i<7;i++){
-				for (int j=0;j<8;j++){
+		    for (int i = 0; i<rows;i++){
+				for (int j=0;j<columns;j++){
 					pWriter.print(database[i][j]+", ");
 					}
 				pWriter.print("\n");
 				}
-			pWriter.print("saved ");
-
+			pWriter.print("saved ");//sanity check
 		    pWriter.close();
 		}
-		public void add(String email,String password, String lastname, String firstname, String address, String phone, MemberType memberType, String paymentMethod){
-			database[2][0]=email;
-			database[2][1]=password;
-			database[2][2]=lastname;
-			database[2][3]=firstname;
-			database[2][4]=address;
-			database[2][5]=phone;
-			database[2][6]="student";
-			database[2][7]=paymentMethod;
+		public static void add(String email,String password, String lastname, String firstname, String address, String phone, MemberType memberType, String paymentMethod){
+			database[rows][0]=email;
+			database[rows][1]=password;
+			database[rows][2]=lastname;
+			database[rows][3]=firstname;
+			database[rows][4]=address;
+			database[rows][5]=phone;
+			database[rows][6]="student";
+			database[rows][7]=paymentMethod;
+			rows++;
 			try {
 				save();
 			} catch (IOException e) {

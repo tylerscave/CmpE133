@@ -26,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Address;
 import model.Context;
+import model.Database;
 import model.Member;
 import model.MemberType;
 
@@ -121,7 +122,7 @@ public class MemberInfoSceneController implements Initializable {
     
     @FXML
     protected void handleSubmitReturnButton(ActionEvent event) throws Exception {
-    	MemberInfoErrorChecker.invalidBlank(firstName,lastName,idNum, email,phone, street, city, zipCode);
+    	//MemberInfoErrorChecker.invalidBlank(firstName,lastName,idNum, email,phone, street, city, zipCode);
     	maintainMemberInfo();
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
@@ -130,9 +131,10 @@ public class MemberInfoSceneController implements Initializable {
             primaryStage.setScene(scene);
             primaryStage.show();
             maintainMemberInfo();
-            /*model.Database.add(email.getText(),password.getText(),lastName.getText(),firstName.getText(),
+            
+            model.Database.add(email.getText(),password.getText(),lastName.getText(),firstName.getText(),
             		street.getText()+city.getText()+ "CA"+ zipCode.getText(), phone.getText(),
-            		getMemberType(),"payment method");*/
+            		getMemberType(),"payment method");
         } catch (IOException ex) {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }     
