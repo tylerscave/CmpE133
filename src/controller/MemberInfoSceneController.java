@@ -130,9 +130,9 @@ public class MemberInfoSceneController implements Initializable {
             primaryStage.setScene(scene);
             primaryStage.show();
             maintainMemberInfo();
-            model.Database.add(email.getText(),password.getText(),lastName.getText(),firstName.getText(),
+            /*model.Database.add(email.getText(),password.getText(),lastName.getText(),firstName.getText(),
             		street.getText()+city.getText()+ "CA"+ zipCode.getText(), phone.getText(),
-            		getMemberType(),"payment method");
+            		getMemberType(),"payment method");*/
         } catch (IOException ex) {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }     
