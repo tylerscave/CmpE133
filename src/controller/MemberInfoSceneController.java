@@ -26,7 +26,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Address;
 import model.Context;
-import model.Database;
 import model.Member;
 import model.MemberType;
 
@@ -133,7 +132,7 @@ public class MemberInfoSceneController implements Initializable {
             maintainMemberInfo();
             
             model.Database.add(email.getText(),password.getText(),lastName.getText(),firstName.getText(),
-            		street.getText()+city.getText()+ "CA"+ zipCode.getText(), phone.getText(),
+            		street.getText()+" "+city.getText()+ " CA "+ zipCode.getText(), phone.getText(),
             		getMemberType(),"payment method");
         } catch (IOException ex) {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);

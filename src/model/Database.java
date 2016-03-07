@@ -66,6 +66,23 @@ public class Database {
 		    pWriter.close();
 		}
 		public static void add(String email,String password, String lastname, String firstname, String address, String phone, MemberType memberType, String paymentMethod){
+			boolean found = false;
+			System.out.print("Add button pressed\n");
+			for(int i = 0; i<rows; i++){
+				if(database[i][0]==email){
+					database[i][0]=email;
+					database[i][1]=password;
+					database[i][2]=lastname;
+					database[i][3]=firstname;
+					database[i][4]=address;
+					database[i][5]=phone;
+					database[i][6]="student";
+					database[i][7]=paymentMethod;
+					
+					found=true;
+				}
+			}
+			if(!found){
 			database[rows][0]=email;
 			database[rows][1]=password;
 			database[rows][2]=lastname;
@@ -74,7 +91,7 @@ public class Database {
 			database[rows][5]=phone;
 			database[rows][6]="student";
 			database[rows][7]=paymentMethod;
-			rows++;
+			rows++;}
 			try {
 				save();
 			} catch (IOException e) {
