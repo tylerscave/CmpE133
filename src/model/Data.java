@@ -18,6 +18,7 @@ public class Data {
     
     private Data() {
         // Exists only to defeat instantiation.
+        generateLists();
     }
     
     public static Data getInstance() {
@@ -27,8 +28,8 @@ public class Data {
         return instance;	
     }
 
-    public void setMembers(List<Member> members) {
-        this.members = members;
+    public List<Member> getMembers() {
+        return members;
     }
     
     public void generateLists() {

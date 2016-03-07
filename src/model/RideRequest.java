@@ -11,10 +11,10 @@ import java.util.List;
 public class RideRequest {
     
     public enum TimeType {
-        NEAR,
-        BEFORE,
-        AFTER,
-        ANYTIME;
+        Near,
+        Before,
+        After,
+        AnyTime;
     }
     
     private Member member;
@@ -24,6 +24,7 @@ public class RideRequest {
     private Location endLocation;
     private TimeType startType;
     private TimeType endType;
+    private String name;
     
     public static final int NEAR_TIME = 10; 
 
@@ -36,21 +37,64 @@ public class RideRequest {
         this.endLocation = endLocation;
         this.startType = startType;
         this.endType = endType;
+        this.name = null;
         
         member.getRideRequests().add(this);
         Data.getInstance().getRideRequests().add(this);
     }
 
-    public boolean generateDrive() {
-        if (startLocation == null || startTime == null || startType == null
-                || endLocation == null || endTime == null || endType == null)
+    public Location getEndLocation() {
+        return endLocation;
+    }
+
+    public GregorianCalendar getEndTime() {
+        return endTime;
+    }
+
+    public TimeType getEndType() {
+        return endType;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public Location getStartLocation() {
+        return startLocation;
+    }
+
+    public GregorianCalendar getStartTime() {
+        return startTime;
+    }
+
+    public TimeType getStartType() {
+        return startType;
+    }
+
+    public boolean generateDriveByStartTime() {
+        if (!correctData())
             return false;
         if (!(member.getMemberType() instanceof Driver))
             return false;
-        
+        Context context = Context.getInstance();
+        Map map = context.getMap();
+        return generateDrive(startTime);
+    }
+    
+    public boolean generateDriveByEndTime() {
+        if (!correctData())
+            return false;
+        if (!(member.getMemberType() instanceof Driver))
+            return false;
+        Context context = Context.getInstance();
+        Map map = context.getMap();
+        return generateDrive(map.getStartTime(endTime, startLocation, endLocation));
+    }
+    
+    private boolean generateDrive(GregorianCalendar time) {
         Context context = Context.getInstance();
         Map map = context.getMap(); 
-        Route route = new Route(map, map.getStartTime(endTime, startLocation, endLocation), startLocation, endLocation);
+        Route route = new Route(map, time, startLocation, endLocation);
         for (Drive d : member.getDrives()) {
             if (d.getRoute().conflicts(route))
                 return false;
@@ -73,8 +117,7 @@ public class RideRequest {
     }
     
     public boolean generateRide(Drive drive) {
-        if (startLocation == null || startTime == null || startType == null
-                || endLocation == null || endTime == null || endType == null)
+        if (!correctData())
             return false;
         if (drive.getNumSeats() < 1)
             return false;
@@ -90,11 +133,10 @@ public class RideRequest {
                 return false;
         }
         
-        Ride ride = new Ride(member);
+        Ride ride = new Ride(member, drive);
         ride.setRoute(route);
-        member.getRides().add(ride);
+        
         drive.addRide(ride);
-
         member.getRides().add(ride);
         Data.getInstance().getRides().add(ride);
         member.getRideRequests().remove(this);
@@ -104,6 +146,8 @@ public class RideRequest {
     }
     
     public List<DriveChoice> getAvailableDriveChoices() {
+        if (!correctData())
+            return new ArrayList<>();
         Data data = Data.getInstance();
         List<DriveChoice> availableDrives = new ArrayList<>();
         for (Drive d : data.getDrives()) {
@@ -118,21 +162,21 @@ public class RideRequest {
         Route route = drive.getRoute();
         if (route.getEndTime().before(new GregorianCalendar()))
             return null;
-        if (route.getEndTime().before(endTime) && (endType == TimeType.AFTER))
+        if (route.getEndTime().before(endTime) && (endType == TimeType.After))
             return null;
-        if (route.getStartTime().after(startTime) && (startType == TimeType.BEFORE))
+        if (route.getStartTime().after(startTime) && (startType == TimeType.Before))
             return null;
         
         Route r = route.createSubroute(startLocation, endLocation);
         if (r == null)
             return null;
-        if (r.getEndTime().before(endTime) && (endType == TimeType.AFTER))
+        if (r.getEndTime().before(endTime) && (endType == TimeType.After))
             return null;
-        if (r.getStartTime().after(startTime) && (startType == TimeType.BEFORE))
+        if (r.getStartTime().after(startTime) && (startType == TimeType.Before))
             return null;
-        if (r.getEndTime().after(endTime) && (endType == TimeType.BEFORE))
+        if (r.getEndTime().after(endTime) && (endType == TimeType.Before))
             return null;
-        if (r.getStartTime().before(startTime) && (startType == TimeType.AFTER))
+        if (r.getStartTime().before(startTime) && (startType == TimeType.After))
             return null;
         GregorianCalendar stlow = new GregorianCalendar();
         GregorianCalendar sthigh = new GregorianCalendar();
@@ -146,10 +190,34 @@ public class RideRequest {
         etlow.add(GregorianCalendar.MINUTE, -NEAR_TIME);
         sthigh.add(GregorianCalendar.MINUTE, NEAR_TIME);
         ethigh.add(GregorianCalendar.MINUTE, NEAR_TIME);
-        if ((r.getEndTime().after(ethigh) || r.getEndTime().before(etlow)) && (endType == TimeType.NEAR))
+        if ((r.getEndTime().after(ethigh) || r.getEndTime().before(etlow)) && (endType == TimeType.Near))
             return null;
-        if ((r.getStartTime().after(sthigh) || r.getStartTime().before(stlow)) && (startType == TimeType.NEAR))
+        if ((r.getStartTime().after(sthigh) || r.getStartTime().before(stlow)) && (startType == TimeType.Near))
             return null;
         return r;
+    }
+    
+    public boolean addToRequests(String name) {
+        if (!correctData())
+            return false;
+        this.name = name;
+        member.getRideRequests().add(this);
+        Data.getInstance().getRideRequests().add(this);
+        return true;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    private boolean correctData() {
+        if (startLocation == null || startTime == null || startType == null
+                || endLocation == null || endTime == null || endType == null)
+            return false;
+        if (startTime.after(endTime) && startType != TimeType.AnyTime && endType != TimeType.AnyTime)
+            return false;
+        if (endTime.before(new GregorianCalendar()) && endType != TimeType.AnyTime)
+            return false;
+        return true;
     }
 }
