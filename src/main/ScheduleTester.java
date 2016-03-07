@@ -101,9 +101,9 @@ public class ScheduleTester {
     private static void setDrive() {
         Scanner in = new Scanner(System.in);
         Member member = selectMember();
-        System.out.println("Choose departure location");
+        System.out.println("Choose departure location rhgada");
         for (int i = 0; i < map.getLocations().size(); i++)
-            System.out.println(i + ": " + map.getLocations().toString());
+            System.out.println(i + ": " + map.getLocations().get(i));
         int startLocation = in.nextInt();
         System.out.println("Choose destination location");
         int endLocation = in.nextInt();
@@ -161,7 +161,7 @@ public class ScheduleTester {
         Scanner in = new Scanner(System.in);
         System.out.println("Choose departure location");
         for (int i = 0; i < map.getLocations().size(); i++)
-            System.out.println(i + ": " + map.getLocations().toString());
+            System.out.println(i + ": " + map.getLocations().get(i).toString());
         int startLocation = in.nextInt();
         System.out.println("Choose how to use a departure time");
         RideRequest.TimeType StartType = RideRequest.TimeType.AnyTime;

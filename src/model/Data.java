@@ -18,6 +18,7 @@ public class Data {
     
     private Data() {
         // Exists only to defeat instantiation.
+        newData();
         generateLists();
     }
     
@@ -55,4 +56,7 @@ public class Data {
         return drives;
     }
     
+    public void newData() {
+        members = new ArrayList<>();
+    }
 }
