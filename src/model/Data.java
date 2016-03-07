@@ -18,8 +18,6 @@ public class Data {
     
     private Data() {
         // Exists only to defeat instantiation.
-        newData();
-        generateLists();
     }
     
     public static Data getInstance() {
