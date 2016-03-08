@@ -289,7 +289,7 @@ public class ScheduleTester {
                 }
                 System.out.println();
             }
-            System.out.println("\t"+Integer.toString(d.getNumSeats()-d.numberOfRides()) + " seats available");
+            System.out.println("\t"+d.getNumSeats() + " seats available");
             System.out.println("\tPassengers:");
             if (d.numberOfRides() == 0)
                 System.out.println("\t\tNone");

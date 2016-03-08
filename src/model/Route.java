@@ -120,7 +120,7 @@ public class Route {
     }
     
     public boolean conflicts(Route route) {
-        return ((route.getStartTime().after(this.startTime) && route.getStartTime().before(this.endTime)) 
-                ||(route.getEndTime().before(this.endTime) && route.getEndTime().after(this.startTime)));
+        return ((!route.getStartTime().before(this.startTime) && route.getStartTime().before(this.endTime)) 
+                ||(!route.getEndTime().after(this.endTime) && route.getEndTime().after(this.startTime)));
     }
 }
