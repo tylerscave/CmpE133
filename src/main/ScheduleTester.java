@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ import model.Driver;
 import model.GraphMap;
 import model.Location;
 import model.Member;
+import model.Notification;
 import model.Passenger;
 import model.Ride;
 import model.RideRequest;
@@ -52,8 +54,9 @@ public class ScheduleTester {
             System.out.println("3: Request a Ride");
             System.out.println("4: View Schedule");
             System.out.println("5: View Map");
+            System.out.println("6: View Notifications");
             System.out.println("0: Exit");
-            int option = getOptionIntFromInput(6);
+            int option = getOptionIntFromInput(7);
             switch (option) {
                 case 0:
                     exit = true;
@@ -72,6 +75,9 @@ public class ScheduleTester {
                     break;
                 case 5:
                     viewMap();
+                    break;
+                case 6:
+                    viewNotifications();
                     break;
                 default:
                     break;
@@ -113,9 +119,9 @@ public class ScheduleTester {
         System.out.println("Set by:");
         System.out.println("0: Departure time");
         System.out.println("1: Destination time");
-        int index = getOptionIntFromInput(2);
+        int option = getOptionIntFromInput(2);
         boolean byStartTime;
-        if (index == 1) {
+        if (option == 1) {
             System.out.println("Enter destination time mm/dd/yyyy/xx:xx");
             byStartTime = false;
         }
@@ -337,6 +343,43 @@ public class ScheduleTester {
     private static void viewMap() {
         System.out.println(map);
         Scanner in = new Scanner(System.in);
+        System.out.println("Press Enter to continue...");
+        in.nextLine();
+    }
+    
+    private static void viewNotifications() {
+        Scanner in = new Scanner(System.in);
+        Member member = selectMember();
+        List<Notification> notifications = member.getNotifications();
+        List<Notification> newNotifications = new ArrayList<>();
+        List<Notification> oldNotifications = new ArrayList<>();
+        for (Notification n : notifications) {
+            if (n.isRead())
+                oldNotifications.add(n);
+            else
+                newNotifications.add(n);
+        }
+        System.out.println("Notifications:");
+        System.out.println("0: Return to menu");
+        System.out.println("1: View new notifications: (" +newNotifications.size()+ ")");
+        System.out.println("2: View old notifications: (" +oldNotifications.size()+ ")");
+        int option = getOptionIntFromInput(3);
+        if (option == 0) {
+            return;
+        }
+        else if (option == 1) {
+            notifications = newNotifications;
+        }
+        else if (option == 2) {
+            notifications = oldNotifications;
+        }
+        
+        for (int i = 0; i < notifications.size(); i++) {
+            notifications.get(i).setRead(true);
+            System.out.println("Notification "+Integer.toString(i+1)+": Created "+getTimeFromCalendar(notifications.get(i).getTime())+" "+getDateFromCalendar(notifications.get(i).getTime()));
+            System.out.println(notifications.get(i).getMessage());
+            System.out.println();
+        }
         System.out.println("Press Enter to continue...");
         in.nextLine();
     }

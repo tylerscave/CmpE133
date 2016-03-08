@@ -141,6 +141,7 @@ public class RideRequest {
         Data.getInstance().getRides().add(ride);
         member.getRideRequests().remove(this);
         Data.getInstance().getRideRequests().remove(this);
+        drive.getMember().getNotifications().add(new Notification("You have a new passenger!"));
         
         return true;
     }

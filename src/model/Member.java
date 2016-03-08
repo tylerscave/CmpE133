@@ -19,6 +19,7 @@ public abstract class Member {
         private List<Drive> drives;
         private List<Ride> rides;
         private List<RideRequest> rideRequests;
+        private List<Notification> notifications;
 
         public Member() {
                 this.setLoginInfo(new LoginInformation("", ""));
@@ -30,6 +31,8 @@ public abstract class Member {
                 this.drives = new ArrayList<>();
                 this.rides = new ArrayList<>();
                 this.rideRequests = new ArrayList<>();
+                this.notifications = new ArrayList<>();
+                notifications.add(new Notification("Welcome to SpartanPool!"));
         }
 	
 	public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
@@ -42,6 +45,8 @@ public abstract class Member {
                 this.drives = new ArrayList<>();
                 this.rides = new ArrayList<>();
                 this.rideRequests = new ArrayList<>();
+                this.notifications = new ArrayList<>();
+                this.notifications.add(new Notification("Welcome to SpartanPool!"));
 	}
 	
 	public Address getAddress() {
@@ -103,6 +108,9 @@ public abstract class Member {
     public List<RideRequest> getRideRequests() {
         return rideRequests;
     }
-		
-        
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+    
 }
