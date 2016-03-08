@@ -146,17 +146,17 @@ public class RideRequest {
     }
     
     public List<DriveChoice> getAvailableDriveChoices() {
-        System.out.println("Testing getAvailableDriveChoices():");
+        //System.out.println("Testing getAvailableDriveChoices():");
         if (!correctData())
             return new ArrayList<>();
-        System.out.println("correctData passed");
+        //System.out.println("correctData passed");
         Data data = Data.getInstance();
         List<DriveChoice> availableDrives = new ArrayList<>();
         for (Drive d : data.getDrives()) {
             Route route = getRouteFromRequest(d);
             if (route != null) {
                 availableDrives.add(new DriveChoice(d, route));
-                System.out.println("availableDrive passed");
+                //System.out.println("availableDrive passed");
             }
         }
         return availableDrives;
@@ -166,47 +166,47 @@ public class RideRequest {
         Route route = drive.getRoute();
         if (route.getEndTime().before(new GregorianCalendar()))
             return null;
-        System.out.println("(drive)notPastTime passed");
+        //System.out.println("(drive)notPastTime passed");
         if (route.getEndTime().before(endTime) && (endType == TimeType.After))
             return null;
-        System.out.println("(drive)notReversedTime passed");
+        //System.out.println("(drive)notReversedTime passed");
         if (route.getStartTime().after(startTime) && (startType == TimeType.Before))
             return null;
         
         Route r = route.createSubroute(startLocation, endLocation);
         if (r == null)
             return null;
-        System.out.println("(drive)createSubroute passed");
+        //System.out.println("(drive)createSubroute passed");
         if (r.getEndTime().before(endTime) && (endType == TimeType.After))
             return null;
-        System.out.println("(drive)Route.endTime<E.Time&&E.type=after passed");
+        //System.out.println("(drive)Route.endTime<E.Time&&E.type=after passed");
         if (r.getStartTime().after(startTime) && (startType == TimeType.Before))
             return null;
-        System.out.println("(drive)Route.startTime>S.Time&&S.type=before passed");
+        //System.out.println("(drive)Route.startTime>S.Time&&S.type=before passed");
         if (r.getEndTime().after(endTime) && (endType == TimeType.Before))
             return null;
-        System.out.println("(drive)Route.endTime>E.Time&&E.type=before passed");
+        //System.out.println("(drive)Route.endTime>E.Time&&E.type=before passed");
         if (r.getStartTime().before(startTime) && (startType == TimeType.After))
             return null;
-        System.out.println("(drive)Route.startTime<S.Time&&S.type=after passed");
+        //System.out.println("(drive)Route.startTime<S.Time&&S.type=after passed");
         GregorianCalendar stlow = new GregorianCalendar();
         GregorianCalendar sthigh = new GregorianCalendar();
         GregorianCalendar etlow = new GregorianCalendar();
         GregorianCalendar ethigh = new GregorianCalendar();
         stlow.setTime(startTime.getTime());
         sthigh.setTime(startTime.getTime());
-        etlow.setTime(startTime.getTime());
-        ethigh.setTime(startTime.getTime());
+        etlow.setTime(endTime.getTime());
+        ethigh.setTime(endTime.getTime());
         stlow.add(GregorianCalendar.MINUTE, -NEAR_TIME);
         etlow.add(GregorianCalendar.MINUTE, -NEAR_TIME);
         sthigh.add(GregorianCalendar.MINUTE, NEAR_TIME);
         ethigh.add(GregorianCalendar.MINUTE, NEAR_TIME);
         if ((r.getEndTime().after(ethigh) || r.getEndTime().before(etlow)) && (endType == TimeType.Near))
             return null;
-        System.out.println("(drive)(Route.endTime>E.Time+N||Route.endTime<E.Time-N)&&E.type=near passed");
+        //System.out.println("(drive)(Route.endTime>E.Time+N||Route.endTime<E.Time-N)&&E.type=near passed");
         if ((r.getStartTime().after(sthigh) || r.getStartTime().before(stlow)) && (startType == TimeType.Near))
             return null;
-        System.out.println("(drive)(Route.startTime>S.Time+N||Route.startTime<S.Time-N)&&S.type=near passed");
+        //System.out.println("(drive)(Route.startTime>S.Time+N||Route.startTime<S.Time-N)&&S.type=near passed");
         return r;
     }
     
@@ -227,13 +227,13 @@ public class RideRequest {
         if (startLocation == null || startTime == null || startType == null
                 || endLocation == null || endTime == null || endType == null)
             return false;
-        System.out.println("correctInfo passed");
+        //System.out.println("correctInfo passed");
         if (startTime.after(endTime) && startType != TimeType.AnyTime && endType != TimeType.AnyTime)
             return false;
-        System.out.println("notReversedTime passed");
+        //System.out.println("notReversedTime passed");
         if (endTime.before(new GregorianCalendar()) && endType != TimeType.AnyTime)
             return false;
-        System.out.println("notPastTime passed");
+        //System.out.println("notPastTime passed");
         return true;
     }
 }

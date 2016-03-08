@@ -39,9 +39,6 @@ public class ScheduleTester {
         data.generateLists();
         members = data.getMembers();
         map = (GraphMap)context.getMap();
-        /*System.out.println("Enter destination time mm/dd/yyyy/xx:xx");
-        GregorianCalendar time = getTimeFromInput();
-        System.out.println(getTimeFromCalendar(time)+" "+getDateFromCalendar(time));*/
         menu();
     }
     
@@ -269,6 +266,8 @@ public class ScheduleTester {
             else
                 System.out.println("Ride Scheduling failed");
         }
+        System.out.println("Press Enter to continue...");
+        in.nextLine();
     }
 
     private static void viewSchedule() {
@@ -359,7 +358,10 @@ public class ScheduleTester {
         String ampm[] = new String[2];
         ampm[0] = " AM";
         ampm[1] = " PM";
-        return gc.get(GregorianCalendar.HOUR)+":"+gc.get(GregorianCalendar.MINUTE)+ampm[gc.get(GregorianCalendar.AM_PM)];
+        String minute = Integer.toString(gc.get(GregorianCalendar.MINUTE));
+        if (minute.length() == 1)
+            minute = "0"+minute;
+        return gc.get(GregorianCalendar.HOUR)+":"+minute+ampm[gc.get(GregorianCalendar.AM_PM)];
     }
     
     private static int getOptionIntFromInput(int lessThan) {

@@ -1,9 +1,11 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 import model.graph.DijkstraAllPairsSP;
 import model.graph.DirectedEdge;
 import model.graph.EdgeWeightedDigraph;
@@ -68,7 +70,7 @@ public class GraphMap implements Map {
     public List<Stop> getStops(GregorianCalendar startTime, Location start, Location stop, List<Location> inBetweens) {
         List<Stop> stops = new ArrayList<>();
         stops.add(new Stop(startTime, start));
-        Iterable<DirectedEdge> edges = dijkstra.path(getIndexFromLocation(start), getIndexFromLocation(stop));
+        Stack<DirectedEdge> edges = (Stack<DirectedEdge>)dijkstra.path(getIndexFromLocation(start), getIndexFromLocation(stop));;
         List<Location> remainingLocations = new ArrayList<>();
         if (inBetweens == null)
             inBetweens = new ArrayList<>();
@@ -76,7 +78,8 @@ public class GraphMap implements Map {
             remainingLocations.add(location);
         }
         double timeCost = 0;
-        for (DirectedEdge edge : edges) {
+        while (!edges.empty()) {
+            DirectedEdge edge = edges.pop();
             timeCost += edge.weight();
             for (int i = 0; i < remainingLocations.size(); i++) {
                 if (getIndexFromLocation(remainingLocations.get(i)) == edge.to()) {
