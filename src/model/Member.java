@@ -20,6 +20,7 @@ public abstract class Member {
         private List<Ride> rides;
         private List<RideRequest> rideRequests;
         private List<Notification> notifications;
+        private MemberSchedule memberSchedule;
 
         public Member() {
                 this.setLoginInfo(new LoginInformation("", ""));
@@ -111,6 +112,10 @@ public abstract class Member {
 
     public List<Notification> getNotifications() {
         return notifications;
+    }
+
+    public MemberSchedule getMemberSchedule() {
+        return memberSchedule;
     }
     
 }
