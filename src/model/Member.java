@@ -9,7 +9,7 @@ import java.util.List;
  * Solves CmpE133 Assignment 2
  * @author Tyler Jones, Hyesung Ko,
 */
-public abstract class Member {
+public class Member {
 	private LoginInformation loginInfo;
 	private String lastName;
 	private String firstName;
@@ -19,7 +19,8 @@ public abstract class Member {
         private List<Drive> drives;
         private List<Ride> rides;
         private List<RideRequest> rideRequests;
-        private List<Notification> notifications;
+        private List<Notification> oldNotifications;
+        private List<Notification> newNotifications;
         private MemberSchedule memberSchedule;
 
         public Member() {
@@ -32,8 +33,9 @@ public abstract class Member {
                 this.drives = new ArrayList<>();
                 this.rides = new ArrayList<>();
                 this.rideRequests = new ArrayList<>();
-                this.notifications = new ArrayList<>();
-                notifications.add(new Notification("Welcome to SpartanPool!"));
+                this.oldNotifications = new ArrayList<>();
+                this.newNotifications = new ArrayList<>();
+                this.newNotifications.add(new Notification("Welcome to SpartanPool!"));
         }
 	
 	public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
@@ -46,8 +48,9 @@ public abstract class Member {
                 this.drives = new ArrayList<>();
                 this.rides = new ArrayList<>();
                 this.rideRequests = new ArrayList<>();
-                this.notifications = new ArrayList<>();
-                this.notifications.add(new Notification("Welcome to SpartanPool!"));
+                this.oldNotifications = new ArrayList<>();
+                this.newNotifications = new ArrayList<>();
+                this.newNotifications.add(new Notification("Welcome to SpartanPool!"));
 	}
 	
 	public Address getAddress() {
@@ -110,8 +113,32 @@ public abstract class Member {
         return rideRequests;
     }
 
-    public List<Notification> getNotifications() {
-        return notifications;
+    /**
+     * Returns a list of new notifications and adds them them to the old notifications
+     * 
+     * @return the list of new notifications
+     */
+    public List<Notification> readNewNotifications() {
+        List<Notification> tempNotifications = newNotifications;
+        oldNotifications.addAll(tempNotifications);
+        newNotifications = new ArrayList<>();
+        return tempNotifications;
+    }
+
+    public void addNewNotification(Notification notification) {
+        newNotifications.add(notification);
+    }
+    
+    public List<Notification> getOldNotifications() {
+        return oldNotifications;
+    }
+    
+    public int getNumberOfNewNotifications() {
+        return newNotifications.size();
+    }
+    
+    public int getNumberOfOldNotifications() {
+        return oldNotifications.size();
     }
 
     public MemberSchedule getMemberSchedule() {

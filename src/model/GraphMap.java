@@ -121,6 +121,7 @@ public class GraphMap implements Map {
         costMatrix[to][from] = cost;
     }
 
+    @Override
     public List<Location> getLocations() {
         return locations;
     }

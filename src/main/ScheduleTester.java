@@ -1,6 +1,5 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -9,8 +8,8 @@ import model.Data;
 import model.Drive;
 import model.DriveChoice;
 import model.Driver;
-import model.GraphMap;
 import model.Location;
+import model.Map;
 import model.Member;
 import model.Notification;
 import model.Passenger;
@@ -29,7 +28,8 @@ public class ScheduleTester {
     private static Context context;
     private static Data data;
     private static List<Member> members;
-    private static GraphMap map;
+    private static Map map;
+    private static List<Location> locations;
     
     /**
      * @param args the command line arguments
@@ -40,7 +40,8 @@ public class ScheduleTester {
         data.newData();
         data.generateLists();
         members = data.getMembers();
-        map = (GraphMap)context.getMap();
+        map = context.getMap();
+        locations = map.getLocations();
         menu();
     }
     
@@ -54,7 +55,7 @@ public class ScheduleTester {
             System.out.println("3: Request a Ride");
             System.out.println("4: View Schedule");
             System.out.println("5: View Map");
-            System.out.println("6: View Notifications");
+            System.out.println("6: Notifications");
             System.out.println("0: Exit");
             int option = getOptionIntFromInput(7);
             switch (option) {
@@ -77,7 +78,7 @@ public class ScheduleTester {
                     viewMap();
                     break;
                 case 6:
-                    viewNotifications();
+                    Notifications();
                     break;
                 default:
                     break;
@@ -111,11 +112,11 @@ public class ScheduleTester {
         Scanner in = new Scanner(System.in);
         Member member = selectMember();
         System.out.println("Choose departure location");
-        for (int i = 0; i < map.getLocations().size(); i++)
-            System.out.println(i + ": " + map.getLocations().get(i));
-        int startLocation = getOptionIntFromInput(map.getLocations().size());
+        for (int i = 0; i < locations.size(); i++)
+            System.out.println(i + ": " + locations.get(i));
+        int startLocation = getOptionIntFromInput(locations.size());
         System.out.println("Choose destination location");
-        int endLocation = getOptionIntFromInput(map.getLocations().size());
+        int endLocation = getOptionIntFromInput(locations.size());
         System.out.println("Set by:");
         System.out.println("0: Departure time");
         System.out.println("1: Destination time");
@@ -130,7 +131,7 @@ public class ScheduleTester {
             byStartTime = true;
         }
         GregorianCalendar time = getTimeFromInput();
-        RideRequest rideRequest = new RideRequest(member, time, time, map.getLocationFromIndex(startLocation), map.getLocationFromIndex(endLocation), RideRequest.TimeType.AnyTime, RideRequest.TimeType.AnyTime);
+        RideRequest rideRequest = new RideRequest(member, time, time, locations.get(startLocation), locations.get(endLocation), RideRequest.TimeType.AnyTime, RideRequest.TimeType.AnyTime);
         boolean success;
         if (byStartTime)
             success = rideRequest.generateDriveByStartTime();
@@ -183,9 +184,9 @@ public class ScheduleTester {
     
     private static void setRideRequest(Member member) {
         System.out.println("Choose departure location");
-        for (int i = 0; i < map.getLocations().size(); i++)
-            System.out.println(i + ": " + map.getLocations().get(i));
-        int startLocation = getOptionIntFromInput(map.getLocations().size());
+        for (int i = 0; i < locations.size(); i++)
+            System.out.println(i + ": " + locations.get(i));
+        int startLocation = getOptionIntFromInput(locations.size());
         System.out.println("Choose how to use a departure time");
         RideRequest.TimeType[] types = RideRequest.TimeType.values();
         for (int i = 0; i < types.length; i++) {
@@ -202,9 +203,9 @@ public class ScheduleTester {
             startTime = getTimeFromInput();
         }
         System.out.println("Choose destination location");
-        for (int i = 0; i < map.getLocations().size(); i++)
-            System.out.println(i + ": " + map.getLocations().get(i));
-        int endLocation = getOptionIntFromInput(map.getLocations().size());
+        for (int i = 0; i < locations.size(); i++)
+            System.out.println(i + ": " + locations.get(i));
+        int endLocation = getOptionIntFromInput(locations.size());
         System.out.println("Choose how to use a destination time");
         for (int i = 0; i < types.length; i++) {
             System.out.print(i+": "+types[i].name());
@@ -220,7 +221,7 @@ public class ScheduleTester {
             endTime = getTimeFromInput();
         }
         
-        RideRequest rideRequest = new RideRequest(member, startTime, endTime, map.getLocationFromIndex(startLocation), map.getLocationFromIndex(endLocation), StartType, EndType);
+        RideRequest rideRequest = new RideRequest(member, startTime, endTime, locations.get(startLocation), locations.get(endLocation), StartType, EndType);
         rideRequestResults(rideRequest);
     }
     
@@ -347,39 +348,45 @@ public class ScheduleTester {
         in.nextLine();
     }
     
-    private static void viewNotifications() {
+    private static void Notifications() {
         Scanner in = new Scanner(System.in);
         Member member = selectMember();
-        List<Notification> notifications = member.getNotifications();
-        List<Notification> newNotifications = new ArrayList<>();
-        List<Notification> oldNotifications = new ArrayList<>();
-        for (Notification n : notifications) {
-            if (n.isRead())
-                oldNotifications.add(n);
-            else
-                newNotifications.add(n);
-        }
+        List<Notification> notifications = null;
         System.out.println("Notifications:");
         System.out.println("0: Return to menu");
-        System.out.println("1: View new notifications: (" +newNotifications.size()+ ")");
-        System.out.println("2: View old notifications: (" +oldNotifications.size()+ ")");
-        int option = getOptionIntFromInput(3);
+        System.out.println("1: View new notifications: (" +member.getNumberOfNewNotifications()+ ")");
+        System.out.println("2: View old notifications: (" +member.getNumberOfOldNotifications()+ ")");
+        System.out.println("3: Send a notification");
+        int option = getOptionIntFromInput(4);
         if (option == 0) {
             return;
         }
         else if (option == 1) {
-            notifications = newNotifications;
+            notifications = member.readNewNotifications();  
         }
         else if (option == 2) {
-            notifications = oldNotifications;
+            notifications = member.getOldNotifications();
         }
-        
+        else if (option == 3) {
+            sendNotification(member);
+            return;
+        }
         for (int i = 0; i < notifications.size(); i++) {
-            notifications.get(i).setRead(true);
             System.out.println("Notification "+Integer.toString(i+1)+": Created "+getTimeFromCalendar(notifications.get(i).getTime())+" "+getDateFromCalendar(notifications.get(i).getTime()));
             System.out.println(notifications.get(i).getMessage());
             System.out.println();
         }
+        System.out.println("Press Enter to continue...");
+        in.nextLine();
+    }
+    
+    private static void sendNotification(Member member) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Select member to send to:");
+        Member ToMember = selectMember();
+        System.out.println("Enter notification message");
+        ToMember.addNewNotification(new Notification("From "+member.getFirstName()+" "+member.getLastName()+": "+in.nextLine()));
+        System.out.println("Notification Sent!");
         System.out.println("Press Enter to continue...");
         in.nextLine();
     }
@@ -451,4 +458,5 @@ public class ScheduleTester {
         }
         return time;
     } 
+
 }

@@ -88,11 +88,8 @@ public class MemberScheduleSceneController implements Initializable{
             member = context.getMember();
             
             //set up the location ComboBox
-            locations.add(new Location("location1"));
-            locations.add(new Location("location2"));
-            locations.add(new Location("location3"));
-            locations.add(new Location("location4"));
-            locations.add(new Location("location5"));
+            for (Location l : context.getMap().getLocations())
+                locations.add(l);
             location.setItems(locations);
             
             //setup Arrival and Departure ComboBoxes

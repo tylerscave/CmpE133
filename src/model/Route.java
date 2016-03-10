@@ -15,8 +15,8 @@ public class Route {
     private List<Stop> stops;
     private Map map;
 
-    public Route(Map map, GregorianCalendar startTime, GregorianCalendar endTime, Location start, Location end) {
-        this.map = map;
+    public Route(GregorianCalendar startTime, GregorianCalendar endTime, Location start, Location end) {
+        this.map = Context.getInstance().getMap();
         this.startTime = startTime;
         this.endTime = endTime;
         this.stops = new ArrayList<>();
@@ -24,8 +24,8 @@ public class Route {
         this.stops.add(new Stop(endTime, end));
     }
     
-    public Route(Map map, GregorianCalendar startTime, Location start, Location end) {
-        this.map = map;
+    public Route(GregorianCalendar startTime, Location start, Location end) {
+        this.map = Context.getInstance().getMap();
         this.startTime = startTime;
         stops = map.getStops(startTime, start, end, null);
         endTime = stops.get(stops.size()-1).getTime();
@@ -46,7 +46,7 @@ public class Route {
         }
         if (leave == null || arrive == null)
             return null;
-        return new Route(map, leave, arrive, start, end);
+        return new Route(leave, arrive, start, end);
     }
     
     private GregorianCalendar TimeOfStop(List<Stop> stops, Location location) {

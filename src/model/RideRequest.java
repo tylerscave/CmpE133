@@ -94,7 +94,7 @@ public class RideRequest {
     private boolean generateDrive(GregorianCalendar time) {
         Context context = Context.getInstance();
         Map map = context.getMap(); 
-        Route route = new Route(map, time, startLocation, endLocation);
+        Route route = new Route(time, startLocation, endLocation);
         for (Drive d : member.getDrives()) {
             if (d.getRoute().conflicts(route))
                 return false;
@@ -141,7 +141,7 @@ public class RideRequest {
         Data.getInstance().getRides().add(ride);
         member.getRideRequests().remove(this);
         Data.getInstance().getRideRequests().remove(this);
-        drive.getMember().getNotifications().add(new Notification("You have a new passenger!"));
+        drive.getMember().addNewNotification(new Notification("You have a new passenger!"));
         
         return true;
     }
