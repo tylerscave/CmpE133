@@ -32,9 +32,9 @@ import model.Location;
 
 public class MemberScheduleSceneController implements Initializable{
 	
-    private MemberSchedule memberSchedule = new MemberSchedule();
     private Context context;
     private Member member;
+    private MemberSchedule memberSchedule;
     private Location selectedLocation;
     private GregorianCalendar monTime, monArriveTime, monDepartTime;
     private GregorianCalendar tuesTime, tuesArriveTime, tuesDepartTime;
@@ -86,6 +86,7 @@ public class MemberScheduleSceneController implements Initializable{
 	public void initialize(URL url, ResourceBundle rb) {
             context = Context.getInstance();
             member = context.getMember();
+            memberSchedule = member.getMemberSchedule();
             
             //set up the location ComboBox
             for (Location l : context.getMap().getLocations())
