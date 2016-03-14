@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class Route {
     private GregorianCalendar endTime;
     private List<Stop> stops;
     private LocationMap map;
+    private List<Stop> realStops;
 
     public Route(GregorianCalendar startTime, GregorianCalendar endTime, Location start, Location end) {
         this.map = Context.getInstance().getMap();
@@ -22,6 +24,7 @@ public class Route {
         this.stops = new ArrayList<>();
         this.stops.add(new Stop(startTime, start));
         this.stops.add(new Stop(endTime, end));
+        this.realStops = new ArrayList<>();
     }
     
     public Route(GregorianCalendar startTime, Location start, Location end) {
@@ -122,5 +125,37 @@ public class Route {
     public boolean conflicts(Route route) {
         return ((!route.getStartTime().before(this.startTime) && route.getStartTime().before(this.endTime)) 
                 ||(!route.getEndTime().after(this.endTime) && route.getEndTime().after(this.startTime)));
+    }
+    
+    /**
+     * Returns the last location that was updated on the route before atTime.
+     * If there is no updated route, returns the last location on the scheduled route before atTime.
+     * If the atTime is before the route starts, returns null
+     * @param atTime the time of interest
+     * @return the last location on the route before atTime
+     */
+    public Location getLocationAtTime(GregorianCalendar atTime) {
+        Location location = null;
+        List<Stop> searchStops;
+        if (realStops.size() > 0)
+            searchStops = realStops;
+        else;
+            searchStops = stops;
+        for (Stop stop : searchStops) {
+                if (stop.getTime().after(atTime)) 
+                    break;
+                location = stop.getLocation();
+            }
+        return location;
+    }
+    
+    /**
+     * Adds a time and location to the real route traveled.
+     * @param time time at location
+     * @param location location at time
+     */
+    public void setRealRoute(GregorianCalendar time, Location location) {
+        realStops.add(new Stop(time, location));
+        Collections.sort(realStops);
     }
 }

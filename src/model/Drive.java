@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -83,4 +84,21 @@ public class Drive implements Schedulable{
         return memberName;
     }
     
+    /**
+     * Returns the last location that was updated on the route before the current time.
+     * If there is no updated route, returns the last location on the scheduled route before the current time.
+     * If the current time is before the route starts, returns null
+     * @return the last location before the current time
+     */
+    public Location getCurrentLocation() {
+        return route.getLocationAtTime(new GregorianCalendar());
+    }
+    
+    /**
+     * Updates the real route being traveled with the current time and location.
+     * @param location the current location at the time of the update
+     */
+    public void updateStatus(Location location) {
+        route.setRealRoute(new GregorianCalendar(), location);
+    }
 }
