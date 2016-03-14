@@ -4,22 +4,25 @@ package model;
  *
  * @author David
  */
-public class Ride {
-    private Member member;
+public class Ride implements Schedulable{
+    private int memberId;
     private Route route;
-    private Drive drive;
+    private int driveId;
+    private int idNumber;
+    private String memberName;
     
     public Ride(Member member, Drive drive) {
-        this.member = member;
-        this.drive = drive;
+        this.memberId = member.getIdNumber();
+        this.driveId = drive.getIdNumber();
+        this.memberName = member.getFirstName()+" "+member.getLastName();
     }
 
-    public Member getMember() {
-        return member;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public Drive getDrive() {
-        return drive;
+    public int getDriveId() {
+        return driveId;
     }
 
     public Route getRoute() {
@@ -32,5 +35,20 @@ public class Ride {
 
     public void remove() {
         //TODO
+    }
+
+    @Override
+    public void setIdNumber(int idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    @Override
+    public int getIdNumber() {
+        return idNumber;
+    }
+
+    @Override
+    public String getMemberName() {
+        return memberName;
     }
 }

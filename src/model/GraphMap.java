@@ -14,7 +14,7 @@ import model.graph.EdgeWeightedDigraph;
  *
  * @author David
  */
-public class GraphMap implements Map {
+public class GraphMap implements LocationMap {
     
     private List<Location> locations;
     private int[][] costMatrix;

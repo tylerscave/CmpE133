@@ -13,7 +13,7 @@ public class Route {
     private GregorianCalendar startTime;
     private GregorianCalendar endTime;
     private List<Stop> stops;
-    private Map map;
+    private LocationMap map;
 
     public Route(GregorianCalendar startTime, GregorianCalendar endTime, Location start, Location end) {
         this.map = Context.getInstance().getMap();

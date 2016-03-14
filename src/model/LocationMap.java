@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author David
  */
-public interface Map {
+public interface LocationMap {
     
     public List<Stop> getStops(GregorianCalendar startTime, Location start, Location stop, List<Location> inBetweens);
     

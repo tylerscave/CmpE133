@@ -4,19 +4,18 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 import model.Context;
-import model.Data;
+import model.DataHandler;
 import model.Drive;
 import model.DriveChoice;
 import model.Driver;
 import model.Location;
-import model.Map;
+import model.LocationMap;
 import model.Member;
 import model.Notification;
 import model.Passenger;
 import model.Ride;
 import model.RideRequest;
 import model.Route;
-import model.Student;
 import model.Vehicle;
 
 /**
@@ -26,9 +25,8 @@ import model.Vehicle;
 public class ScheduleTester {
 
     private static Context context;
-    private static Data data;
-    private static List<Member> members;
-    private static Map map;
+    private static DataHandler data;
+    private static LocationMap map;
     private static List<Location> locations;
     
     /**
@@ -36,10 +34,7 @@ public class ScheduleTester {
      */
     public static void main(String[] args) {
         context = Context.getInstance();
-        data = Data.getInstance();
-        data.newData();
-        data.generateLists();
-        members = data.getMembers();
+        data = context.getDataHandler();
         map = context.getMap();
         locations = map.getLocations();
         menu();
@@ -89,20 +84,20 @@ public class ScheduleTester {
 
     private static void createAccount() {
         Scanner in = new Scanner(System.in);
+        Member member = new Member();
         System.out.println("Enter first name");     
-        String firstName = in.nextLine();
+        member.setFirstName(in.nextLine());
         System.out.println("Enter last name");
-        String lastName = in.nextLine();
+        member.setLastName(in.nextLine());
         System.out.println("Driver:");
         System.out.println("0: Yes");
         System.out.println("1: No:");
         int option = getOptionIntFromInput(2);
-        if (option == 0) {
-            members.add(new Student(null, lastName, firstName, null, lastName, new Driver("", new Vehicle("", 4), null), null));
-        }
-        else {
-            members.add(new Student(null, lastName, firstName, null, lastName, new Passenger(null, null), null));
-        }
+        if (option == 0) 
+            member.setMemberType(new Driver("", new Vehicle("", 4), null));
+        else
+            member.setMemberType(new Passenger(null, null));
+        data.addMember(member);
         System.out.println("New Account created!");
         System.out.println("Press Enter to continue...");
         in.nextLine();
@@ -111,12 +106,13 @@ public class ScheduleTester {
     private static void setDrive() {
         Scanner in = new Scanner(System.in);
         Member member = selectMember();
+        member.addObserver(data);
         System.out.println("Choose departure location");
         for (int i = 0; i < locations.size(); i++)
             System.out.println(i + ": " + locations.get(i));
-        int startLocation = getOptionIntFromInput(locations.size());
+        Location startLocation = locations.get(getOptionIntFromInput(locations.size()));
         System.out.println("Choose destination location");
-        int endLocation = getOptionIntFromInput(locations.size());
+        Location endLocation = locations.get(getOptionIntFromInput(locations.size()));
         System.out.println("Set by:");
         System.out.println("0: Departure time");
         System.out.println("1: Destination time");
@@ -131,7 +127,7 @@ public class ScheduleTester {
             byStartTime = true;
         }
         GregorianCalendar time = getTimeFromInput();
-        RideRequest rideRequest = new RideRequest(member, time, time, locations.get(startLocation), locations.get(endLocation), RideRequest.TimeType.AnyTime, RideRequest.TimeType.AnyTime);
+        RideRequest rideRequest = new RideRequest(member, time, time, startLocation, endLocation, RideRequest.TimeType.AnyTime, RideRequest.TimeType.AnyTime);
         boolean success;
         if (byStartTime)
             success = rideRequest.generateDriveByStartTime();
@@ -153,11 +149,11 @@ public class ScheduleTester {
             System.out.println(Integer.toString(drive.getNumSeats()-drive.numberOfRides()) + " seats available");
             System.out.println("Passengers:");
             if (drive.numberOfRides() == 0)
-                System.out.println("\tNone");
+                System.out.println("  None");
             for (int i = 0; i < drive.numberOfRides(); i++) {
-                Ride ride = drive.getRide(i);
+                Ride ride = (Ride) data.getSchedulable(drive.getRideId(i));
                 Route rideRoute = ride.getRoute();
-                System.out.print("\t"+ride.getMember().getFirstName() + ride.getMember().getLastName() + ": ");
+                System.out.print("  "+ride.getMemberName() + ": ");
                 System.out.println(rideRoute.getStops().get(0)+" at "+getTimeFromCalendar(rideRoute.getStartTime())+" to "+rideRoute.getStops().get(stops.size()-1)+" at "+getTimeFromCalendar(rideRoute.getEndTime()));
             }
         }
@@ -165,10 +161,12 @@ public class ScheduleTester {
             System.out.println("Drive Scheduling failed");
         System.out.println("Press Enter to continue...");
         in.nextLine();
+        member.deleteObservers();
     }
 
     private static void viewRideRequest() {        
         Member member = selectMember();
+        member.addObserver(data);
         System.out.println("Request a Ride:");
         System.out.println("0: New Ride Request");
         List<RideRequest> rideRequests = member.getRideRequests();
@@ -179,7 +177,7 @@ public class ScheduleTester {
         if (option == 0)
             setRideRequest(member);
         else
-            rideRequestResults(rideRequests.get(option-1));
+            rideRequestResults(rideRequests.get(option-1), member);
     }
     
     private static void setRideRequest(Member member) {
@@ -222,10 +220,10 @@ public class ScheduleTester {
         }
         
         RideRequest rideRequest = new RideRequest(member, startTime, endTime, locations.get(startLocation), locations.get(endLocation), StartType, EndType);
-        rideRequestResults(rideRequest);
+        rideRequestResults(rideRequest, member);
     }
     
-    private static void rideRequestResults(RideRequest rideRequest) {
+    private static void rideRequestResults(RideRequest rideRequest, Member member) {
         String name = rideRequest.getName();
         if (name == null)
             name = "New Ride Request";
@@ -247,8 +245,7 @@ public class ScheduleTester {
         for (int i = 0; i < driveChoices.size(); i++) {
             Drive drive = driveChoices.get(i).getDrive();
             Route route = driveChoices.get(i).getRoute();
-            System.out.println(Integer.toString(i+1)+": "+drive.getMember().getFirstName()+" "+drive.getMember().getLastName()+
-                    ". "+drive.getNumSeats()+" seats available. "+getTimeFromCalendar(route.getStartTime())+" to "+getTimeFromCalendar(route.getEndTime()));
+            System.out.println(Integer.toString(i+1)+": "+drive.getMemberName()+". "+drive.getNumSeats()+" seats available. "+getTimeFromCalendar(route.getStartTime())+" to "+getTimeFromCalendar(route.getEndTime()));
         }
         int index = getOptionIntFromInput(driveChoices.size()+1);
         if (index == 0) {
@@ -259,15 +256,15 @@ public class ScheduleTester {
             rideRequest.addToRequests(name);
         }
         else {
-            boolean success = rideRequest.generateRide(driveChoices.get(index-1).getDrive());
+            boolean success = rideRequest.generateRideFromRequest(driveChoices.get(index-1).getDrive());
             if (success) {
                 System.out.println("New Ride Scheduled!");
                 Ride ride = rideRequest.getMember().getRides().get(rideRequest.getMember().getRides().size()-1);
                 Route route = ride.getRoute();
                 List<Location> stops = route.getStops();
                 System.out.println(stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime()) +" on "+getDateFromCalendar(route.getEndTime()));
-                Drive drive = ride.getDrive();
-                System.out.println("Passenger in "+drive.getMember().getFirstName()+" "+drive.getMember().getLastName()+"'s vehicle");
+                Drive drive = (Drive) data.getSchedulable(ride.getDriveId());
+                System.out.println("Passenger in "+drive.getMemberName()+"'s vehicle");
 
             }
             else
@@ -275,6 +272,7 @@ public class ScheduleTester {
         }
         System.out.println("Press Enter to continue...");
         in.nextLine();
+        member.deleteObservers();
     }
 
     private static void viewSchedule() {
@@ -288,22 +286,22 @@ public class ScheduleTester {
             System.out.println("Drive details:");
             Route route = d.getRoute();
             List<Location> stops = route.getStops();
-            System.out.println("\t"+stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime())+" on "+getDateFromCalendar(route.getEndTime()));
+            System.out.println("  "+stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime())+" on "+getDateFromCalendar(route.getEndTime()));
             if (stops.size() > 2) {
-                System.out.print("\tStops at: ");
+                System.out.print("  Stops at: ");
                 for (int j = 1; j < stops.size()-1; j++) {
                     System.out.print(stops.get(j) + ", ");
                 }
                 System.out.println();
             }
-            System.out.println("\t"+d.getNumSeats() + " seats available");
-            System.out.println("\tPassengers:");
+            System.out.println("  "+d.getNumSeats() + " seats available");
+            System.out.println("  Passengers:");
             if (d.numberOfRides() == 0)
-                System.out.println("\t\tNone");
+                System.out.println("    None");
             for (int j = 0; j < d.numberOfRides(); j++) {
-                Ride ride = d.getRide(j);
+                Ride ride = (Ride) data.getSchedulable(d.getRideId(j));
                 Route rideRoute = ride.getRoute();
-                System.out.print("\t\t"+ride.getMember().getFirstName() + ride.getMember().getLastName() + ": ");
+                System.out.print("    "+ride.getMemberName() + ": ");
                 System.out.println(rideRoute.getStops().get(0)+" at "+getTimeFromCalendar(rideRoute.getStartTime())+" to "+rideRoute.getStops().get(stops.size()-1)+" at "+getTimeFromCalendar(rideRoute.getEndTime()));
             }
         }
@@ -316,9 +314,9 @@ public class ScheduleTester {
             System.out.println("Ride details:");
             Route route = r.getRoute();
             List<Location> stops = route.getStops();
-            System.out.println("\t"+stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime()) +" on "+getDateFromCalendar(route.getEndTime()));
-            Drive drive = r.getDrive();
-            System.out.println("\tPassenger in "+drive.getMember().getFirstName()+" "+drive.getMember().getLastName()+"'s vehicle");
+            System.out.println("  "+stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime()) +" on "+getDateFromCalendar(route.getEndTime()));
+            Drive drive = (Drive) data.getSchedulable(r.getDriveId());
+            System.out.println("  Passenger in "+drive.getMemberName()+"'s vehicle");
         }
         System.out.println();
         
@@ -328,13 +326,13 @@ public class ScheduleTester {
         for (RideRequest rr : member.getRideRequests()) {
             System.out.println("Ride request details:");
             if (rr.getStartType() == RideRequest.TimeType.AnyTime)
-                System.out.println("\tDepart from "+rr.getStartLocation()+" at AnyTime");
+                System.out.println("  Depart from "+rr.getStartLocation()+" at AnyTime");
             else
-                System.out.println("\tDepart from "+rr.getStartLocation()+" "+rr.getStartType().name()+" "+getTimeFromCalendar(rr.getStartTime())+" "+getDateFromCalendar(rr.getStartTime()));
+                System.out.println("  Depart from "+rr.getStartLocation()+" "+rr.getStartType().name()+" "+getTimeFromCalendar(rr.getStartTime())+" "+getDateFromCalendar(rr.getStartTime()));
             if (rr.getEndType() == RideRequest.TimeType.AnyTime)
-                System.out.println("\tArrive at "+rr.getEndLocation()+" at AnyTime");
+                System.out.println("  Arrive at "+rr.getEndLocation()+" at AnyTime");
             else
-                System.out.println("\tArrive at "+rr.getEndLocation()+" "+rr.getEndType().name()+" "+getTimeFromCalendar(rr.getEndTime())+" "+getDateFromCalendar(rr.getEndTime()));
+                System.out.println("  Arrive at "+rr.getEndLocation()+" "+rr.getEndType().name()+" "+getTimeFromCalendar(rr.getEndTime())+" "+getDateFromCalendar(rr.getEndTime()));
         }
         System.out.println();
         System.out.println("Press Enter to continue...");
@@ -362,6 +360,7 @@ public class ScheduleTester {
             return;
         }
         else if (option == 1) {
+            member.addObserver(data);
             notifications = member.readNewNotifications();  
         }
         else if (option == 2) {
@@ -378,6 +377,7 @@ public class ScheduleTester {
         }
         System.out.println("Press Enter to continue...");
         in.nextLine();
+        member.deleteObservers();
     }
     
     private static void sendNotification(Member member) {
@@ -385,14 +385,17 @@ public class ScheduleTester {
         System.out.println("Select member to send to:");
         Member ToMember = selectMember();
         System.out.println("Enter notification message");
-        ToMember.addNewNotification(new Notification("From "+member.getFirstName()+" "+member.getLastName()+": "+in.nextLine()));
+        String message = in.nextLine();
+        data.notify(ToMember.getIdNumber(), new Notification("From "+member.getFirstName()+" "+member.getLastName()+": "+message));
         System.out.println("Notification Sent!");
         System.out.println("Press Enter to continue...");
         in.nextLine();
+        member.deleteObservers();
     }
     
     private static Member selectMember() {
         System.out.println("Select Member");
+        List<Member> members = data.getMembers();
         for (int i = 0; i < members.size(); i++) {
             System.out.println(i + ": " + members.get(i).getFirstName() + " " + members.get(i).getLastName());
         }

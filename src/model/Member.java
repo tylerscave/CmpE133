@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -9,7 +11,7 @@ import java.util.List;
  * Solves CmpE133 Assignment 2
  * @author Tyler Jones, Hyesung Ko,
 */
-public class Member {
+public class Member extends Observable {
 	private LoginInformation loginInfo;
 	private String lastName;
 	private String firstName;
@@ -22,9 +24,10 @@ public class Member {
         private List<Notification> oldNotifications;
         private List<Notification> newNotifications;
         private MemberSchedule memberSchedule;
+        private int idNumber;
 
         public Member() {
-                this.setLoginInfo(new LoginInformation("", ""));
+                this.loginInfo = new LoginInformation("", "");
 		this.lastName = "";
 		this.firstName = "";
 		this.address = new Address("", "", "", "", "");
@@ -39,7 +42,7 @@ public class Member {
         }
 	
 	public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type){
-		this.setLoginInfo(loginInfo);
+		this.loginInfo = loginInfo;
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.address = address;
@@ -122,6 +125,8 @@ public class Member {
         List<Notification> tempNotifications = newNotifications;
         oldNotifications.addAll(tempNotifications);
         newNotifications = new ArrayList<>();
+        setChanged();
+        notifyObservers();
         return tempNotifications;
     }
 
@@ -144,5 +149,17 @@ public class Member {
     public MemberSchedule getMemberSchedule() {
         return memberSchedule;
     }
+
+    public int getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(int idNumber) {
+        this.idNumber = idNumber;
+    }
     
+    @Override
+    public void setChanged() {
+        super.setChanged();
+    }
 }

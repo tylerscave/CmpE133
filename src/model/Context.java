@@ -9,11 +9,13 @@ public class Context {
     private static Context instance = null;
     private Member member;
     private LoginHandler login;
-    private Map map;
+    private LocationMap map;
+    private DataHandler dataHandler;
     
     private Context() {
         // Exists only to defeat instantiation.
         map = new GraphMap();
+        dataHandler = new NewDataHandler();
     }
     
     public static Context getInstance() {
@@ -43,8 +45,12 @@ public class Context {
         return login;
     }
 
-    public Map getMap() {
+    public LocationMap getMap() {
         return map;
+    }
+
+    public DataHandler getDataHandler() {
+        return dataHandler;
     }
     
 }
