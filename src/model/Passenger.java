@@ -2,9 +2,9 @@ package model;
 
 public class Passenger extends MemberType {
 	private Address location;
-	private PaymentMethod payMethod;
+	private Reward payMethod;
 
-    public Passenger(Address location, PaymentMethod payMethod) {
+    public Passenger(Address location, Reward payMethod) {
         this.location = location;
         this.payMethod = payMethod;
     }

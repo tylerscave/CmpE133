@@ -158,4 +158,19 @@ public class Route {
         realStops.add(new Stop(time, location));
         Collections.sort(realStops);
     }
+    
+    /**
+     * Returns the total time traveled in minutes.
+     * By default, this is the difference between the first and last time setRealRoute was called.
+     * If it wasn't called at least twice, returns the time of the scheduled route.
+     * Returns 0 if no route.
+     * @return the total time traveled in minutes
+     */
+    public int getTravelTime() {
+        if (realStops.size() > 1)
+            return (int) ((realStops.get(realStops.size()-1).getTime().getTime().getTime()-realStops.get(0).getTime().getTime().getTime())/(1000*60));
+        else if (stops.size() > 1)
+            return (int) ((endTime.getTime().getTime()-startTime.getTime().getTime())/(1000*60));
+        return 0;
+    }
 }

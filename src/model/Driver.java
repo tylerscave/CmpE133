@@ -4,6 +4,7 @@ public class Driver extends MemberType {
 	private String DriverLicenseNumber;
 	private Vehicle vehicle;
 	private Address departureLocation;
+        private double hourlyRate;
 
     public Driver() {
     }
@@ -12,6 +13,7 @@ public class Driver extends MemberType {
         this.DriverLicenseNumber = DriverLicenseNumber;
         this.vehicle = vehicle;
         this.departureLocation = departureLocation;
+        this.hourlyRate = 0;
     }
 
     public Vehicle getVehicle() {
@@ -20,6 +22,14 @@ public class Driver extends MemberType {
 
     public String getDriverLicenseNumber() {
         return DriverLicenseNumber;
+    }
+
+    public double getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
     }
         
 }
