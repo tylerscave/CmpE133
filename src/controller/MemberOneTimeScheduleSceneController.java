@@ -36,12 +36,12 @@ import model.Member;
 import model.MemberSchedule;
 public class MemberOneTimeScheduleSceneController implements Initializable{
 
-    private MemberSchedule memberSchedule = new MemberSchedule();
     private Context context;
     private Member member;
+    private MemberSchedule memberSchedule;
     private boolean drive;
     private Location selectedLocation;
-    private GregorianCalendar arriveTime, departTime, day;
+    private GregorianCalendar arriveTime, departTime;
     private LocalDate date = LocalDate.now();
     private ObservableList<Location> locations = FXCollections.observableArrayList();
     private ObservableList<GregorianCalendar> times;
@@ -65,12 +65,15 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
 	public void initialize(URL url, ResourceBundle resources) {
         context = Context.getInstance();
         member = context.getMember();
+        memberSchedule = member.getMemberSchedule();
         
         
         //set up the location ComboBox
         for (Location l : context.getMap().getLocations())
             locations.add(l);
         locationCombo.setItems(locations);
+	    locationCombo.setDisable(true);
+	    locationCombo.setStyle("-fx-opacity: 0;");
         
         //setup Arrival and Departure ComboBoxes
         //they are set up for todays date until a new date is picked from datePicker
@@ -84,8 +87,12 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
     	RadioButton radio = (RadioButton) event.getSource();
     	if (radio == driveRadio) {
     		drive = true;
+    	    locationCombo.setDisable(true);
+    	    locationCombo.setStyle("-fx-opacity: 0;");
     	} else {
     		drive = false;
+    		locationCombo.setDisable(false);
+    		locationCombo.setStyle("-fx-opacity: 1;");
     	}
     }
 	
@@ -183,7 +190,7 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
 		times = FXCollections.observableArrayList();
 		// get times for 6AM to 11AM
 		for (int i = 6; i <= 11; i++) {
-			day = new GregorianCalendar() {
+			GregorianCalendar day = new GregorianCalendar() {
 	            public String toString() {
 	                return Integer.toString(this.get(GregorianCalendar.HOUR))
 	                		+ this.getDisplayName(GregorianCalendar.AM_PM, 
@@ -202,7 +209,7 @@ public class MemberOneTimeScheduleSceneController implements Initializable{
 		
 		// get times for noon to 10pm
 		for (int i = 12; i <= 22; i++) {
-			day = new GregorianCalendar() {
+			GregorianCalendar day = new GregorianCalendar() {
 	            public String toString() {
 	            	if (this.get(GregorianCalendar.HOUR) == 0) {
 	            		return 12 + this.getDisplayName(GregorianCalendar.AM_PM, 

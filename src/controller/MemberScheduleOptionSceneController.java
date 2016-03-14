@@ -60,6 +60,19 @@ public class MemberScheduleOptionSceneController implements Initializable {
     }
     
     @FXML
+    private void handleSelectAvailableRide(ActionEvent event) {
+    	try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/PickDriverScheduleScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML
     private void handleCancelButton(ActionEvent event) {
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
