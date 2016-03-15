@@ -93,6 +93,10 @@ public class ViewScheduleSceneController implements Initializable {
                 sb.append(rideRoute.getStops().get(0)).append(" at ").append(getTimeFromCalendar(rideRoute.getStartTime())).append(" to ");
                 sb.append(rideRoute.getStops().get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(rideRoute.getEndTime())).append(System.lineSeparator());
             }
+            Location status = route.getLocationAtTime(new GregorianCalendar());
+            if (status == null)
+                status = new Location("Not yet started");
+            sb.append("  Current Status: ").append(status).append(System.lineSeparator());
         }
         sb.append(System.lineSeparator());
         
@@ -107,6 +111,10 @@ public class ViewScheduleSceneController implements Initializable {
             sb.append(stops.get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(route.getEndTime())).append(" on ").append(getDateFromCalendar(route.getEndTime())).append(System.lineSeparator());
             Drive drive = (Drive) data.getSchedulable(r.getDriveId());
             sb.append("  Passenger in ").append(drive.getMemberName()).append("'s vehicle").append(System.lineSeparator());
+            Location status = route.getLocationAtTime(new GregorianCalendar());
+            if (status == null)
+                status = new Location("Not yet started");
+            sb.append("  Current Status: ").append(status).append(System.lineSeparator());
         }
         sb.append(System.lineSeparator());
         

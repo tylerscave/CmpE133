@@ -304,6 +304,10 @@ public class ScheduleTester {
                 System.out.print("    "+ride.getMemberName() + ": ");
                 System.out.println(rideRoute.getStops().get(0)+" at "+getTimeFromCalendar(rideRoute.getStartTime())+" to "+rideRoute.getStops().get(stops.size()-1)+" at "+getTimeFromCalendar(rideRoute.getEndTime()));
             }
+            Location status = route.getLocationAtTime(new GregorianCalendar());
+            if (status == null)
+                status = new Location("Not yet started");
+            System.out.println("  Current Status: "+status);
         }
         System.out.println();
         
@@ -317,6 +321,10 @@ public class ScheduleTester {
             System.out.println("  "+stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime()) +" on "+getDateFromCalendar(route.getEndTime()));
             Drive drive = (Drive) data.getSchedulable(r.getDriveId());
             System.out.println("  Passenger in "+drive.getMemberName()+"'s vehicle");
+            Location status = route.getLocationAtTime(new GregorianCalendar());
+            if (status == null)
+                status = new Location("Not yet started");
+            System.out.println("  Current Status: "+status);
         }
         System.out.println();
         
