@@ -91,7 +91,10 @@ public class Drive implements Schedulable{
      * @return the last location before the current time
      */
     public Location getCurrentLocation() {
-        return route.getLocationAtTime(new GregorianCalendar());
+        //get latest information
+        DataHandler data = Context.getInstance().getDataHandler();
+        Drive temp = (Drive)data.getSchedulable(idNumber);
+        return temp.getRoute().getLocationAtTime(new GregorianCalendar());
     }
     
     /**
@@ -99,6 +102,20 @@ public class Drive implements Schedulable{
      * @param location the current location at the time of the update
      */
     public void updateStatus(Location location) {
+        //update data
+        DataHandler data = Context.getInstance().getDataHandler();
+        Member member = data.getMember(memberId);
+        for (Drive d : member.getDrives()) {
+            if (d.idNumber == idNumber)
+                d.getRoute().setRealRoute(new GregorianCalendar(), location);
+        }
+        data.setMember(memberId, member);
+        
+        member.addObserver(data);
+        member.setChanged();
+        member.notifyObservers();
+        member.deleteObservers();
+        //finish update data; local copy
         route.setRealRoute(new GregorianCalendar(), location);
     }
 }
