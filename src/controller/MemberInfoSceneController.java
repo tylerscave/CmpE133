@@ -98,7 +98,15 @@ public class MemberInfoSceneController implements Initializable {
     
     @FXML
     protected void handleVehicleButton(ActionEvent event) {
-    	//TODO
+    	try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/VehicleInfoScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
     }
     
     @FXML
