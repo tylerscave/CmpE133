@@ -94,7 +94,7 @@ public class ScheduleTester {
         System.out.println("1: No:");
         int option = getOptionIntFromInput(2);
         if (option == 0) 
-            member.setMemberType(new Driver("", new Vehicle("", 4), null));
+            member.setMemberType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4), null));
         else
             member.setMemberType(new Passenger(null, null));
         data.addMember(member);

@@ -24,6 +24,7 @@ public class Member extends Observable {
         private List<Notification> oldNotifications;
         private List<Notification> newNotifications;
         private MemberSchedule memberSchedule;
+        private Vehicle vehicle;
         private int idNumber;
 
         public Member() {
@@ -156,6 +157,14 @@ public class Member extends Observable {
 
     public void setIdNumber(int idNumber) {
         this.idNumber = idNumber;
+    }
+    
+    public Vehicle getVehicle() {
+    	return vehicle;
+    }
+    
+    public void setVehicle(Vehicle vehicle) {
+    	this.vehicle = vehicle;
     }
     
     @Override
