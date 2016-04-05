@@ -20,6 +20,7 @@ public class Member extends Observable {
 	private MemberType type;
         private List<Drive> drives;
         private List<Ride> rides;
+        private List<ParkingTime> parkingTimes;
         private List<RideRequest> rideRequests;
         private List<Notification> oldNotifications;
         private List<Notification> newNotifications;
@@ -36,6 +37,7 @@ public class Member extends Observable {
 		this.type = new Passenger();
                 this.drives = new ArrayList<>();
                 this.rides = new ArrayList<>();
+                this.parkingTimes = new ArrayList<>();
                 this.rideRequests = new ArrayList<>();
                 this.oldNotifications = new ArrayList<>();
                 this.newNotifications = new ArrayList<>();
@@ -51,6 +53,7 @@ public class Member extends Observable {
 		this.type = type;
                 this.drives = new ArrayList<>();
                 this.rides = new ArrayList<>();
+                this.parkingTimes = new ArrayList<>();
                 this.rideRequests = new ArrayList<>();
                 this.oldNotifications = new ArrayList<>();
                 this.newNotifications = new ArrayList<>();
@@ -113,6 +116,10 @@ public class Member extends Observable {
         return rides;
     }
 
+    public List<ParkingTime> getParkingTimes() {
+        return parkingTimes;
+    }
+
     public List<RideRequest> getRideRequests() {
         return rideRequests;
     }
@@ -171,4 +178,10 @@ public class Member extends Observable {
     public void setChanged() {
         super.setChanged();
     }
+
+    @Override
+    public String toString() {
+        return firstName+" "+lastName;
+    }
+    
 }

@@ -21,7 +21,7 @@ public class Drive implements Schedulable{
         this.numSeats = numSeats;
         this.memberId = member.getIdNumber();
         this.rideIds = new ArrayList<>();
-        this.memberName = member.getFirstName()+" "+member.getLastName();
+        this.memberName = member.toString();
     }
 
     public int getMemberId() {

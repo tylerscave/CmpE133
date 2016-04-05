@@ -1,4 +1,8 @@
 package model;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
  * The model for the member schedule
@@ -7,9 +11,11 @@ package model;
 */
 public class Location {
     private String name;
+    private List<ParkingSpot> parkingSpots;
     
     public Location (String name) {
         this.name = name;
+        this.parkingSpots = new ArrayList<>();
     }
 
     /*public String getName() {
@@ -27,6 +33,10 @@ public class Location {
             return false;
         Location location = (Location)o;
         return location.toString().equals(this.name);
+    }
+
+    public List<ParkingSpot> getParkingSpots() {
+        return parkingSpots;
     }
     
 }

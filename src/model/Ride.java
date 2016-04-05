@@ -14,7 +14,7 @@ public class Ride implements Schedulable{
     public Ride(Member member, Drive drive) {
         this.memberId = member.getIdNumber();
         this.driveId = drive.getIdNumber();
-        this.memberName = member.getFirstName()+" "+member.getLastName();
+        this.memberName = member.toString();
     }
 
     public int getMemberId() {

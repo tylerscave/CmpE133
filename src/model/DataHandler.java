@@ -34,6 +34,14 @@ public interface DataHandler extends Observer {
     public Member getMember(int memberId);
     
     /**
+     *
+     * Replaces the member given by a unique id number with the modified member
+     * @param memberId a member's unique id number
+     * @param member the modified member
+     */
+    public void setMember(int memberId, Member member);
+    
+    /**
      * Returns a new unique schedulable id
      * @return
      */
@@ -41,20 +49,12 @@ public interface DataHandler extends Observer {
             
     /**
      *
-     * Returns the schedulable (ride, drive) given by a unique id number
+     * Returns the schedulable (ride, drive, weekly, parkingTime) given by a unique id number
      * 
      * @param scheduleId a member's unique id number
      * @return the schedulable
      */
     public Schedulable getSchedulable(int scheduleId);
-    
-    /**
-     *
-     * Replaces the member info of unique id i with the modified member
-     * @param memberId a member's unique id number
-     * @param member the modified member
-     */
-    public void setMember(int memberId, Member member);
     
     /**
      *
@@ -73,6 +73,12 @@ public interface DataHandler extends Observer {
      * @return list of pending drives
      */
     public List<Drive> getDrives();
+    
+    /**
+     *
+     * @return list of all parkingTimes used by all members
+     */
+    public List<ParkingTime> getParkingTimes();
 
     /**
      * Send a notification message to a member

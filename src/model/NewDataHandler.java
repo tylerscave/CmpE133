@@ -14,6 +14,7 @@ public class NewDataHandler implements DataHandler {
     private List<Member> members;
     private List<Drive> drives;
     private List<Ride> rides;
+    private List<ParkingTime> parkingTimes;
     private List<RideRequest> rideRequests;
     private HashMap<Integer, Schedulable> schedulables;
     private int schedulableId;
@@ -28,6 +29,7 @@ public class NewDataHandler implements DataHandler {
     public void generateLists() {
         drives = new ArrayList<>();
         rides = new ArrayList<>();
+        parkingTimes = new ArrayList<>();
         rideRequests = new ArrayList<>();
         for (Member member : members) {
             drives.addAll(member.getDrives());
@@ -37,6 +39,8 @@ public class NewDataHandler implements DataHandler {
                 schedulables.put(d.getIdNumber(), d);
             for (Ride r : rides) 
                 schedulables.put(r.getIdNumber(), r);
+            for (ParkingTime p : parkingTimes)
+                schedulables.put(p.getIdNumber(), p);
         }
     }
 
@@ -80,6 +84,8 @@ public class NewDataHandler implements DataHandler {
             schedulables.put(d.getIdNumber(), d);
         for (Ride r : member.getRides())
             schedulables.put(r.getIdNumber(), r);
+        for (ParkingTime p : parkingTimes)
+            schedulables.put(p.getIdNumber(), p);
     }
     
     @Override
@@ -121,4 +127,10 @@ public class NewDataHandler implements DataHandler {
         member.addNewNotification(notification);
         members.set(memberId, member);
     }
+
+    @Override
+    public List<ParkingTime> getParkingTimes() {
+        return parkingTimes;
+    }
+
 }
