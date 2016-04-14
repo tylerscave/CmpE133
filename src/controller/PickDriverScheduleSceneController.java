@@ -26,12 +26,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import model.Context;
-import model.DriveChoice;
+import model.schedule.DriveChoice;
 import model.Location;
 import model.Member;
-import model.MemberSchedule;
-import model.RideRequest;
-import model.RideRequest.TimeType;
+import model.schedule.MemberSchedule;
+import model.schedule.RideRequest;
+import model.schedule.RideRequest.TimeType;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.

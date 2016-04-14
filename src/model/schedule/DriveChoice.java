@@ -1,4 +1,7 @@
-package model;
+package model.schedule;
+
+import model.schedule.Route;
+import model.schedule.Drive;
 
 /**
  *

@@ -1,4 +1,4 @@
-package model;
+package model.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,6 +6,9 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
+import model.Location;
+import model.LocationMap;
+import model.Stop;
 import model.graph.DijkstraAllPairsSP;
 import model.graph.DirectedEdge;
 import model.graph.EdgeWeightedDigraph;

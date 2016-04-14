@@ -27,7 +27,7 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import model.Context;
 import model.Member;
-import model.MemberSchedule;
+import model.schedule.MemberSchedule;
 import model.Location;
 
 public class MemberScheduleSceneController implements Initializable{

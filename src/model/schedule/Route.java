@@ -1,9 +1,13 @@
-package model;
+package model.schedule;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
+import model.Context;
+import model.Location;
+import model.LocationMap;
+import model.Stop;
 
 /**
  *

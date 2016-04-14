@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.Scanner;
 import model.Context;
 import model.DataHandler;
-import model.Drive;
-import model.DriveChoice;
+import model.schedule.Drive;
+import model.schedule.DriveChoice;
 import model.Driver;
 import model.Location;
 import model.LocationMap;
 import model.Member;
 import model.Notification;
 import model.Passenger;
-import model.Ride;
-import model.RideRequest;
-import model.Route;
+import model.schedule.Ride;
+import model.schedule.RideRequest;
+import model.schedule.Route;
 import model.Vehicle;
 
 /**

@@ -1,4 +1,4 @@
-package model;
+package model.schedule;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author David
  */
-public class DriveScheduler extends Scheduler{
+public class ParkingScheduler extends Scheduler {
 
     @Override
     public String schedule(ScheduleRequest r, Schedulable s) {

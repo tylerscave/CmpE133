@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 import model.Context;
 import model.Location;
 import model.Member;
-import model.MemberSchedule;
+import model.schedule.MemberSchedule;
 public class MemberOneTimeScheduleSceneController implements Initializable{
 
     private Context context;

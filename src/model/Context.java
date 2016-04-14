@@ -1,5 +1,7 @@
 package model;
 
+import model.graph.GraphMap;
+
 /**
  *
  * Follows Singleton design pattern. Used to hold user information.

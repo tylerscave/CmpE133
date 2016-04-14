@@ -1,4 +1,7 @@
-package model;
+package model.payment;
+
+import model.Member;
+import model.schedule.Ride;
 
 public class CreditCard extends Reward {
     

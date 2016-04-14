@@ -1,5 +1,7 @@
 package model;
 
+import model.payment.Reward;
+
 public class Passenger extends MemberType {
 	private Address location;
 	private Reward payMethod;

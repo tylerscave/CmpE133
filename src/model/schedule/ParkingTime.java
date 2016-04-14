@@ -1,6 +1,9 @@
-package model;
+package model.schedule;
 
+import model.schedule.ParkingSpot;
 import java.util.GregorianCalendar;
+import model.Location;
+import model.Member;
 
 /**
  *

@@ -1,5 +1,11 @@
-package model;
+package model.schedule;
 
+import model.schedule.Scheduler;
+import model.schedule.ScheduleRequest;
+import model.schedule.Schedulable;
+import model.schedule.RideScheduler;
+import model.schedule.ParkingScheduler;
+import model.schedule.DriveScheduler;
 import java.util.List;
 
 /**
@@ -11,13 +17,13 @@ public class SchedulingContext {
 
     public void setScheduler(ScheduleRequest r) {
         if (r.getRequestType() == ScheduleRequest.RequestType.RIDE)
-            scheduler = null;
+            scheduler = new RideScheduler();
         if (r.getRequestType() == ScheduleRequest.RequestType.DRIVE)
-            scheduler = null;
+            scheduler = new DriveScheduler();
         if (r.getRequestType() == ScheduleRequest.RequestType.PARKING)
             scheduler = new ParkingScheduler();
         if (r.getRequestType() == ScheduleRequest.RequestType.WEEKLY)
-            scheduler = null;
+            scheduler = new WeeklyScheduler();
     }
     
     public List<Schedulable> getAvailable(ScheduleRequest r) {

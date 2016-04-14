@@ -1,5 +1,10 @@
 package model;
 
+import model.schedule.Schedulable;
+import model.schedule.RideRequest;
+import model.schedule.Ride;
+import model.schedule.ParkingTime;
+import model.schedule.Drive;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

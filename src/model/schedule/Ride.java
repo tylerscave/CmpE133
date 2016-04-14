@@ -1,4 +1,7 @@
-package model;
+package model.schedule;
+
+import model.Member;
+import model.schedule.Drive;
 
 /**
  *

@@ -1,5 +1,7 @@
-package model;
+package model.schedule;
 
+import model.schedule.ScheduleRequest;
+import model.schedule.Schedulable;
 import java.util.Iterator;
 import java.util.List;
 

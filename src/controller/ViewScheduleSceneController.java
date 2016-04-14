@@ -18,12 +18,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Context;
 import model.DataHandler;
-import model.Drive;
+import model.schedule.Drive;
 import model.Location;
 import model.Member;
-import model.Ride;
-import model.RideRequest;
-import model.Route;
+import model.schedule.Ride;
+import model.schedule.RideRequest;
+import model.schedule.Route;
 import org.omg.CORBA.DATA_CONVERSION;
 
 /**

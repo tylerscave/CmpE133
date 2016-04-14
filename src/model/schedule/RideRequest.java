@@ -1,8 +1,17 @@
-package model;
+package model.schedule;
 
+import model.schedule.Ride;
+import model.schedule.Drive;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import model.Context;
+import model.DataHandler;
+import model.Driver;
+import model.Location;
+import model.LocationMap;
+import model.Member;
+import model.Notification;
 
 /**
  *

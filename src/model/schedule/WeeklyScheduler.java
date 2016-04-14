@@ -1,12 +1,15 @@
-package model;
+package model.schedule;
 
+import model.schedule.Scheduler;
+import model.schedule.ScheduleRequest;
+import model.schedule.Schedulable;
 import java.util.List;
 
 /**
  *
  * @author David
  */
-public class ParkingScheduler extends Scheduler {
+public class WeeklyScheduler extends Scheduler{
 
     @Override
     public String schedule(ScheduleRequest r, Schedulable s) {

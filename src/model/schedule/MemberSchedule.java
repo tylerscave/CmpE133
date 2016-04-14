@@ -1,4 +1,4 @@
-package model;
+package model.schedule;
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
  * The model for the member schedule
@@ -8,6 +8,7 @@ package model;
 
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import model.Location;
 
 public class MemberSchedule {
 	//declare all variables for member schedule
