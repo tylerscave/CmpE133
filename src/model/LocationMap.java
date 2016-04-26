@@ -14,4 +14,6 @@ public interface LocationMap {
     public GregorianCalendar getStartTime(GregorianCalendar arrivalTime, Location start, Location stop);
     
     public List<Location> getLocations();
+    
+    public double getMiles(List<Location> locations);
 }

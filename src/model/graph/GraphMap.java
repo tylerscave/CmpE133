@@ -73,7 +73,7 @@ public class GraphMap implements LocationMap {
     public List<Stop> getStops(GregorianCalendar startTime, Location start, Location stop, List<Location> inBetweens) {
         List<Stop> stops = new ArrayList<>();
         stops.add(new Stop(startTime, start));
-        Stack<DirectedEdge> edges = (Stack<DirectedEdge>)dijkstra.path(getIndexFromLocation(start), getIndexFromLocation(stop));;
+        Stack<DirectedEdge> edges = (Stack<DirectedEdge>)dijkstra.path(getIndexFromLocation(start), getIndexFromLocation(stop));
         List<Location> remainingLocations = new ArrayList<>();
         if (inBetweens == null)
             inBetweens = new ArrayList<>();
@@ -129,6 +129,27 @@ public class GraphMap implements LocationMap {
         return locations;
     }
 
+    private double MILES_PER_MINUTE = .185;
+    
+    @Override
+    public double getMiles(List<Location> l) {
+        if (l.size() < 2)
+            return 0;
+        double miles = 0;
+        Location start = l.remove(0);
+        while (!l.isEmpty()) {
+            Location stop = l.remove(0);
+            Stack<DirectedEdge> edges = (Stack<DirectedEdge>)dijkstra.path(getIndexFromLocation(start), getIndexFromLocation(stop));
+            while (!edges.empty()) {
+                DirectedEdge edge = edges.pop();
+                miles += edge.weight()*MILES_PER_MINUTE;
+            }
+            start = stop;
+        }
+        return miles;
+    }
+
+    
     @Override
     public String toString() {
         return graph.toString();

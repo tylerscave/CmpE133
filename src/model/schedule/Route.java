@@ -177,4 +177,12 @@ public class Route {
             return (int) ((endTime.getTime().getTime()-startTime.getTime().getTime())/(1000*60));
         return 0;
     }
+    
+    public double getRouteMiles() {
+        List<Location> l = new ArrayList<>();
+        for (Stop s : realStops) {
+            l.add(s.getLocation());
+        }
+        return map.getMiles(l);
+    }
 }
