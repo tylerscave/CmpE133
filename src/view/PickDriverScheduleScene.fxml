@@ -131,7 +131,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Pick Your Ride:      " GridPane.halignment="RIGHT" />
+                  <Label text="Pick Your Driver:      " GridPane.halignment="RIGHT" />
                   <ComboBox fx:id="pickDriverCombo" onAction="#handlePickDriverCombo" prefWidth="150.0" GridPane.columnIndex="1" />
                </children>
             </GridPane>
