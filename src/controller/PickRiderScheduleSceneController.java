@@ -50,7 +50,7 @@ public class PickRiderScheduleSceneController implements Initializable {
     private int minuteTime;
     private boolean byStartTime;
     private TimeType timeType;
-//    private DriveRequest selectedRider;	
+//    private DriveChoice selectedRider;	//NEED TO CHANGE THIS 
     private ObservableList<GregorianCalendar> hours = FXCollections.observableArrayList();;
     private ObservableList<Location> locations = FXCollections.observableArrayList();
     private ObservableList<Integer> minutes = FXCollections.observableArrayList();
@@ -147,8 +147,8 @@ public class PickRiderScheduleSceneController implements Initializable {
 	}
 	
 	@FXML
-	private void handlePickDriverCombo(ActionEvent event) {
-//		selectedDrive = pickRiderCombo.getSelectionModel().getSelectedItem();
+	private void handlePickRiderCombo(ActionEvent event) {
+//		selectedRider = pickRiderCombo.getSelectionModel().getSelectedItem();
 	}
 
     @FXML
