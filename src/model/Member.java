@@ -23,6 +23,7 @@ public class Member extends Observable {
 	private Address address;
 	private String phoneNumber;
 	private MemberType type;
+        private Vehicle vehicle;
         private List<Drive> drives;
         private List<Ride> rides;
         private List<ParkingTime> parkingTimes;
@@ -30,7 +31,6 @@ public class Member extends Observable {
         private List<Notification> oldNotifications;
         private List<Notification> newNotifications;
         private MemberSchedule memberSchedule;
-        private Vehicle vehicle;
         private int idNumber;
 
         public Member() {
@@ -40,6 +40,7 @@ public class Member extends Observable {
 		this.address = new Address("", "", "", "", "");
 		this.phoneNumber = "";
 		this.type = new Passenger();
+                this.vehicle = null;
                 this.drives = new ArrayList<>();
                 this.rides = new ArrayList<>();
                 this.parkingTimes = new ArrayList<>();

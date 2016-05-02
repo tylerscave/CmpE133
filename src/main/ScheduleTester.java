@@ -10,13 +10,17 @@ import model.schedule.DriveChoice;
 import model.Driver;
 import model.Location;
 import model.LocationMap;
+import model.LoginInformation;
 import model.Member;
+import model.MemberBuilder;
 import model.Notification;
+import model.NotificationSender;
 import model.Passenger;
 import model.schedule.Ride;
 import model.schedule.RideRequest;
 import model.schedule.Route;
 import model.Vehicle;
+import model.schedule.ScheduleViewer;
 
 /**
  *
@@ -84,21 +88,27 @@ public class ScheduleTester {
 
     private static void createAccount() {
         Scanner in = new Scanner(System.in);
-        Member member = new Member();
-        System.out.println("Enter first name");     
-        member.setFirstName(in.nextLine());
+        MemberBuilder mb = new MemberBuilder();
+        System.out.println("Enter first name");
+        String fn = in.nextLine();
+        mb.setFirstName(fn);
         System.out.println("Enter last name");
-        member.setLastName(in.nextLine());
+        String ln = in.nextLine();
+        mb.setLastName(ln);
         System.out.println("Driver:");
         System.out.println("0: Yes");
-        System.out.println("1: No:");
+        System.out.println("1: No");
         int option = getOptionIntFromInput(2);
         if (option == 0) 
-            member.setMemberType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4), null));
+            mb.setType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4), null));
         else
-            member.setMemberType(new Passenger(null, null));
-        data.addMember(member);
-        System.out.println("New Account created!");
+            mb.setType(new Passenger(null, null));
+        mb.setLoginInfo(new LoginInformation(fn, ln));
+        
+        if (mb.build() == -1)
+            System.out.println("Failed to create new account");
+        else
+            System.out.println("New Account created!");
         System.out.println("Press Enter to continue...");
         in.nextLine();
     }
@@ -278,71 +288,8 @@ public class ScheduleTester {
     private static void viewSchedule() {
         Scanner in = new Scanner(System.in);
         Member member = selectMember();
-        System.out.println("Drives:");
-        if (member.getDrives().isEmpty())
-            System.out.println("None");
-        for (int i = 0; i < member.getDrives().size(); i++) {
-            Drive d = member.getDrives().get(i);
-            System.out.println("Drive details:");
-            Route route = d.getRoute();
-            List<Location> stops = route.getStops();
-            System.out.println("  "+stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime())+" on "+getDateFromCalendar(route.getEndTime()));
-            if (stops.size() > 2) {
-                System.out.print("  Stops at: ");
-                for (int j = 1; j < stops.size()-1; j++) {
-                    System.out.print(stops.get(j) + ", ");
-                }
-                System.out.println();
-            }
-            System.out.println("  "+d.getNumSeats() + " seats available");
-            System.out.println("  Passengers:");
-            if (d.numberOfRides() == 0)
-                System.out.println("    None");
-            for (int j = 0; j < d.numberOfRides(); j++) {
-                Ride ride = (Ride) data.getSchedulable(d.getRideId(j));
-                Route rideRoute = ride.getRoute();
-                System.out.print("    "+ride.getMemberName() + ": ");
-                System.out.println(rideRoute.getStops().get(0)+" at "+getTimeFromCalendar(rideRoute.getStartTime())+" to "+rideRoute.getStops().get(stops.size()-1)+" at "+getTimeFromCalendar(rideRoute.getEndTime()));
-            }
-            Location status = route.getLocationAtTime(new GregorianCalendar());
-            if (status == null)
-                status = new Location("Not yet started");
-            System.out.println("  Current Status: "+status);
-        }
-        System.out.println();
-        
-        System.out.println("Rides:");
-        if (member.getRides().isEmpty())
-            System.out.println("None");
-        for (Ride r : member.getRides()) {
-            System.out.println("Ride details:");
-            Route route = r.getRoute();
-            List<Location> stops = route.getStops();
-            System.out.println("  "+stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime()) +" on "+getDateFromCalendar(route.getEndTime()));
-            Drive drive = (Drive) data.getSchedulable(r.getDriveId());
-            System.out.println("  Passenger in "+drive.getMemberName()+"'s vehicle");
-            Location status = route.getLocationAtTime(new GregorianCalendar());
-            if (status == null)
-                status = new Location("Not yet started");
-            System.out.println("  Current Status: "+status);
-        }
-        System.out.println();
-        
-        System.out.println("Ride Requests:");
-        if (member.getRideRequests().isEmpty())
-            System.out.println("None");
-        for (RideRequest rr : member.getRideRequests()) {
-            System.out.println("Ride request details:");
-            if (rr.getStartType() == RideRequest.TimeType.AnyTime)
-                System.out.println("  Depart from "+rr.getStartLocation()+" at AnyTime");
-            else
-                System.out.println("  Depart from "+rr.getStartLocation()+" "+rr.getStartType().name()+" "+getTimeFromCalendar(rr.getStartTime())+" "+getDateFromCalendar(rr.getStartTime()));
-            if (rr.getEndType() == RideRequest.TimeType.AnyTime)
-                System.out.println("  Arrive at "+rr.getEndLocation()+" at AnyTime");
-            else
-                System.out.println("  Arrive at "+rr.getEndLocation()+" "+rr.getEndType().name()+" "+getTimeFromCalendar(rr.getEndTime())+" "+getDateFromCalendar(rr.getEndTime()));
-        }
-        System.out.println();
+        ScheduleViewer sv = new ScheduleViewer();
+        System.out.print(sv.getScheduleText(member));
         System.out.println("Press Enter to continue...");
         in.nextLine();
     }
@@ -391,10 +338,11 @@ public class ScheduleTester {
     private static void sendNotification(Member member) {
         Scanner in = new Scanner(System.in);
         System.out.println("Select member to send to:");
-        Member ToMember = selectMember();
+        Member toMember = selectMember();
         System.out.println("Enter notification message");
         String message = in.nextLine();
-        data.notify(ToMember.getIdNumber(), new Notification("From "+member.getFirstName()+" "+member.getLastName()+": "+message));
+        NotificationSender ns = new NotificationSender(member);
+        ns.send(toMember.getIdNumber(), message);
         System.out.println("Notification Sent!");
         System.out.println("Press Enter to continue...");
         in.nextLine();

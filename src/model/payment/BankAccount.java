@@ -24,8 +24,8 @@ public class BankAccount extends Reward{
 
     @Override
     public Object findReward(Member recipient, Ride ride) {
-        //stub
-        throw new UnsupportedOperationException("Not supported yet.");
+        payment = (Double) rewardCalculator.calculateReward(recipient, ride);
+        return payment;
     }
 
     @Override
