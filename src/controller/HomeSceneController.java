@@ -57,6 +57,19 @@ public class HomeSceneController implements Initializable {
     } 
     
     @FXML
+    protected void handleUpdateRides(ActionEvent event) {
+        try {
+        	Parent root = FXMLLoader.load(getClass().getResource("/view/RideScheduleOptionScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    } 
+    
+    @FXML
     protected void handleViewSchedule(ActionEvent event) {
         try {
             //currently links to info scene, must change to appropriate scene when it's implemented
