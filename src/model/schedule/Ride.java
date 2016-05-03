@@ -13,11 +13,13 @@ public class Ride implements Schedulable{
     private int driveId;
     private int idNumber;
     private String memberName;
+    private RideStatus rideStatus;
     
     public Ride(Member member, Drive drive) {
         this.memberId = member.getIdNumber();
         this.driveId = drive.getIdNumber();
         this.memberName = member.toString();
+        this.rideStatus = new RideStatus();
     }
 
     public int getMemberId() {

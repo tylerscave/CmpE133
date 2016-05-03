@@ -13,11 +13,13 @@ public class Context {
     private LoginHandler login;
     private LocationMap map;
     private DataHandler dataHandler;
+    private Tracker tracker;
     
     private Context() {
         // Exists only to defeat instantiation.
         map = new GraphMap();
         dataHandler = new NewDataHandler();
+        tracker = new GPSTracker();
     }
     
     public static Context getInstance() {
@@ -53,6 +55,10 @@ public class Context {
 
     public DataHandler getDataHandler() {
         return dataHandler;
+    }
+
+    public Tracker getTracker() {
+        return tracker;
     }
     
 }
