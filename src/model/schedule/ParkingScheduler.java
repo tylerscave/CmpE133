@@ -9,7 +9,7 @@ import java.util.List;
 public class ParkingScheduler extends Scheduler {
 
     @Override
-    public String schedule(ScheduleRequest r, Schedulable s) {
+    public String schedule(Request r, Schedulable s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -19,7 +19,7 @@ public class ParkingScheduler extends Scheduler {
     }
 
     @Override
-    public boolean isAvailable(ScheduleRequest r, Schedulable s) {
+    public boolean isAvailable(Request r, Schedulable s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

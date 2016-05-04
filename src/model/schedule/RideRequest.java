@@ -85,7 +85,7 @@ public class RideRequest {
     public boolean generateDriveByStartTime() {
         if (!correctData())
             return false;
-        if (!(member.getMemberType() instanceof Driver))
+        if (!(member.getDrivingType() instanceof Driver))
             return false;
         return generateDrive(startTime);
     }
@@ -93,7 +93,7 @@ public class RideRequest {
     public boolean generateDriveByEndTime() {
         if (!correctData())
             return false;
-        if (!(member.getMemberType() instanceof Driver))
+        if (!(member.getDrivingType() instanceof Driver))
             return false;
         LocationMap map = context.getMap();
         return generateDrive(map.getStartTime(endTime, startLocation, endLocation));
@@ -110,9 +110,9 @@ public class RideRequest {
                 return false;
         }
         
-        if (!(member.getMemberType() instanceof Driver))
+        if (!(member.getDrivingType() instanceof Driver))
             return false;
-        Driver driver = (Driver) member.getMemberType();
+        Driver driver = (Driver) member.getDrivingType();
         Drive drive = new Drive(driver.getVehicle().getCapacity(), member);
         drive.setRoute(route);
         drive.setIdNumber(data.getNewSchedulableId());

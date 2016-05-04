@@ -1,12 +1,7 @@
 package model.schedule;
 
-import model.schedule.Scheduler;
-import model.schedule.ScheduleRequest;
-import model.schedule.Schedulable;
-import model.schedule.RideScheduler;
-import model.schedule.ParkingScheduler;
-import model.schedule.DriveScheduler;
 import java.util.List;
+import model.Member;
 
 /**
  *
@@ -15,24 +10,35 @@ import java.util.List;
 public class SchedulingContext {
     private Scheduler scheduler;
 
-    public void setScheduler(ScheduleRequest r) {
-        if (r.getRequestType() == ScheduleRequest.RequestType.RIDE)
+    public void setScheduler(Request r) {
+        if (r.getRequestType() == Request.RequestType.RIDE)
             scheduler = new RideScheduler();
-        if (r.getRequestType() == ScheduleRequest.RequestType.DRIVE)
+        if (r.getRequestType() == Request.RequestType.DRIVE)
             scheduler = new DriveScheduler();
-        if (r.getRequestType() == ScheduleRequest.RequestType.PARKING)
+        if (r.getRequestType() == Request.RequestType.PARKING)
             scheduler = new ParkingScheduler();
-        if (r.getRequestType() == ScheduleRequest.RequestType.WEEKLY)
+        if (r.getRequestType() == Request.RequestType.WEEKLY)
             scheduler = new WeeklyScheduler();
     }
     
-    public List<Schedulable> getAvailable(ScheduleRequest r) {
+    public List<Schedulable> getAvailable(Request r) {
         setScheduler(r);
         return scheduler.getAvailable(r);
     }
     
-    public String schedule(ScheduleRequest r, Schedulable s) {
+    public String schedule(Request r, Schedulable s) {
         setScheduler(r);
         return scheduler.schedule(r, s);
+    }
+    
+    public boolean addToRequests(Request r, String name) {
+        if (r.getRequestType() != Request.RequestType.RIDE)
+            return false;
+        Member member = r.getMember();
+        r.setName(name);
+        member.getRequests().add(r);
+        member.setChanged();
+        member.notifyObservers();
+        return true;
     }
 }

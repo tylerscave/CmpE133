@@ -1,7 +1,7 @@
 package model.schedule;
 
 import model.schedule.Scheduler;
-import model.schedule.ScheduleRequest;
+import model.schedule.Request;
 import model.schedule.Schedulable;
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class WeeklyScheduler extends Scheduler{
 
     @Override
-    public String schedule(ScheduleRequest r, Schedulable s) {
+    public String schedule(Request r, Schedulable s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -22,7 +22,7 @@ public class WeeklyScheduler extends Scheduler{
     }
 
     @Override
-    public boolean isAvailable(ScheduleRequest r, Schedulable s) {
+    public boolean isAvailable(Request r, Schedulable s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

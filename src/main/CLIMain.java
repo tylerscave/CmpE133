@@ -17,16 +17,18 @@ import model.Notification;
 import model.NotificationSender;
 import model.Passenger;
 import model.schedule.Ride;
-import model.schedule.RideRequest;
 import model.schedule.Route;
 import model.Vehicle;
+import model.schedule.Request;
+import model.schedule.Schedulable;
 import model.schedule.ScheduleViewer;
+import model.schedule.SchedulingContext;
 
 /**
  *
  * @author David
  */
-public class ScheduleTester {
+public class CLIMain {
 
     private static Context context;
     private static DataHandler data;
@@ -137,13 +139,11 @@ public class ScheduleTester {
             byStartTime = true;
         }
         GregorianCalendar time = getTimeFromInput();
-        RideRequest rideRequest = new RideRequest(member, time, time, startLocation, endLocation, RideRequest.TimeType.AnyTime, RideRequest.TimeType.AnyTime);
-        boolean success;
-        if (byStartTime)
-            success = rideRequest.generateDriveByStartTime();
-        else
-            success = rideRequest.generateDriveByEndTime();
-        if (success) {
+        
+        Request r = new Request(member, time, startLocation, endLocation, Request.TimeType.Near, byStartTime);
+        SchedulingContext sc = new SchedulingContext();
+        String fail = sc.schedule(r, null);
+        if (fail.equals("Success")) {
             System.out.println("New Drive Scheduled!");
             Drive drive = member.getDrives().get(member.getDrives().size()-1);
             Route route = drive.getRoute();
@@ -161,14 +161,15 @@ public class ScheduleTester {
             if (drive.numberOfRides() == 0)
                 System.out.println("  None");
             for (int i = 0; i < drive.numberOfRides(); i++) {
-                Ride ride = (Ride) data.getSchedulable(drive.getRideId(i));
+                ScheduleViewer sv = new ScheduleViewer();
+                Ride ride = sv.getRideById(drive.getRideId(i));
                 Route rideRoute = ride.getRoute();
                 System.out.print("  "+ride.getMemberName() + ": ");
                 System.out.println(rideRoute.getStops().get(0)+" at "+getTimeFromCalendar(rideRoute.getStartTime())+" to "+rideRoute.getStops().get(stops.size()-1)+" at "+getTimeFromCalendar(rideRoute.getEndTime()));
             }
         }
         else
-            System.out.println("Drive Scheduling failed");
+            System.out.println(fail);
         System.out.println("Press Enter to continue...");
         in.nextLine();
         member.deleteObservers();
@@ -179,15 +180,15 @@ public class ScheduleTester {
         member.addObserver(data);
         System.out.println("Request a Ride:");
         System.out.println("0: New Ride Request");
-        List<RideRequest> rideRequests = member.getRideRequests();
-        for (int i = 0; i < rideRequests.size(); i++) {
-            System.out.println(Integer.toString(i+1)+": "+rideRequests.get(i).getName());
+        List<Request> requests = member.getRequests();
+        for (int i = 0; i < requests.size(); i++) {
+            System.out.println(Integer.toString(i+1)+": "+requests.get(i).getName());
         }
-        int option = getOptionIntFromInput(rideRequests.size()+1);
+        int option = getOptionIntFromInput(requests.size()+1);
         if (option == 0)
             setRideRequest(member);
         else
-            rideRequestResults(rideRequests.get(option-1), member);
+            rideRequestResults(requests.get(option-1), member);
     }
     
     private static void setRideRequest(Member member) {
@@ -196,17 +197,17 @@ public class ScheduleTester {
             System.out.println(i + ": " + locations.get(i));
         int startLocation = getOptionIntFromInput(locations.size());
         System.out.println("Choose how to use a departure time");
-        RideRequest.TimeType[] types = RideRequest.TimeType.values();
+        Request.TimeType[] types = Request.TimeType.values();
         for (int i = 0; i < types.length; i++) {
             System.out.print(i+": "+types[i].name());
-            if (types[i] != RideRequest.TimeType.AnyTime)
+            if (types[i] != Request.TimeType.Anytime)
                 System.out.print(" a time");
             System.out.println();
         }
         int index = getOptionIntFromInput(types.length);
-        RideRequest.TimeType StartType = types[index];
+        Request.TimeType startType = types[index];
         GregorianCalendar startTime = new GregorianCalendar();
-        if (StartType != RideRequest.TimeType.AnyTime) {
+        if (startType != Request.TimeType.Anytime) {
             System.out.println("Enter departure time mm/dd/yyyy/xx:xx");    
             startTime = getTimeFromInput();
         }
@@ -217,59 +218,60 @@ public class ScheduleTester {
         System.out.println("Choose how to use a destination time");
         for (int i = 0; i < types.length; i++) {
             System.out.print(i+": "+types[i].name());
-            if (types[i] != RideRequest.TimeType.AnyTime)
+            if (types[i] != Request.TimeType.Anytime)
                 System.out.print(" a time");
             System.out.println();
         }
         index = getOptionIntFromInput(types.length);
-        RideRequest.TimeType EndType = types[index];
+        Request.TimeType EndType = types[index];
         GregorianCalendar endTime = new GregorianCalendar();
-        if (EndType != RideRequest.TimeType.AnyTime) {
+        if (EndType != Request.TimeType.Anytime) {
             System.out.println("Enter destination time mm/dd/yyyy/xx:xx");   
             endTime = getTimeFromInput();
         }
         
-        RideRequest rideRequest = new RideRequest(member, startTime, endTime, locations.get(startLocation), locations.get(endLocation), StartType, EndType);
-        rideRequestResults(rideRequest, member);
+        Request request = new Request(member, startTime, endTime, locations.get(startLocation), locations.get(endLocation), startType, EndType);
+        rideRequestResults(request, member);
     }
     
-    private static void rideRequestResults(RideRequest rideRequest, Member member) {
-        String name = rideRequest.getName();
+    private static void rideRequestResults(Request request, Member member) {
+        String name = request.getName();
         if (name == null)
             name = "New Ride Request";
         System.out.println(name+" details:");
-        if (rideRequest.getStartType() == RideRequest.TimeType.AnyTime)
-            System.out.println("Depart from "+rideRequest.getStartLocation()+" at AnyTime");
+        if (request.getStartType() == Request.TimeType.Anytime)
+            System.out.println("Depart from "+request.getStartLocation()+" at AnyTime");
         else
-            System.out.println("Depart from "+rideRequest.getStartLocation()+" "+rideRequest.getStartType().name()+" "+getTimeFromCalendar(rideRequest.getStartTime())+" "+getDateFromCalendar(rideRequest.getStartTime()));
-        if (rideRequest.getEndType() == RideRequest.TimeType.AnyTime)
-            System.out.println("Arrive at "+rideRequest.getEndLocation()+" at AnyTime");
+            System.out.println("Depart from "+request.getStartLocation()+" "+request.getStartType().name()+" "+getTimeFromCalendar(request.getStartTime())+" "+getDateFromCalendar(request.getStartTime()));
+        if (request.getEndType() == Request.TimeType.Anytime)
+            System.out.println("Arrive at "+request.getEndLocation()+" at AnyTime");
         else
-            System.out.println("Arrive at "+rideRequest.getEndLocation()+" "+rideRequest.getEndType().name()+" "+getTimeFromCalendar(rideRequest.getEndTime())+" "+getDateFromCalendar(rideRequest.getEndTime()));
+            System.out.println("Arrive at "+request.getEndLocation()+" "+request.getEndType().name()+" "+getTimeFromCalendar(request.getEndTime())+" "+getDateFromCalendar(request.getEndTime()));
         Scanner in = new Scanner(System.in);
         in.nextLine();
-        
-        List<DriveChoice> driveChoices = rideRequest.getAvailableDriveChoices();
-        System.out.println("Choose an Available Drive: ("+driveChoices.size()+")");
+
+        SchedulingContext sc = new SchedulingContext();
+        List<Schedulable> drives = sc.getAvailable(request);
+        System.out.println("Choose an Available Drive: ("+drives.size()+")");
         System.out.println("0: Save Ride Request and return");
-        for (int i = 0; i < driveChoices.size(); i++) {
-            Drive drive = driveChoices.get(i).getDrive();
-            Route route = driveChoices.get(i).getRoute();
+        for (int i = 0; i < drives.size(); i++) {
+            Drive drive = (Drive) drives.get(i);
+            Route route = drive.getRoute();
             System.out.println(Integer.toString(i+1)+": "+drive.getMemberName()+". "+drive.getNumSeats()+" seats available. "+getTimeFromCalendar(route.getStartTime())+" to "+getTimeFromCalendar(route.getEndTime()));
         }
-        int index = getOptionIntFromInput(driveChoices.size()+1);
+        int index = getOptionIntFromInput(drives.size()+1);
         if (index == 0) {
-            if (rideRequest.getName() == null) {
+            if (request.getName() == null) {
                 System.out.println("Enter a name for the Ride Request: ");
                 name = in.nextLine();
             }
-            rideRequest.addToRequests(name);
+            sc.addToRequests(request, name);
         }
         else {
-            boolean success = rideRequest.generateRideFromRequest(driveChoices.get(index-1).getDrive());
-            if (success) {
+            String fail = sc.schedule(request, drives.get(index-1));
+            if (fail.equals("Success")) {
                 System.out.println("New Ride Scheduled!");
-                Ride ride = rideRequest.getMember().getRides().get(rideRequest.getMember().getRides().size()-1);
+                Ride ride = request.getMember().getRides().get(request.getMember().getRides().size()-1);
                 Route route = ride.getRoute();
                 List<Location> stops = route.getStops();
                 System.out.println(stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime()) +" on "+getDateFromCalendar(route.getEndTime()));
@@ -278,7 +280,7 @@ public class ScheduleTester {
 
             }
             else
-                System.out.println("Ride Scheduling failed");
+                System.out.println(fail);
         }
         System.out.println("Press Enter to continue...");
         in.nextLine();
@@ -289,7 +291,7 @@ public class ScheduleTester {
         Scanner in = new Scanner(System.in);
         Member member = selectMember();
         ScheduleViewer sv = new ScheduleViewer();
-        System.out.print(sv.getScheduleTextOld(member));
+        System.out.print(sv.getScheduleText(member));
         System.out.println("Press Enter to continue...");
         in.nextLine();
     }

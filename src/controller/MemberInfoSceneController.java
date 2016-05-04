@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import model.Address;
 import model.Context;
 import model.Member;
-import model.MemberType;
+import model.DrivingType;
 
 public class MemberInfoSceneController implements Initializable {
 	
@@ -158,11 +158,11 @@ public class MemberInfoSceneController implements Initializable {
         member.setFirstName(firstName.getText());
         member.setLastName(lastName.getText());
         member.setPhoneNumber(phone.getText());
-        member.setMemberType(getMemberType());
+        member.setDrivingType(getMemberType());
         member.setAddress(new Address(street.getText(), "", city.getText(), "CA", zipCode.getText()));
     }
     
-    private MemberType getMemberType() {
+    private DrivingType getMemberType() {
         //TODO: get the appropriate member type based on radio button
         if (student.isSelected())
             return null;

@@ -1,5 +1,9 @@
 package model;
 
-public abstract class MemberType {
-	
+/**
+ *
+ * @author David
+ */
+public interface MemberType {
+    
 }

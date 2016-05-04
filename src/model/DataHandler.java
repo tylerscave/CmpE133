@@ -8,6 +8,7 @@ import model.schedule.Drive;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import model.schedule.Request;
 
 /**
  *
@@ -62,10 +63,16 @@ public interface DataHandler extends Observer {
     public Schedulable getSchedulable(int scheduleId);
     
     /**
-     *
+     * (Legacy)
      * @return list of pending ride requests
      */
     public List<RideRequest> getRideRequests();
+    
+    /**
+     * (Legacy)
+     * @return list of pending ride requests
+     */
+    public List<Request> getRequests();
 
     /**
      *

@@ -36,6 +36,7 @@ public class Route {
         this.startTime = startTime;
         stops = map.getStops(startTime, start, end, null);
         endTime = stops.get(stops.size()-1).getTime();
+        this.realStops = new ArrayList<>();
     }
     
     public Route createSubroute(Location start, Location end) {

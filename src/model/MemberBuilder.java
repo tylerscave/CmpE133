@@ -13,7 +13,8 @@ public class MemberBuilder {
     private String firstName;
     private Address address;
     private String phoneNumber;
-    private MemberType type;
+    private DrivingType drivingType;
+    private MemberType memberType;
     private Vehicle vehicle;
     
     public MemberBuilder() {
@@ -22,7 +23,8 @@ public class MemberBuilder {
         this.firstName = "";
         this.address = new Address("", "", "", "", "");
         this.phoneNumber = "";
-        this.type = new Passenger();
+        this.drivingType = new Passenger();
+        this.memberType = new Student("000000000");
         this.vehicle = null;
         
         this.data = Context.getInstance().getDataHandler();
@@ -46,7 +48,8 @@ public class MemberBuilder {
         member.setFirstName(firstName);
         member.setLastName(lastName);
         member.setAddress(address);
-        member.setMemberType(type);
+        member.setDrivingType(drivingType);
+        member.setMemberType(memberType);
         member.setPhoneNumber(phoneNumber);
         member.setVehicle(vehicle);
         return data.addMember(member);
@@ -72,8 +75,12 @@ public class MemberBuilder {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setType(MemberType type) {
-        this.type = type;
+    public void setDrivingType(DrivingType drivingType) {
+        this.drivingType = drivingType;
+    }
+
+    public void setMemberType(MemberType memberType) {
+        this.memberType = memberType;
     }
 
     public void setVehicle(Vehicle vehicle) {

@@ -1,11 +1,10 @@
 package model;
 
-public class Staff extends Member{
+public class Staff implements MemberType{
 	
 	private String sjsuID;
 
-	public Staff(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type, String sjsuID){
-		super(loginInfo, lastName, firstName, address, phoneNumber, type);
+	public Staff(String sjsuID){
 		this.setSjsuID(sjsuID);
 	}
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
+import model.schedule.Request;
 
 /**
  *
@@ -17,10 +18,6 @@ import java.util.Observable;
 public class NewDataHandler implements DataHandler {
     
     private List<Member> members;
-    private List<Drive> drives;
-    private List<Ride> rides;
-    private List<ParkingTime> parkingTimes;
-    private List<RideRequest> rideRequests;
     private HashMap<Integer, Schedulable> schedulables;
     private int schedulableId;
     
@@ -32,14 +29,20 @@ public class NewDataHandler implements DataHandler {
     }
     
     public void generateLists() {
-        drives = new ArrayList<>();
-        rides = new ArrayList<>();
-        parkingTimes = new ArrayList<>();
-        rideRequests = new ArrayList<>();
+        List<Drive> drives = new ArrayList<>();
+        List<Ride> rides = new ArrayList<>();
+        List<ParkingTime> parkingTimes = new ArrayList<>();
+        //legacy
+        List<RideRequest> rideRequests = new ArrayList<>();
+        //
+        List<Request> requests = new ArrayList<>();
         for (Member member : members) {
             drives.addAll(member.getDrives());
             rides.addAll(member.getRides());
+            //legacy
             rideRequests.addAll(member.getRideRequests());
+            //
+            requests.addAll(member.getRequests());
             for (Drive d : drives) 
                 schedulables.put(d.getIdNumber(), d);
             for (Ride r : rides) 
@@ -49,18 +52,40 @@ public class NewDataHandler implements DataHandler {
         }
     }
 
+    //legacy
     @Override
     public List<RideRequest> getRideRequests() {
+        List<RideRequest> rideRequests = new ArrayList<>();
+        for (Member member : members) {
+            rideRequests.addAll(member.getRideRequests());
+        }
         return rideRequests;
+    }
+    
+    @Override
+    public List<Request> getRequests() {
+        List<Request> requests = new ArrayList<>();
+        for (Member member : members) {
+            requests.addAll(member.getRequests());
+        }
+        return requests;
     }
 
     @Override
     public List<Ride> getRides() {
+        List<Ride> rides = new ArrayList<>();
+        for (Member member : members) {
+            rides.addAll(member.getRides());
+        }
         return rides;
     }
 
     @Override
     public List<Drive> getDrives() {
+        List<Drive> drives = new ArrayList<>();
+        for (Member member : members) {
+            drives.addAll(member.getDrives());
+        }
         return drives;
     }
     
@@ -89,7 +114,7 @@ public class NewDataHandler implements DataHandler {
             schedulables.put(d.getIdNumber(), d);
         for (Ride r : member.getRides())
             schedulables.put(r.getIdNumber(), r);
-        for (ParkingTime p : parkingTimes)
+        for (ParkingTime p : member.getParkingTimes())
             schedulables.put(p.getIdNumber(), p);
     }
     
@@ -135,6 +160,10 @@ public class NewDataHandler implements DataHandler {
 
     @Override
     public List<ParkingTime> getParkingTimes() {
+        List<ParkingTime> parkingTimes = new ArrayList<>();
+        for (Member member : members) {
+            parkingTimes.addAll(member.getParkingTimes());
+        }
         return parkingTimes;
     }
 

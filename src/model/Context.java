@@ -35,7 +35,7 @@ public class Context {
     
     public Member getMember() {
         if (this.member == null)
-            this.member = new Student(new LoginInformation("", ""), "", "", new Address("", "", "", "", ""), "", new Passenger(), "");
+            this.member = new Member();
         return this.member;
     }
 

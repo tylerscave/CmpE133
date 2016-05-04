@@ -1,10 +1,9 @@
 package model;
 
-public class Student extends Member {
+public class Student implements MemberType {
 	private String studentID;
 
-	public Student(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, MemberType type, String studentID){
-		super(loginInfo, lastName, firstName, address, phoneNumber, type);
+	public Student(String studentID){
 		this.studentID = studentID;
 	}
 	

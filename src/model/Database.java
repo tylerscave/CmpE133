@@ -65,7 +65,7 @@ public class Database {
 			pWriter.print("saved ");//sanity check
 		    pWriter.close();
 		}
-		public static void add(String email,String password, String lastname, String firstname, String address, String phone, MemberType memberType, String paymentMethod){
+		public static void add(String email,String password, String lastname, String firstname, String address, String phone, DrivingType memberType, String paymentMethod){
 			boolean found = false;
 			System.out.print("Add button pressed\n");
 			for(int i = 0; i<rows; i++){

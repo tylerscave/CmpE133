@@ -2,7 +2,7 @@ package model;
 
 import model.payment.Reward;
 
-public class Passenger extends MemberType {
+public class Passenger implements DrivingType {
 	private Address location;
 	private Reward payMethod;
 
@@ -13,5 +13,9 @@ public class Passenger extends MemberType {
 
     public Passenger() {
     }
-        
+    
+    @Override
+    public boolean isDriver() {
+        return false;
+    }
 }
