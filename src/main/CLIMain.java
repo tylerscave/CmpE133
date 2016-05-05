@@ -541,7 +541,10 @@ public class CLIMain {
     }
 
     private static void updateName(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	System.out.println("Enter the first name: ");
+    	member.setFirstName(in.nextLine());
+    	System.out.println("Enter the last name: ");
+    	member.setLastName(in.nextLine());
     }
 
     private static void updateAddress(Member member) {
