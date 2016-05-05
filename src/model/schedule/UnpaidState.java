@@ -4,9 +4,9 @@ package model.schedule;
  *
  * @author David
  */
-public class EarlyState extends RideState{
+public class UnpaidState extends RideState{
 
-    public EarlyState(RideStatus rs) {
+    public UnpaidState(RideStatus rs) {
         super(rs);
     }
     
