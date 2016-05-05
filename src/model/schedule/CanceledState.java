@@ -4,9 +4,9 @@ package model.schedule;
  *
  * @author David
  */
-public class OnTimeState extends RideState{
+public class CanceledState extends RideState{
 
-    public OnTimeState(RideStatus rs) {
+    public CanceledState(RideStatus rs) {
         super(rs);
     }
     
