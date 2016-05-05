@@ -21,9 +21,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Context;
-import model.Member;
-import model.Vehicle;
-import model.Vehicle.VehicleStyle;
+import model.member.Member;
+import model.member.Vehicle;
+import model.member.Vehicle.VehicleStyle;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.

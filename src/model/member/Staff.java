@@ -1,4 +1,6 @@
-package model;
+package model.member;
+
+import model.member.MemberType;
 
 public class Staff implements MemberType{
 	

@@ -1,8 +1,8 @@
 package controller;
 
 import model.LoginHandler;
-import model.LoginInformation;
-import model.Member;
+import model.member.LoginInformation;
+import model.member.Member;
 
 import java.io.IOException;
 import java.net.URL;

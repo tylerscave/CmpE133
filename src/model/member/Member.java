@@ -1,5 +1,7 @@
-package model;
+package model.member;
 
+import model.member.DrivingType;
+import model.member.Address;
 import model.schedule.RideRequest;
 import model.schedule.Ride;
 import model.schedule.ParkingTime;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import model.Notification;
 import model.schedule.Request;
 
 /**

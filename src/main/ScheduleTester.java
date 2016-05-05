@@ -7,19 +7,19 @@ import model.Context;
 import model.DataHandler;
 import model.schedule.Drive;
 import model.schedule.DriveChoice;
-import model.Driver;
-import model.Location;
+import model.member.Driver;
+import model.schedule.Location;
 import model.LocationMap;
-import model.LoginInformation;
-import model.Member;
-import model.MemberBuilder;
+import model.member.LoginInformation;
+import model.member.Member;
+import model.member.MemberBuilder;
 import model.Notification;
 import model.NotificationSender;
-import model.Passenger;
+import model.member.Passenger;
 import model.schedule.Ride;
 import model.schedule.RideRequest;
 import model.schedule.Route;
-import model.Vehicle;
+import model.member.Vehicle;
 import model.schedule.ScheduleViewer;
 
 /**

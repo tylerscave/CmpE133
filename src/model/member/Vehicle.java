@@ -1,4 +1,4 @@
-package model;
+package model.member;
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
  * The model for the vehicle objects.  

@@ -1,4 +1,4 @@
-package model;
+package model.member;
 
 public class Address {
 	private String street1;

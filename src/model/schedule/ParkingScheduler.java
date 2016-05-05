@@ -2,7 +2,7 @@ package model.schedule;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Member;
+import model.member.Member;
 
 /**
  *

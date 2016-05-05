@@ -22,7 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Context;
-import model.Member;
+import model.member.Member;
 
 public class RideScheduleOptionSceneController implements Initializable {
     private Context context;

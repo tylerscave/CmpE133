@@ -1,6 +1,6 @@
 package model.payment;
 
-import model.Member;
+import model.member.Member;
 import model.payment.RewardCalculator;
 import model.payment.Reward;
 import model.schedule.Ride;

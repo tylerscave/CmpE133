@@ -3,9 +3,9 @@ package model.schedule;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-import model.Driver;
+import model.member.Driver;
 import model.LocationMap;
-import model.Member;
+import model.member.Member;
 import model.Notification;
 
 /**

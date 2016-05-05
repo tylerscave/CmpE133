@@ -1,5 +1,6 @@
 package model;
 
+import model.member.Member;
 import model.schedule.Schedulable;
 import model.schedule.RideRequest;
 import model.schedule.Ride;

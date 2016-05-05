@@ -4,8 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import model.Context;
 import model.DataHandler;
-import model.Location;
-import model.Member;
+import model.member.Member;
 
 /**
  *

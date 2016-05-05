@@ -7,10 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import model.Context;
 import model.DataHandler;
-import model.Driver;
-import model.Location;
+import model.member.Driver;
 import model.LocationMap;
-import model.Member;
+import model.member.Member;
 import model.Notification;
 
 /**

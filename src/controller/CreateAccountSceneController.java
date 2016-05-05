@@ -19,7 +19,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Context;
-import model.Member;
+import model.member.Member;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.

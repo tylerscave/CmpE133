@@ -1,6 +1,11 @@
-package model;
+package model.member;
 
+import model.member.Member;
+import model.member.DrivingType;
+import model.member.Address;
 import java.util.List;
+import model.Context;
+import model.DataHandler;
 
 /**
  *

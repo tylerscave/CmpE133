@@ -1,5 +1,6 @@
-package model;
+package model.schedule;
 
+import model.schedule.Location;
 import java.util.GregorianCalendar;
 
 /**

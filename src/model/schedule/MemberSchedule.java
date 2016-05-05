@@ -8,7 +8,6 @@ package model.schedule;
 
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import model.Location;
 
 public class MemberSchedule {
 	//declare all variables for member schedule

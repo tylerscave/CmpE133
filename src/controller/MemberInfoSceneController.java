@@ -24,10 +24,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Address;
+import model.member.Address;
 import model.Context;
-import model.Member;
-import model.DrivingType;
+import model.member.Member;
+import model.member.DrivingType;
 
 public class MemberInfoSceneController implements Initializable {
 	

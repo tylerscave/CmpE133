@@ -1,5 +1,8 @@
 package model;
 
+import model.member.LoginInformation;
+import model.member.Member;
+
 /**
  *
  * @author David

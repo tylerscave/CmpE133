@@ -1,6 +1,6 @@
 package model.payment;
 
-import model.Member;
+import model.member.Member;
 import model.schedule.Ride;
 
 public abstract class Reward {

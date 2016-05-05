@@ -1,8 +1,8 @@
 package model.payment;
 
 import java.util.InputMismatchException;
-import model.Driver;
-import model.Member;
+import model.member.Driver;
+import model.member.Member;
 import model.schedule.Ride;
 
 /**

@@ -31,8 +31,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import model.Context;
-import model.Location;
-import model.Member;
+import model.schedule.Location;
+import model.member.Member;
 import model.schedule.MemberSchedule;
 public class MemberOneTimeScheduleSceneController implements Initializable{
 

@@ -1,4 +1,5 @@
 package model;
+import model.member.DrivingType;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

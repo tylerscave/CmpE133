@@ -1,5 +1,6 @@
 package model;
 
+import model.member.Member;
 import model.graph.GraphMap;
 
 /**

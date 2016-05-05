@@ -1,4 +1,6 @@
-package model;
+package model.member;
+
+import model.member.Address;
 
 public class Driver implements DrivingType {
 	private String DriverLicenseNumber;

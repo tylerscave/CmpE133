@@ -1,4 +1,4 @@
-package model;
+package model.schedule;
 
 import model.schedule.ParkingSpot;
 import java.util.ArrayList;

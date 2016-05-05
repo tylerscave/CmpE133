@@ -1,5 +1,7 @@
 package model;
 
+import model.schedule.Stop;
+import model.schedule.Location;
 import java.util.GregorianCalendar;
 import java.util.List;
 
