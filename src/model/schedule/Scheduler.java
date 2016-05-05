@@ -21,22 +21,9 @@ public abstract class Scheduler {
         data = context.getDataHandler();
     }
     
-    public List<Schedulable> getAvailable(Request r) {
-        List<Schedulable> available = getAllAvailable();
-        Iterator<Schedulable> it = available.iterator();
-        while (it.hasNext()) {
-            Schedulable s = it.next();
-            if (!isAvailable(r, s))
-                it.remove();
-        }
-        return available;
-    }
+    public abstract List<Schedulable> getAvailable(Request r);
     
     public abstract String schedule(Request r, Schedulable s);
-
-    public abstract List<Schedulable> getAllAvailable();
-    
-    public abstract boolean isAvailable(Request r, Schedulable s);
     
     protected String correctData(Request r) {
         if (r == null)

@@ -1,29 +1,21 @@
 package model.schedule;
 
+import java.util.GregorianCalendar;
 import model.Member;
-import model.schedule.Drive;
 
 /**
  *
  * @author David
  */
-public class Ride implements Schedulable{
-    private int memberId;
+public class Ride extends Schedulable{
     private Route route;
     private int driveId;
-    private int idNumber;
-    private String memberName;
     private RideStatus rideStatus;
     
     public Ride(Member member, Drive drive) {
-        this.memberId = member.getIdNumber();
+        super(member);
         this.driveId = drive.getIdNumber();
-        this.memberName = member.toString();
         this.rideStatus = new RideStatus();
-    }
-
-    public int getMemberId() {
-        return memberId;
     }
 
     public int getDriveId() {
@@ -38,22 +30,18 @@ public class Ride implements Schedulable{
         this.route = route;
     }
 
+    @Override
     public void remove() {
         //TODO
     }
 
     @Override
-    public void setIdNumber(int idNumber) {
-        this.idNumber = idNumber;
+    public GregorianCalendar getStartTime() {
+        return route.getStartTime();
     }
 
     @Override
-    public int getIdNumber() {
-        return idNumber;
-    }
-
-    @Override
-    public String getMemberName() {
-        return memberName;
+    public GregorianCalendar getEndTime() {
+        return route.getEndTime();
     }
 }

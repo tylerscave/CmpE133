@@ -149,6 +149,8 @@ public class ScheduleViewer {
         if (member.getRequests().isEmpty())
             sb.append("None").append(System.lineSeparator());
         for (Request r : member.getRequests()) {
+            if (r.getRequestType() != Request.RequestType.RIDE)
+                continue;
             sb.append("Ride request details:").append(System.lineSeparator());
             if (r.getStartType() == Request.TimeType.Anytime)
                 sb.append("  Depart from ").append(r.getStartLocation()).append(" at AnyTime").append(System.lineSeparator());

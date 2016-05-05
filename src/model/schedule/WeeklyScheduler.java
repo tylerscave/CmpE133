@@ -1,8 +1,5 @@
 package model.schedule;
 
-import model.schedule.Scheduler;
-import model.schedule.Request;
-import model.schedule.Schedulable;
 import java.util.List;
 
 /**
@@ -17,13 +14,8 @@ public class WeeklyScheduler extends Scheduler{
     }
 
     @Override
-    public List<Schedulable> getAllAvailable() {
+    public List<Schedulable> getAvailable(Request r) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public boolean isAvailable(Request r, Schedulable s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

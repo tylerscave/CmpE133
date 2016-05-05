@@ -146,9 +146,8 @@ public class ScheduleTester {
         if (success) {
             System.out.println("New Drive Scheduled!");
             Drive drive = member.getDrives().get(member.getDrives().size()-1);
-            Route route = drive.getRoute();
-            List<Location> stops = route.getStops();
-            System.out.println(stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime())+" on "+getDateFromCalendar(route.getEndTime()));
+            List<Location> stops = drive.getRoute().getStops();
+            System.out.println(stops.get(0)+" at "+getTimeFromCalendar(drive.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(drive.getEndTime())+" on "+getDateFromCalendar(drive.getEndTime()));
             if (stops.size() > 2) {
                 System.out.print("Stops at: ");
                 for (int j = 1; j < stops.size()-1; j++) {
@@ -162,9 +161,9 @@ public class ScheduleTester {
                 System.out.println("  None");
             for (int i = 0; i < drive.numberOfRides(); i++) {
                 Ride ride = (Ride) data.getSchedulable(drive.getRideId(i));
-                Route rideRoute = ride.getRoute();
+                List<Location> rideStops = ride.getRoute().getStops();
                 System.out.print("  "+ride.getMemberName() + ": ");
-                System.out.println(rideRoute.getStops().get(0)+" at "+getTimeFromCalendar(rideRoute.getStartTime())+" to "+rideRoute.getStops().get(stops.size()-1)+" at "+getTimeFromCalendar(rideRoute.getEndTime()));
+                System.out.println(rideStops.get(0)+" at "+getTimeFromCalendar(ride.getStartTime())+" to "+rideStops.get(rideStops.size()-1)+" at "+getTimeFromCalendar(ride.getEndTime()));
             }
         }
         else
@@ -270,9 +269,8 @@ public class ScheduleTester {
             if (success) {
                 System.out.println("New Ride Scheduled!");
                 Ride ride = rideRequest.getMember().getRides().get(rideRequest.getMember().getRides().size()-1);
-                Route route = ride.getRoute();
-                List<Location> stops = route.getStops();
-                System.out.println(stops.get(0)+" at "+getTimeFromCalendar(route.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(route.getEndTime()) +" on "+getDateFromCalendar(route.getEndTime()));
+                List<Location> stops = ride.getRoute().getStops();
+                System.out.println(stops.get(0)+" at "+getTimeFromCalendar(ride.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(ride.getEndTime()) +" on "+getDateFromCalendar(ride.getEndTime()));
                 Drive drive = (Drive) data.getSchedulable(ride.getDriveId());
                 System.out.println("Passenger in "+drive.getMemberName()+"'s vehicle");
 

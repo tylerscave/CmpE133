@@ -25,31 +25,6 @@ public class NewDataHandler implements DataHandler {
         members = new ArrayList<>();
         schedulables = new HashMap<>();
         schedulableId = 0;
-        generateLists();
-    }
-    
-    public void generateLists() {
-        List<Drive> drives = new ArrayList<>();
-        List<Ride> rides = new ArrayList<>();
-        List<ParkingTime> parkingTimes = new ArrayList<>();
-        //legacy
-        List<RideRequest> rideRequests = new ArrayList<>();
-        //
-        List<Request> requests = new ArrayList<>();
-        for (Member member : members) {
-            drives.addAll(member.getDrives());
-            rides.addAll(member.getRides());
-            //legacy
-            rideRequests.addAll(member.getRideRequests());
-            //
-            requests.addAll(member.getRequests());
-            for (Drive d : drives) 
-                schedulables.put(d.getIdNumber(), d);
-            for (Ride r : rides) 
-                schedulables.put(r.getIdNumber(), r);
-            for (ParkingTime p : parkingTimes)
-                schedulables.put(p.getIdNumber(), p);
-        }
     }
 
     //legacy

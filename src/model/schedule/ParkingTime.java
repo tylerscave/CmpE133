@@ -1,6 +1,5 @@
 package model.schedule;
 
-import model.schedule.ParkingSpot;
 import java.util.GregorianCalendar;
 import model.Location;
 import model.Member;
@@ -9,10 +8,7 @@ import model.Member;
  *
  * @author David
  */
-public class ParkingTime implements Schedulable {
-    private int idNumber;
-    private int memberId;
-    private String memberName;
+public class ParkingTime extends Schedulable {
     private GregorianCalendar startTime;
     private GregorianCalendar endTime;
     private Location location;
@@ -20,8 +16,7 @@ public class ParkingTime implements Schedulable {
     
     public ParkingTime(Member member, GregorianCalendar startTime, 
             GregorianCalendar endTime, Location location, ParkingSpot parkingSpot) {
-        this.memberId = member.getIdNumber();
-        this.memberName = member.toString();
+        super(member);
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
@@ -29,35 +24,27 @@ public class ParkingTime implements Schedulable {
     }
     
     
-    public boolean conflicts(ParkingTime parkingTime) {
+    @Override
+    public boolean conflicts(Schedulable s) {
+        return super.conflicts(s);/*
+        if (s instanceof ParkingTime)
+            
+        
         if ((!parkingTime.getLocation().equals(location) || !parkingTime.getParkingSpot().equals(parkingSpot)) 
                 && memberId != parkingTime.getMemberId())
             return false;
         return ((!parkingTime.getStartTime().before(this.startTime) && parkingTime.getStartTime().before(this.endTime)) 
-                ||(!parkingTime.getEndTime().after(this.endTime) && parkingTime.getEndTime().after(this.startTime)));
+                ||(!parkingTime.getEndTime().after(this.endTime) && parkingTime.getEndTime().after(this.startTime)));*/
     }
 
+    @Override
     public GregorianCalendar getStartTime() {
         return startTime;
     }
 
+    @Override
     public GregorianCalendar getEndTime() {
         return endTime;
-    }
-    
-    @Override
-    public void setIdNumber(int idNumber) {
-        this.idNumber = idNumber;
-    }
-
-    @Override
-    public int getIdNumber() {
-        return idNumber;
-    }
-
-    @Override
-    public String getMemberName() {
-        return memberName;
     }
 
     public Location getLocation() {
@@ -68,8 +55,8 @@ public class ParkingTime implements Schedulable {
         return parkingSpot;
     }
 
-    public int getMemberId() {
-        return memberId;
+    @Override
+    public void remove() {
+        //ToDo
     }
-    
 }

@@ -47,36 +47,38 @@ public class RideScheduler extends Scheduler{
     }
 
     @Override
-    public List<Schedulable> getAllAvailable() {
-        List<Schedulable> all = new ArrayList<>();
+    public List<Schedulable> getAvailable(Request r) {
+        List<Schedulable> available = new ArrayList<>();
         List<Drive> drives = data.getDrives();
         for (Drive d : drives) {
-            all.add(d);
+            if (getRouteFromRequest(d, r) != null)
+                available.add(d);
         }
         
-        return all;
+        return available;
     }
 
-    @Override
-    public boolean isAvailable(Request r, Schedulable s) {
-        return (getRouteFromRequest((Drive) s, r) != null);
-    }
-    
     private Ride generateRide(Drive drive, Member member, Request request) {
         Route route = getRouteFromRequest(drive, request);
         if (route == null)
             return null;
+        Ride ride = new Ride(member, drive);
+        ride.setRoute(route);
+        
         for (Drive d : member.getDrives()) {
-            if (d.getRoute().conflicts(route))
+            if (d.conflicts(ride))
                 return null;
         }
         for (Ride r : member.getRides()) {
-            if (r.getRoute().conflicts(route))
+            if (r.conflicts(ride))
+                return null;
+        }
+        //may not want to check for this 
+        for (ParkingTime p : member.getParkingTimes()) {
+            if (p.conflicts(ride))
                 return null;
         }
         
-        Ride ride = new Ride(member, drive);
-        ride.setRoute(route);
         ride.setIdNumber(data.getNewSchedulableId());
         return ride;
     }

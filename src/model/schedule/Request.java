@@ -92,18 +92,16 @@ public class Request {
      * @param startTime
      * @param endTime
      * @param location
-     * @param startType
-     * @param endType
      */
     public Request(Member member, GregorianCalendar startTime, GregorianCalendar endTime, 
-            Location location, TimeType startType, TimeType endType) {
+            Location location) {
         this.member = member;
         this.startTime = startTime;
         this.endTime = endTime;
         this.startLocation = location;
         this.endLocation = location;
-        this.startType = startType;
-        this.endType = endType;
+        this.startType = TimeType.Near;
+        this.endType = TimeType.Near;
         
         requestType = RequestType.PARKING;
         name = null;

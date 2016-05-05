@@ -31,14 +31,11 @@ public class SchedulingContext {
         return scheduler.schedule(r, s);
     }
     
-    public boolean addToRequests(Request r, String name) {
-        if (r.getRequestType() != Request.RequestType.RIDE)
-            return false;
+    public void addToRequests(Request r, String name) {
         Member member = r.getMember();
         r.setName(name);
         member.getRequests().add(r);
         member.setChanged();
         member.notifyObservers();
-        return true;
     }
 }

@@ -12,24 +12,16 @@ import model.Member;
  *
  * @author David
  */
-public class Drive implements Schedulable{
+public class Drive extends Schedulable{
     
     private int numSeats;
-    private int memberId;
     private List<Integer> rideIds;
     private Route route;
-    private int idNumber;
-    private String memberName;
     
     public Drive(int numSeats, Member member) {
+        super(member);
         this.numSeats = numSeats;
-        this.memberId = member.getIdNumber();
         this.rideIds = new ArrayList<>();
-        this.memberName = member.toString();
-    }
-
-    public int getMemberId() {
-        return memberId;
     }
 
     public int getNumSeats() {
@@ -69,23 +61,9 @@ public class Drive implements Schedulable{
         return this.rideIds.size();
     }
     
+    @Override
     public void remove() {
         //TODO
-    }
-
-    @Override
-    public int getIdNumber() {
-        return idNumber;
-    }
-
-    @Override
-    public void setIdNumber(int idNumber) {
-        this.idNumber = idNumber;
-    }
-
-    @Override
-    public String getMemberName() {
-        return memberName;
     }
     
     /**
@@ -97,7 +75,7 @@ public class Drive implements Schedulable{
     public Location getCurrentLocation() {
         //get latest information
         DataHandler data = Context.getInstance().getDataHandler();
-        Drive temp = (Drive)data.getSchedulable(idNumber);
+        Drive temp = (Drive)data.getSchedulable(getIdNumber());
         return temp.getRoute().getLocationAtTime(new GregorianCalendar());
     }
     
@@ -108,12 +86,12 @@ public class Drive implements Schedulable{
     public void updateStatus(Location location) {
         //update data
         DataHandler data = Context.getInstance().getDataHandler();
-        Member member = data.getMember(memberId);
+        Member member = data.getMember(getMemberId());
         for (Drive d : member.getDrives()) {
-            if (d.idNumber == idNumber)
+            if (d.getIdNumber() == getIdNumber())
                 d.getRoute().setRealRoute(new GregorianCalendar(), location);
         }
-        data.setMember(memberId, member);
+        data.setMember(getMemberId(), member);
         
         member.addObserver(data);
         member.setChanged();
@@ -121,5 +99,15 @@ public class Drive implements Schedulable{
         member.deleteObservers();
         //finish update data; local copy
         route.setRealRoute(new GregorianCalendar(), location);
+    }
+
+    @Override
+    public GregorianCalendar getStartTime() {
+        return route.getStartTime();
+    }
+
+    @Override
+    public GregorianCalendar getEndTime() {
+        return route.getEndTime();
     }
 }
