@@ -1,8 +1,7 @@
 package model.member;
 
-import model.member.Address;
 
-public class Driver implements DrivingType {
+public class Driver extends DrivingType {
 	private String DriverLicenseNumber;
 	private Vehicle vehicle;
 	private Address departureLocation;

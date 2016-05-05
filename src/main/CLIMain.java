@@ -6,10 +6,10 @@ import java.util.Scanner;
 import model.Context;
 import model.DataHandler;
 import model.schedule.Drive;
-import model.schedule.DriveChoice;
 import model.member.Driver;
 import model.schedule.Location;
 import model.LocationMap;
+import model.LoginHandler;
 import model.member.LoginInformation;
 import model.member.Member;
 import model.member.MemberBuilder;
@@ -33,6 +33,8 @@ public class CLIMain {
     private static DataHandler data;
     private static LocationMap map;
     private static List<Location> locations;
+    private static LoginHandler loginHandler;
+    private static Scanner in;
     
     /**
      * @param args the command line arguments
@@ -42,43 +44,34 @@ public class CLIMain {
         data = context.getDataHandler();
         map = context.getMap();
         locations = map.getLocations();
-        menu();
+        context.setLogin(new LoginHandler());
+        loginHandler = context.getLogin();
+        in = new Scanner(System.in);
+        start();
     }
     
-    private static void menu() {
+    private static void start() {
         boolean exit = false;
         while (! exit) {
-            System.out.println("Schedule Tester");
-            System.out.println("Get started by entering one of the following commands:");
-            System.out.println("1: Create new account");
-            System.out.println("2: Set a Drive");
-            System.out.println("3: Request a Ride");
-            System.out.println("4: View Schedule");
-            System.out.println("5: View Map");
-            System.out.println("6: Notifications");
+            System.out.println("Welcome to Spartan Pool.");
+            System.out.println("Get started by entering one of the following numbers:");
             System.out.println("0: Exit");
-            int option = getOptionIntFromInput(7);
+            System.out.println("1: Login");
+            System.out.println("2: Create new account");
+            System.out.println("3: Cheat Login");
+            int option = getOptionIntFromInput(4);
             switch (option) {
                 case 0:
                     exit = true;
                     break;
                 case 1:
-                    createAccount();
+                    login();
                     break;
                 case 2:
-                    setDrive();
+                    createAccount();
                     break;
                 case 3:
-                    viewRideRequest();
-                    break;
-                case 4:
-                    viewSchedule();
-                    break;
-                case 5:
-                    viewMap();
-                    break;
-                case 6:
-                    Notifications();
+                    cheatLogin();
                     break;
                 default:
                     break;
@@ -86,9 +79,23 @@ public class CLIMain {
         }
         System.exit(0);
     }
-
+    private static void login() {
+        System.out.println("Enter email");
+        String email = in.nextLine();
+        System.out.println("Enter password");
+        String password = in.nextLine();
+        if (loginHandler.isLoggedIn())
+            loginHandler.handleLogout();
+        System.out.println(loginHandler.handleLogin(new LoginInformation(email, password)));
+        if (loginHandler.isLoggedIn()) {
+            menu();
+            return;
+        }
+        System.out.println("Press Enter to continue...");
+        in.nextLine();
+    }
+    
     private static void createAccount() {
-        Scanner in = new Scanner(System.in);
         MemberBuilder mb = new MemberBuilder();
         System.out.println("Enter first name");
         String fn = in.nextLine();
@@ -112,12 +119,115 @@ public class CLIMain {
             System.out.println("New Account created!");
         System.out.println("Press Enter to continue...");
         in.nextLine();
+        if (loginHandler.handleLogin(new LoginInformation(fn, ln)).equals(""))
+            menu();
     }
 
+    private static void cheatLogin() {
+        if (loginHandler.handleLogin(selectMember().getLoginInfo()).equals(""))
+            menu();
+    }
+    
+    private static void menu() {
+        boolean exit = false;
+        while (! exit) {
+            System.out.println("Welcome, "+context.getMember());
+            System.out.println("Main Menu:");
+            System.out.println("0: Logout");
+            System.out.println("1: Update Account");
+            System.out.println("2: Set a Drive");
+            System.out.println("3: Request a Ride");
+            System.out.println("4: Set Weekly Schedule");
+            System.out.println("5: View Schedule");
+            System.out.println("6: View Map");
+            System.out.println("7: Notifications");
+            System.out.println("8: Payments");
+            int option = getOptionIntFromInput(9);
+            switch (option) {
+                case 0:
+                    loginHandler.handleLogout();
+                    exit = true;
+                    break;
+                case 1:
+                    updateAccount();
+                    break;
+                case 2:
+                    setDrive();
+                    break;
+                case 3:
+                    viewRideRequest();
+                    break;
+                case 4:
+                    setWeekly();
+                    break;
+                case 5:
+                    viewSchedule();
+                    break;
+                case 6:
+                    viewMap();
+                    break;
+                case 7:
+                    notifications();
+                    break;
+                case 8:
+                    payments();
+                    break;
+                default:
+                    break;
+            }
+        }
+        //back to start()
+    }
+
+    private static void updateAccount() {
+        Member member = context.getMember();
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Select the info you wish to modify");
+            System.out.println("0: Return to menu");
+            System.out.println("1: Login Information");
+            System.out.println("2: Name");
+            System.out.println("3: Address");
+            System.out.println("4: Phone Number");
+            System.out.println("5: Driving Type");
+            System.out.println("6: Member Type");
+            System.out.println("7: Vehicle");
+            int option = getOptionIntFromInput(8);
+            switch (option) {
+                case 0:
+                    exit = true;
+                    break;
+                case 1:
+                    updateLoginInfo(member);
+                    break;
+                case 2:
+                    updateName(member);
+                    break;
+                case 3:
+                    updateAddress(member);
+                    break;
+                case 4:
+                    updatePhone(member);
+                    break;
+                case 5:
+                    updateDrivingType(member);
+                    break;
+                case 6:
+                    updateMemberType(member);
+                    break;
+                case 7:
+                    updateVehicle(member);
+                    break;
+                default:
+                    break;
+            }
+        }
+        member.setChanged();
+        member.notifyObservers();
+        //back to menu
+    }
     private static void setDrive() {
-        Scanner in = new Scanner(System.in);
-        Member member = selectMember();
-        member.addObserver(data);
+        Member member = context.getMember();
         System.out.println("Choose departure location");
         for (int i = 0; i < locations.size(); i++)
             System.out.println(i + ": " + locations.get(i));
@@ -170,12 +280,10 @@ public class CLIMain {
             System.out.println(fail);
         System.out.println("Press Enter to continue...");
         in.nextLine();
-        member.deleteObservers();
     }
 
     private static void viewRideRequest() {        
-        Member member = selectMember();
-        member.addObserver(data);
+        Member member = context.getMember();
         System.out.println("Request a Ride:");
         System.out.println("0: New Ride Request");
         List<Request> requests = member.getRequests();
@@ -245,7 +353,6 @@ public class CLIMain {
             System.out.println("Arrive at "+request.getEndLocation()+" at AnyTime");
         else
             System.out.println("Arrive at "+request.getEndLocation()+" "+request.getEndType().name()+" "+getTimeFromCalendar(request.getEndTime())+" "+getDateFromCalendar(request.getEndTime()));
-        Scanner in = new Scanner(System.in);
         in.nextLine();
 
         SchedulingContext sc = new SchedulingContext();
@@ -271,7 +378,7 @@ public class CLIMain {
                 Ride ride = request.getMember().getRides().get(request.getMember().getRides().size()-1);
                 List<Location> stops = ride.getRoute().getStops();
                 System.out.println(stops.get(0)+" at "+getTimeFromCalendar(ride.getStartTime())+" to "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(ride.getEndTime()) +" on "+getDateFromCalendar(ride.getEndTime()));
-                Drive drive = (Drive) data.getSchedulable(ride.getDriveId());
+                Drive drive = (new ScheduleViewer()).getDriveById(ride.getDriveId());
                 System.out.println("Passenger in "+drive.getMemberName()+"'s vehicle");
 
             }
@@ -280,28 +387,27 @@ public class CLIMain {
         }
         System.out.println("Press Enter to continue...");
         in.nextLine();
-        member.deleteObservers();
+    }
+    
+    public static void setWeekly() {
+        //todo
     }
 
     private static void viewSchedule() {
-        Scanner in = new Scanner(System.in);
-        Member member = selectMember();
-        ScheduleViewer sv = new ScheduleViewer();
-        System.out.print(sv.getScheduleText(member));
+        Member member = context.getMember();
+        System.out.print((new ScheduleViewer()).getScheduleText(member));
         System.out.println("Press Enter to continue...");
         in.nextLine();
     }
     
     private static void viewMap() {
         System.out.println(map);
-        Scanner in = new Scanner(System.in);
         System.out.println("Press Enter to continue...");
         in.nextLine();
     }
     
-    private static void Notifications() {
-        Scanner in = new Scanner(System.in);
-        Member member = selectMember();
+    private static void notifications() {
+        Member member = context.getMember();
         List<Notification> notifications = null;
         System.out.println("Notifications:");
         System.out.println("0: Return to menu");
@@ -313,7 +419,6 @@ public class CLIMain {
             return;
         }
         else if (option == 1) {
-            member.addObserver(data);
             notifications = member.readNewNotifications();  
         }
         else if (option == 2) {
@@ -330,22 +435,24 @@ public class CLIMain {
         }
         System.out.println("Press Enter to continue...");
         in.nextLine();
-        member.deleteObservers();
     }
     
     private static void sendNotification(Member member) {
-        Scanner in = new Scanner(System.in);
         System.out.println("Select member to send to:");
         Member toMember = selectMember();
         System.out.println("Enter notification message");
         String message = in.nextLine();
         NotificationSender ns = new NotificationSender(member);
-        ns.send(toMember.getIdNumber(), message);
+        ns.send(toMember.getLoginInfo().getEmail(), message);
         System.out.println("Notification Sent!");
         System.out.println("Press Enter to continue...");
         in.nextLine();
-        member.deleteObservers();
     }
+    
+    private static void payments() {
+        //todo
+    }
+
     
     private static Member selectMember() {
         System.out.println("Select Member");
@@ -373,7 +480,6 @@ public class CLIMain {
     
     private static int getOptionIntFromInput(int lessThan) {
         int option = 0;
-        Scanner in = new Scanner(System.in);
         boolean valid = false;
         while (!valid) {
             String input = in.nextLine();
@@ -397,7 +503,6 @@ public class CLIMain {
     
     private static GregorianCalendar getTimeFromInput() {
         GregorianCalendar time = null;
-        Scanner in = new Scanner(System.in);
         boolean valid = false;
         while (!valid) {
             String input = in.nextLine();    
@@ -415,5 +520,33 @@ public class CLIMain {
         }
         return time;
     } 
+
+    private static void updateLoginInfo(Member member) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void updateName(Member member) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void updateAddress(Member member) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void updatePhone(Member member) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void updateDrivingType(Member member) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void updateMemberType(Member member) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void updateVehicle(Member member) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

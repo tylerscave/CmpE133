@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import model.member.LoginInformation;
 import model.member.Member;
 
@@ -10,27 +11,39 @@ import model.member.Member;
 public class LoginHandler {
     
     private boolean loggedIn;
+    private Context context;
 
     public LoginHandler() {
+        context = Context.getInstance();
         loggedIn = false;
     }
     
     /**
-     * Currently a stub. Creates a new account with the given username and password
-     * TODO: Make this access a database of members
+     * Logs in.
      *
-     * @param email
-     * @param password
+     * @param loginInfo
+     * @return a string explaining if anything went wrong, "" otherwise 
      */
-    public void handleLogin(LoginInformation loginInfo) {
-        loggedIn = true;
-        //stub
-        Context.getInstance().setMember(new Member());
+    public String handleLogin(LoginInformation loginInfo) {
+        if (loggedIn)
+            return "Already logged in";
+        DataHandler data = context.getDataHandler();
+        List<Member> members = data.getMembers();
+        for (Member m : members) {
+            if (m.getLoginInfo().equals(loginInfo)) {
+                loggedIn = true;
+                context.setMember(data.getMember(m.getIdNumber()));
+                context.getMember().addObserver(data);
+                return "";
+            }
+        }
+        return "Account with that email and password combination not found";
     }
     
     public void handleLogout() {
-        //TODO
         loggedIn = false;
+        context.getMember().deleteObservers();
+        context.setMember(new Member());
     }
 
     public boolean isLoggedIn() {

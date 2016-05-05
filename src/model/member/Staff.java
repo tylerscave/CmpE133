@@ -1,8 +1,6 @@
 package model.member;
 
-import model.member.MemberType;
-
-public class Staff implements MemberType{
+public class Staff extends MemberType{
 	
 	private String sjsuID;
 

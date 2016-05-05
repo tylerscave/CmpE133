@@ -44,7 +44,7 @@ public class ParkingScheduler extends Scheduler {
         member.getParkingTimes().add(park);
 
         member.setChanged();
-        member.notifyObservers(new ArrayList<>());
+        member.notifyObservers();
         
         return "Success";
     }

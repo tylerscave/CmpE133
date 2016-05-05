@@ -24,10 +24,11 @@ public interface DataHandler extends Observer {
     public List<Member> getMembers();
     
     /**
-     * Adds a new member to the database and returns a unique id number
+     * Adds a new member to the database and returns a unique id number.
+     * If there already is a member with the same email address, returns -1
      * 
      * @param member the member to add
-     * @return the unique member id number
+     * @return the unique member id number or -1
      */
     public int addMember(Member member);
     

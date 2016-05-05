@@ -1,5 +1,5 @@
 package model.member;
 
-public interface DrivingType {
-    public boolean isDriver();
+public abstract class DrivingType {
+    public abstract boolean isDriver();
 }

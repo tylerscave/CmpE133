@@ -1,6 +1,6 @@
 package model.member;
 
-public class Faculty implements MemberType{
+public class Faculty extends MemberType{
 	
 	
 }

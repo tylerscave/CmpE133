@@ -1,8 +1,6 @@
 package model.member;
 
-import model.member.MemberType;
-
-public class Student implements MemberType {
+public class Student extends MemberType {
 	private String studentID;
 
 	public Student(String studentID){

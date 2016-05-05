@@ -340,7 +340,7 @@ public class ScheduleTester {
         System.out.println("Enter notification message");
         String message = in.nextLine();
         NotificationSender ns = new NotificationSender(member);
-        ns.send(toMember.getIdNumber(), message);
+        ns.send(toMember.getLoginInfo().getEmail(), message);
         System.out.println("Notification Sent!");
         System.out.println("Press Enter to continue...");
         in.nextLine();

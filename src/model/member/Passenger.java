@@ -1,10 +1,8 @@
 package model.member;
 
-import model.member.DrivingType;
-import model.member.Address;
 import model.payment.Reward;
 
-public class Passenger implements DrivingType {
+public class Passenger extends DrivingType {
 	private Address location;
 	private Reward payMethod;
 

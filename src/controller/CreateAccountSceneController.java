@@ -19,7 +19,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Context;
+import model.member.LoginInformation;
 import model.member.Member;
+import model.member.MemberBuilder;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -66,8 +68,10 @@ public class CreateAccountSceneController implements Initializable {
 			JOptionPane.showMessageDialog(null, "Passwords must match!", "Error",
 											JOptionPane.ERROR_MESSAGE);
 		} else {
-	        member.getLoginInfo().setEmail(email.getText());
-	        member.getLoginInfo().setPassword(password.getText());
+                MemberBuilder mb = new MemberBuilder();
+                mb.setLoginInfo(new LoginInformation(email.getText(), password.getText()));
+                if (mb.build() == -1)
+                    return;
 			try {
 				Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
 				Scene scene = new Scene(root);

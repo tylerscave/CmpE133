@@ -4,6 +4,6 @@ package model.member;
  *
  * @author David
  */
-public interface MemberType {
+public abstract class MemberType {
     
 }

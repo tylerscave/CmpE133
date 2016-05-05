@@ -96,6 +96,10 @@ public class NewDataHandler implements DataHandler {
     
     @Override
     public int addMember(Member member) {
+        for (Member m : members) {
+            if (m.getLoginInfo().getEmail().equals(member.getLoginInfo().getEmail()))
+                return -1;
+        }
         int idNumber = members.size();
         member.setIdNumber(idNumber);
         members.add(member);
