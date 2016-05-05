@@ -522,7 +522,22 @@ public class CLIMain {
     } 
 
     private static void updateLoginInfo(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Enter the Email address: ");
+        String email, password1, password2;
+    	int i = 0;
+        email = in.nextLine();
+        do{
+        
+        	if (i > 0)
+        		System.out.println("Password did not match.");
+        	System.out.println("Enter a new password: ");
+            password1 = in.nextLine();
+            System.out.println("Enter the new password again: ");
+            password2 = in.nextLine();
+            i++;
+        }while(!password1.equals(password2));
+        
+        member.setLoginInfo(new LoginInformation(email, password1));
     }
 
     private static void updateName(Member member) {
