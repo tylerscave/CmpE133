@@ -3,6 +3,10 @@ package model.member;
 public class Student extends MemberType {
 	private String studentID;
 
+	public Student(){
+		
+	}
+	
 	public Student(String studentID){
 		this.studentID = studentID;
 	}
