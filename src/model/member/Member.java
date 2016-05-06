@@ -5,7 +5,7 @@ import model.member.Address;
 import model.schedule.RideRequest;
 import model.schedule.Ride;
 import model.schedule.ParkingTime;
-import model.schedule.MemberSchedule;
+import model.schedule.WeeklySchedule;
 import model.schedule.Drive;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class Member extends Observable {
     //
     private List<Notification> oldNotifications;
     private List<Notification> newNotifications;
-    private MemberSchedule memberSchedule;
+    private WeeklySchedule weeklySchedule;
     private int idNumber;
 
     public Member() {
@@ -184,8 +184,8 @@ public class Member extends Observable {
         return oldNotifications.size();
     }
 
-    public MemberSchedule getMemberSchedule() {
-        return memberSchedule;
+    public WeeklySchedule getWeeklySchedule() {
+        return weeklySchedule;
     }
 
     public int getIdNumber() {

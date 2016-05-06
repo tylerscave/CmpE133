@@ -27,14 +27,14 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import model.Context;
 import model.member.Member;
-import model.schedule.MemberSchedule;
+import model.schedule.WeeklySchedule;
 import model.schedule.Location;
 
 public class MemberScheduleSceneController implements Initializable{
 	
     private Context context;
     private Member member;
-    private MemberSchedule memberSchedule;
+    private WeeklySchedule memberSchedule;
     private Location selectedLocation;
     private GregorianCalendar monTime, monArriveTime, monDepartTime;
     private GregorianCalendar tuesTime, tuesArriveTime, tuesDepartTime;
@@ -86,7 +86,7 @@ public class MemberScheduleSceneController implements Initializable{
 	public void initialize(URL url, ResourceBundle rb) {
             context = Context.getInstance();
             member = context.getMember();
-            memberSchedule = member.getMemberSchedule();
+            memberSchedule = member.getWeeklySchedule();
             
             //set up the location ComboBox
             for (Location l : context.getMap().getLocations())

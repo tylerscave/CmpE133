@@ -106,6 +106,24 @@ public class Request {
         name = null;
     }
 
+    /**
+     * Constructor for requesting a weekly schedule
+     * @param member
+     * @param location
+     */
+    public Request(Member member, Location location) {
+        this.member = member;
+        this.startTime = new GregorianCalendar();
+        this.endTime = startTime;
+        this.startLocation = location;
+        this.endLocation = location;
+        this.startType = TimeType.Near;
+        this.endType = TimeType.Near;
+        
+        requestType = RequestType.WEEKLY;
+        name = null;
+    }
+
     public RequestType getRequestType() {
         return requestType;
     }
