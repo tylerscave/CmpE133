@@ -1,6 +1,7 @@
 package model.schedule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ListIterator;
@@ -53,9 +54,13 @@ public class DriveScheduler extends Scheduler{
             m.deleteObservers();
         }*/
         
-        List<Member> members = data.getMembers();
+        List<Member> members = new ArrayList<>(data.getMembers());
+        //make it fair
+        Collections.shuffle(members);
         List<Member> changed = new ArrayList<>();
         for (Member m : members) {
+            if (m.getIdNumber() == member.getIdNumber())
+                continue;
             ListIterator<Request> it = m.getRequests().listIterator();
             while (it.hasNext()) {
                 if (drive.getNumSeats() < 1) {

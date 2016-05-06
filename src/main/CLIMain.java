@@ -100,12 +100,12 @@ public class CLIMain {
     
     private static void createAccount() {
         MemberBuilder mb = new MemberBuilder();
-        System.out.println("Enter first name");
-        String fn = in.nextLine();
-        mb.setFirstName(fn);
-        System.out.println("Enter last name");
-        String ln = in.nextLine();
-        mb.setLastName(ln);
+        System.out.println("Enter email");
+        String email = in.nextLine();
+        mb.setFirstName(email);
+        System.out.println("Enter password");
+        String pw = in.nextLine();
+        mb.setLoginInfo(new LoginInformation(email, pw));
         System.out.println("Driver:");
         System.out.println("0: Yes");
         System.out.println("1: No");
@@ -114,7 +114,6 @@ public class CLIMain {
             mb.setDrivingType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4), null));
         else
             mb.setDrivingType(new Passenger(null, null));
-        mb.setLoginInfo(new LoginInformation(fn, ln));
         
         if (mb.build() == -1)
             System.out.println("Failed to create new account");
@@ -122,7 +121,7 @@ public class CLIMain {
             System.out.println("New Account created!");
         System.out.println("Press Enter to continue...");
         in.nextLine();
-        if (loginHandler.handleLogin(new LoginInformation(fn, ln)).equals(""))
+        if (loginHandler.handleLogin(new LoginInformation(email, pw)).equals(""))
             menu();
     }
 

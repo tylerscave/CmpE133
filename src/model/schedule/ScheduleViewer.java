@@ -117,12 +117,12 @@ public class ScheduleViewer {
                 Route rideRoute = ride.getRoute();
                 sb.append("    ").append(ride.getMemberName()).append(": ");
                 sb.append(rideRoute.getStops().get(0)).append(" at ").append(getTimeFromCalendar(rideRoute.getStartTime())).append(" to ");
-                sb.append(rideRoute.getStops().get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(rideRoute.getEndTime())).append(System.lineSeparator());
+                sb.append(rideRoute.getStops().get(rideRoute.getStops().size()-1)).append(" at ").append(getTimeFromCalendar(rideRoute.getEndTime())).append(System.lineSeparator());
             }
             Location status = route.getLocationAtTime(new GregorianCalendar());
             if (status == null)
                 status = new Location("Not yet started");
-            sb.append("  Current Status: ").append(status).append(System.lineSeparator());
+            sb.append("    Current Status: ").append(status).append(System.lineSeparator());
         }
         sb.append(System.lineSeparator());
         

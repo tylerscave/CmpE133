@@ -42,6 +42,8 @@ public class Drive extends Schedulable{
     public void addRide(Ride ride) {
         this.rideIds.add(ride.getIdNumber());
         numSeats --;
+        for (Location l : ride.getRoute().getStops())
+            route.addStopInRoute(l);
     }
     
     public void removeRideById(int rideId) {
