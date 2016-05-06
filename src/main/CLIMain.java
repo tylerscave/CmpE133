@@ -191,8 +191,7 @@ public class CLIMain {
             System.out.println("4: Phone Number");
             System.out.println("5: Driving Type");
             System.out.println("6: Member Type");
-            System.out.println("7: Vehicle");
-            int option = getOptionIntFromInput(8);
+            int option = getOptionIntFromInput(7);
             switch (option) {
                 case 0:
                     exit = true;
@@ -214,9 +213,6 @@ public class CLIMain {
                     break;
                 case 6:
                     updateMemberType(member);
-                    break;
-                case 7:
-                    updateVehicle(member);
                     break;
                 default:
                     break;
@@ -584,9 +580,6 @@ public class CLIMain {
     		member.setMemberType(new Faculty());
     	else
     		member.setMemberType(new Student());
-    }
-    private static void updateVehicle(Member member) {
-        
     }
 
 }
