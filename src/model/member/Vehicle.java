@@ -17,16 +17,20 @@ public class Vehicle {
         Truck;
     }
     private int year;
-    private String make;
+    private String manufacturer;
     private String model;
     private String color;
 	private String plateNumber;
 	private VehicleStyle style;
 	private int capacity;
 	
-	public Vehicle(int year, String make, String model, String color,String plateNumber, VehicleStyle style, int capacity){
+	public Vehicle(){
+		
+	}
+	
+	public Vehicle(int year, String manufacturer, String model, String color,String plateNumber, VehicleStyle style, int capacity){
 		this.year = year;
-		this.make = make;
+		this.manufacturer = manufacturer;
 		this.model = model;
 		this.color = color;
 		this.plateNumber = plateNumber;
@@ -41,12 +45,12 @@ public class Vehicle {
 		this.year = year;
 	}
 	
-	public String getMake() {
-		return make;
+	public String getManufacturer() {
+		return manufacturer;
 	}
 	
-	public void setMake(String make) {
-		this.make = make;
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
 	}
 	
 	public String getModel() {
