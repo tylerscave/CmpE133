@@ -1,7 +1,7 @@
 package model.member;
 
 
-public class Driver extends DrivingType {
+public class Driver implements DrivingType {
 	private String DriverLicenseNumber;
 	private Vehicle vehicle;
 	private Address departureLocation;
@@ -53,7 +53,6 @@ public class Driver extends DrivingType {
         this.flatrate = flatrate;
     }
 
-    @Override
     public boolean isDriver() {
         return true;
     }

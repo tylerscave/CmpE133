@@ -564,8 +564,10 @@ public class CLIMain {
     private static void updateDrivingType(Member member) {
     	System.out.println("Are you going to drive?(0) or ride(1)? ");
     	int type = getOptionIntFromInput(2);
-    	if(type == 0)
+    	if(type == 0){
     		member.setDrivingType(new Driver());
+    		//updateVehicle(member);
+    	}
     	else
     		member.setDrivingType(new Passenger());
     	
@@ -581,5 +583,9 @@ public class CLIMain {
     	else
     		member.setMemberType(new Student());
     }
+    
+    //private static void updateVehicle(Member member){
+    //	Vehicle vehicle = member.getDrivingType()
+    //}
 
 }
