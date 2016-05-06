@@ -18,6 +18,7 @@ import model.NotificationSender;
 import model.member.Passenger;
 import model.schedule.Ride;
 import model.member.Vehicle;
+import model.member.Vehicle.VehicleStyle;
 import model.schedule.Request;
 import model.schedule.Schedulable;
 import model.schedule.ScheduleViewer;
@@ -183,6 +184,7 @@ public class CLIMain {
         Member member = context.getMember();
         boolean exit = false;
         while (!exit) {
+        	showMemberInfo(member);
             System.out.println("Select the info you wish to modify");
             System.out.println("0: Return to menu");
             System.out.println("1: Login Information");
@@ -198,30 +200,43 @@ public class CLIMain {
                     break;
                 case 1:
                     updateLoginInfo(member);
+                    member.setChanged();
+                    member.notifyObservers();
                     break;
                 case 2:
                     updateName(member);
+                    member.setChanged();
+                    member.notifyObservers();
                     break;
                 case 3:
                     updateAddress(member);
+                    member.setChanged();
+                    member.notifyObservers();
                     break;
                 case 4:
                     updatePhone(member);
+                    member.setChanged();
+                    member.notifyObservers();
                     break;
                 case 5:
                     updateDrivingType(member);
+                    member.setChanged();
+                    member.notifyObservers();
                     break;
                 case 6:
                     updateMemberType(member);
+                    member.setChanged();
+                    member.notifyObservers();
                     break;
                 default:
                     break;
             }
         }
-        member.setChanged();
-        member.notifyObservers();
+        //member.setChanged();
+        //member.notifyObservers();
         //back to menu
     }
+    
     private static void setDrive() {
         Member member = context.getMember();
         System.out.println("Choose departure location");
@@ -518,7 +533,7 @@ public class CLIMain {
     } 
 
     private static void updateLoginInfo(Member member) {
-        System.out.println("Enter the Email address: ");
+        System.out.print("Enter the Email address: ");
         String email, password1, password2;
     	int i = 0;
         email = in.nextLine();
@@ -526,9 +541,9 @@ public class CLIMain {
         
         	if (i > 0)
         		System.out.println("Password did not match.");
-        	System.out.println("Enter a new password: ");
+        	System.out.print("Enter a new password: ");
             password1 = in.nextLine();
-            System.out.println("Enter the new password again: ");
+            System.out.print("Enter the new password again: ");
             password2 = in.nextLine();
             i++;
         }while(!password1.equals(password2));
@@ -537,22 +552,22 @@ public class CLIMain {
     }
 
     private static void updateName(Member member) {
-    	System.out.println("Enter the first name: ");
+    	System.out.print("Enter the first name: ");
     	member.setFirstName(in.nextLine());
-    	System.out.println("Enter the last name: ");
+    	System.out.print("Enter the last name: ");
     	member.setLastName(in.nextLine());
     }
 
     private static void updateAddress(Member member) {
-    	System.out.println("Enter the street address (ex:320 turk st) ");
+    	System.out.print("Enter the street address (ex:320 turk st) ");
     	member.getAddress().setStreet1(in.nextLine());
-    	System.out.println("Enter the unit number(if you have): ");
+    	System.out.print("Enter the unit number(if applicable): ");
     	member.getAddress().setStreet2(in.nextLine());
-    	System.out.println("Enter the city: ");
+    	System.out.print("Enter the city: ");
     	member.getAddress().setCity(in.nextLine());
-    	System.out.println("Enter the state: ");
+    	System.out.print("Enter the state: ");
     	member.getAddress().setState(in.nextLine());
-    	System.out.println("Enter the zip code: ");
+    	System.out.print("Enter the zip code: ");
     	member.getAddress().setZipCode(in.nextLine());
     }
 
@@ -562,19 +577,20 @@ public class CLIMain {
     }
 
     private static void updateDrivingType(Member member) {
-    	System.out.println("Are you going to drive?(0) or ride(1)? ");
+    	System.out.print("Are you going to drive?(0) or ride(1)? ");
     	int type = getOptionIntFromInput(2);
     	if(type == 0){
-    		member.setDrivingType(new Driver());
-    		//updateVehicle(member);
+    		System.out.print("Enter your driver License number: ");
+    		String licenseNumber = in.nextLine();
+    		Vehicle vehicle = updateVehicle();
+    		member.setDrivingType(new Driver(licenseNumber, vehicle, null));
     	}
     	else
     		member.setDrivingType(new Passenger());
-    	
     }
 
     private static void updateMemberType(Member member) {
-    	System.out.println("Are you a staff(0), faculty(1), or student(2)?");
+    	System.out.print("Are you a staff(0), faculty(1), or student(2)?");
     	int type = getOptionIntFromInput(3);
     	if(type == 0)
     		member.setMemberType(new Staff());
@@ -584,8 +600,71 @@ public class CLIMain {
     		member.setMemberType(new Student());
     }
     
-    //private static void updateVehicle(Member member){
-    //	Vehicle vehicle = member.getDrivingType()
-    //}
+    private static Vehicle updateVehicle(){
+    	Vehicle vehicle = new Vehicle();
+    	
+    	System.out.println("Enter the information of your car.");
+    	
+    	System.out.print("Enter the year your car manufactured: ");
+    	vehicle.setYear(in.nextInt());
+    	
+    	System.out.print("Enter the manufacturer: ");
+    	vehicle.setManufacturer(in.nextLine());
+    	
+    	System.out.print("Enter the car model: ");
+    	vehicle.setModel(in.nextLine());
+    	
+    	System.out.print("Enter the color: ");
+    	vehicle.setColor(in.nextLine());
+    	
+    	System.out.print("Enter the plate number: ");
+    	vehicle.setPlateNumber(in.nextLine());
+    	
+    	System.out.println("Choose the Type of your car: ");
+    	System.out.print("Sedan(0), TwoDoor(1), Wagon(2), SUV(3), Van(4), Truck(5): ");
+    	int type = getOptionIntFromInput(6);
+    	switch(type){
+    	case 0:
+    		vehicle.setStyle(VehicleStyle.Sedan);
+    		break;
+    	case 1:
+    		vehicle.setStyle(VehicleStyle.TwoDoor);
+    		break;
+    	case 2:
+    		vehicle.setStyle(VehicleStyle.Wagon);
+    		break;
+    	case 3:
+    		vehicle.setStyle(VehicleStyle.SUV);
+    		break;
+    	case 4:
+    		vehicle.setStyle(VehicleStyle.Van);
+    		break;
+    	case 5:
+    		vehicle.setStyle(VehicleStyle.Truck);
+    		break;
+    	}
+    	
+    	System.out.println("Enter the capacity of your car: ");
+    	vehicle.setCapacity(in.nextInt());
+    	
+    	return vehicle;
+    }
+    private static void showMemberInfo(Member member){
+    	System.out.printf("\nName: %s %s\n", member.getFirstName(), member.getLastName());
+    	
+    	LoginInformation login = member.getLoginInfo();
+    	System.out.printf("Email: %s\nPassword: %s\n", login.getEmail(), login.getPassword());
+    	
+    	Address address = member.getAddress();
+    	System.out.printf("Address: %s %s, %s, %s, %s.\n", address.getStreet1(), address.getStreet2()
+    			, address.getCity(), address.getState(), address.getZipCode());
+    	
+    	System.out.printf("Phone Number: %s\n", member.getPhoneNumber());
+    	
+    	if(member.getDrivingType().isDriver())
+    		System.out.println("Driving Type: Driver");
+    	else
+    		System.out.println("Driving Type: Passenger");
+    }
 
 }
