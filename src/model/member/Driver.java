@@ -8,7 +8,7 @@ public class Driver extends DrivingType {
         private double hourlyRate;
         private double perMileRate;
         private double flatrate;
-
+        
     public Driver() {
     }
 

@@ -6,7 +6,7 @@ import java.util.Scanner;
 import model.Context;
 import model.DataHandler;
 import model.schedule.Drive;
-import model.member.Driver;
+import model.member.*;
 import model.schedule.Location;
 import model.LocationMap;
 import model.LoginHandler;
@@ -548,23 +548,45 @@ public class CLIMain {
     }
 
     private static void updateAddress(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	System.out.println("Enter the street address (ex:320 turk st) ");
+    	member.getAddress().setStreet1(in.nextLine());
+    	System.out.println("Enter the unit number(if you have): ");
+    	member.getAddress().setStreet2(in.nextLine());
+    	System.out.println("Enter the city: ");
+    	member.getAddress().setCity(in.nextLine());
+    	System.out.println("Enter the state: ");
+    	member.getAddress().setState(in.nextLine());
+    	System.out.println("Enter the zip code: ");
+    	member.getAddress().setZipCode(in.nextLine());
     }
 
     private static void updatePhone(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	System.out.println("Enter the phone number: ");
+    	member.setPhoneNumber(in.nextLine());
     }
 
     private static void updateDrivingType(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	System.out.println("Are you going to drive?(0) or ride(1)? ");
+    	int type = getOptionIntFromInput(2);
+    	if(type == 0)
+    		member.setDrivingType(new Driver());
+    	else
+    		member.setDrivingType(new Passenger());
+    	
     }
 
     private static void updateMemberType(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	System.out.println("Are you a staff(0), faculty(1), or student(2)?");
+    	int type = getOptionIntFromInput(3);
+    	if(type == 0)
+    		member.setMemberType(new Staff());
+    	else if (type == 1)
+    		member.setMemberType(new Faculty());
+    	else
+    		member.setMemberType(new Student());
     }
-
     private static void updateVehicle(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
 }

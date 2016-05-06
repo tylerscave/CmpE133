@@ -3,7 +3,11 @@ package model.member;
 public class Staff extends MemberType{
 	
 	private String sjsuID;
-
+	
+	public Staff(){
+		
+	}
+	
 	public Staff(String sjsuID){
 		this.setSjsuID(sjsuID);
 	}
