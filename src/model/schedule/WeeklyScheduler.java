@@ -1,5 +1,6 @@
 package model.schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,12 +11,13 @@ public class WeeklyScheduler extends Scheduler{
 
     @Override
     public String schedule(Request r, Schedulable s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        WeeklySchedule ws = r.getMember().getWeeklySchedule();
+        return "Success";
     }
 
     @Override
     public List<Schedulable> getAvailable(Request r) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ArrayList<>();
     }
 
 }

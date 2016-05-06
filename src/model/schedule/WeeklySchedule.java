@@ -1,7 +1,7 @@
 package model.schedule;
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
- * The model for the member schedule
+ * The model for the member weekly schedule
  * Solves CmpE133 Assignment 2
  * @author Tyler Jones,
 */
@@ -9,7 +9,7 @@ package model.schedule;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-public class MemberSchedule {
+public class WeeklySchedule {
 	//declare all variables for member schedule
 	private Location pickupLocation;
 	private GregorianCalendar monArrive, tuesArrive, wedArrive, thursArrive, friArrive;

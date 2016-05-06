@@ -29,7 +29,7 @@ import model.Context;
 import model.schedule.Location;
 import model.member.Member;
 import model.schedule.DriveChoice;
-import model.schedule.MemberSchedule;
+import model.schedule.WeeklySchedule;
 import model.schedule.RideRequest;
 import model.schedule.RideRequest.TimeType;
 
@@ -43,7 +43,7 @@ import model.schedule.RideRequest.TimeType;
 public class PickRiderScheduleSceneController implements Initializable {
     private Context context;
     private Member member;
-    private MemberSchedule memberSchedule;
+    private WeeklySchedule memberSchedule;
     private Location pickup, destination;
     private LocalDate date;
     private GregorianCalendar hourTime, selectedDateTime;
@@ -80,7 +80,7 @@ public class PickRiderScheduleSceneController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
-        memberSchedule = member.getMemberSchedule();
+        memberSchedule = member.getWeeklySchedule();
         
         //set up the location ComboBox
         for (Location l : context.getMap().getLocations())
