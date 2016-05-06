@@ -117,8 +117,8 @@ public class Request {
         this.endTime = startTime;
         this.startLocation = location;
         this.endLocation = location;
-        this.startType = TimeType.Near;
-        this.endType = TimeType.Near;
+        this.startType = TimeType.Anytime;
+        this.endType = TimeType.Anytime;
         
         requestType = RequestType.WEEKLY;
         name = null;

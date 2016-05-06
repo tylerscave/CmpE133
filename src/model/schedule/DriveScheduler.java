@@ -3,6 +3,7 @@ package model.schedule;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.ListIterator;
 import model.member.Driver;
 import model.LocationMap;
 import model.member.Member;
@@ -15,58 +16,80 @@ import model.Notification;
 public class DriveScheduler extends Scheduler{
     
     @Override
-    public String schedule(Request r, Schedulable s) {
-        String fail = correctData(r);
-        if (!fail.equals(""))
+    public String schedule(Request request, Schedulable s) {
+        String fail = correctData(request);
+        if (!fail.equals(SUCCESS))
             return fail;
-        Member member = r.getMember();
+        Member member = request.getMember();
         if (!member.getDrivingType().isDriver())
             return "Failure: You are not a driver";
         GregorianCalendar time;
-        if (r.getStartType() == Request.TimeType.Anytime) {
+        if (request.getStartType() == Request.TimeType.Anytime) {
             LocationMap map = context.getMap();
-            time = map.getStartTime(r.getEndTime(), r.getStartLocation(), r.getEndLocation());
+            time = map.getStartTime(request.getEndTime(), request.getStartLocation(), request.getEndLocation());
         }
         else {
-            time = r.getStartTime();
+            time = request.getStartTime();
         }
-        Drive drive = generateDrive(time, r);
+        Drive drive = generateDrive(time, request);
         if (drive == null)
             return "Failure: Conflict with prior schedule";
         
         drive.setIdNumber(data.getNewSchedulableId());
         member.getDrives().add(drive);
-        //toggle on/off with auto schedule code below
-        List<Member> changed = new ArrayList<>();
-        /*
-        if (name != null)
-            member.getRideRequests().remove(this);
-        List<Member> changed = new ArrayList<>();
+        
+        /*member.setChanged();
+        member.notifyObservers();
+        
+        RideScheduler rs = new RideScheduler();
+        List<Request> requests = data.getRequests();
+        for (Request r : requests) {
+            if (drive.getNumSeats() < 1)
+                break;
+            Member m = r.getMember();
+            m.addObserver(data);
+            if (rs.schedule(r, drive).equals(SUCCESS))
+                data.notify(m.getIdNumber(), new Notification("You have a new driver!"));
+            m.deleteObservers();
+        }*/
+        
         List<Member> members = data.getMembers();
+        List<Member> changed = new ArrayList<>();
         for (Member m : members) {
-            for (RideRequest r : m.getRideRequests()) {
-                Ride ride = generateRide(drive);
+            ListIterator<Request> it = m.getRequests().listIterator();
+            while (it.hasNext()) {
+                if (drive.getNumSeats() < 1) {
+                    member.setChanged();
+                    member.notifyObservers(changed);
+                    return SUCCESS;
+                }
+                Request r = it.next();
+                
+                Ride ride = (new RideScheduler()).generateRide(drive, m, r);
                 if (ride != null) {
+                    ride.setIdNumber(data.getNewSchedulableId());
                     drive.addRide(ride);
                     m.getRides().add(ride);
-                    m.getRideRequests().remove(this);
+                    //remove saved request
+                    it.remove();
+                    member.addNewNotification(new Notification("You have a new passenger!"));
                     m.addNewNotification(new Notification("You have a new driver!"));
                     changed.add(m);
                 }
             }
         }
-        */
+        
         member.setChanged();
         member.notifyObservers(changed);
         
-        return "Success";
+        return SUCCESS;
     }
 
     @Override
     public List<Schedulable> getAvailable(Request r) {
         List<Schedulable> available = new ArrayList<>();
         String fail = correctData(r);
-        if (!fail.equals(""))
+        if (!fail.equals(SUCCESS))
             return available;
         Member member = r.getMember();
         if (!member.getDrivingType().isDriver())

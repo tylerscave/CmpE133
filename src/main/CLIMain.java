@@ -21,7 +21,9 @@ import model.member.Vehicle;
 import model.schedule.Request;
 import model.schedule.Schedulable;
 import model.schedule.ScheduleViewer;
+import model.schedule.Scheduler;
 import model.schedule.SchedulingContext;
+import model.schedule.WeeklySchedule;
 
 /**
  *
@@ -248,7 +250,7 @@ public class CLIMain {
         Request r = new Request(member, time, startLocation, endLocation, Request.TimeType.Near, byStartTime);
         SchedulingContext sc = new SchedulingContext();
         String fail = sc.schedule(r, null);
-        if (fail.equals("Success")) {
+        if (fail.equals(Scheduler.SUCCESS)) {
             System.out.println("New Drive Scheduled!");
             Drive drive = member.getDrives().get(member.getDrives().size()-1);
             List<Location> stops = drive.getRoute().getStops();
@@ -260,7 +262,7 @@ public class CLIMain {
                 }
                 System.out.println();
             }
-            System.out.println(Integer.toString(drive.getNumSeats()-drive.numberOfRides()) + " seats available");
+            System.out.println(Integer.toString(drive.getNumSeats()) + " seats available");
             System.out.println("Passengers:");
             if (drive.numberOfRides() == 0)
                 System.out.println("  None");
@@ -364,12 +366,12 @@ public class CLIMain {
             if (request.getName() == null) {
                 System.out.println("Enter a name for the Ride Request: ");
                 name = in.nextLine();
-            }
-            sc.addToRequests(request, name);
+                sc.addToRequests(request, name);
+            }            
         }
         else {
             String fail = sc.schedule(request, drives.get(index-1));
-            if (fail.equals("Success")) {
+            if (fail.equals(Scheduler.SUCCESS)) {
                 System.out.println("New Ride Scheduled!");
                 Ride ride = request.getMember().getRides().get(request.getMember().getRides().size()-1);
                 List<Location> stops = ride.getRoute().getStops();
@@ -385,8 +387,10 @@ public class CLIMain {
         in.nextLine();
     }
     
-    public static void setWeekly() {
-        //todo
+    private static void setWeekly() {
+        Member member = context.getMember();
+        WeeklySchedule ws = member.getWeeklySchedule();
+        
     }
 
     private static void viewSchedule() {

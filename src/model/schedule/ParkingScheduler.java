@@ -13,7 +13,7 @@ public class ParkingScheduler extends Scheduler {
     @Override
     public String schedule(Request request, Schedulable s) {
         String fail = correctData(request);
-        if (!fail.equals(""))
+        if (!fail.equals(SUCCESS))
             return fail;
         if (!(s instanceof ParkingTime))
             return "Failure: No parking spot selected";
@@ -46,14 +46,14 @@ public class ParkingScheduler extends Scheduler {
         member.setChanged();
         member.notifyObservers();
         
-        return "Success";
+        return SUCCESS;
     }
 
     @Override
     public List<Schedulable> getAvailable(Request request) {
         List<Schedulable> available = new ArrayList<>();
         String fail = correctData(request);
-        if (!fail.equals(""))
+        if (!fail.equals(SUCCESS))
             return available;
         Member member = request.getMember();
         

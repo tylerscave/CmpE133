@@ -12,7 +12,7 @@ public class WeeklyScheduler extends Scheduler{
     @Override
     public String schedule(Request r, Schedulable s) {
         WeeklySchedule ws = r.getMember().getWeeklySchedule();
-        return "Success";
+        return SUCCESS;
     }
 
     @Override
