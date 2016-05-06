@@ -28,7 +28,7 @@ public class Member extends Observable {
     private String phoneNumber;
     private DrivingType drivingType;
     private MemberType memberType;
-    private Vehicle vehicle;
+    //private Vehicle vehicle;
     private List<Drive> drives;
     private List<Ride> rides;
     private List<ParkingTime> parkingTimes;
@@ -49,7 +49,6 @@ public class Member extends Observable {
         this.phoneNumber = "";
         this.drivingType = new Passenger();
         this.memberType = new Student("000000000");
-        this.vehicle = null;
         this.drives = new ArrayList<>();
         this.rides = new ArrayList<>();
         this.parkingTimes = new ArrayList<>();
@@ -195,14 +194,6 @@ public class Member extends Observable {
 
     public void setIdNumber(int idNumber) {
         this.idNumber = idNumber;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-    
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
     }
     
     @Override

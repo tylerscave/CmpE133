@@ -1,8 +1,5 @@
 package model.member;
 
-import model.member.Member;
-import model.member.DrivingType;
-import model.member.Address;
 import java.util.List;
 import model.Context;
 import model.DataHandler;
@@ -20,7 +17,6 @@ public class MemberBuilder {
     private String phoneNumber;
     private DrivingType drivingType;
     private MemberType memberType;
-    private Vehicle vehicle;
     
     public MemberBuilder() {
         this.loginInfo = new LoginInformation("", "");
@@ -30,7 +26,6 @@ public class MemberBuilder {
         this.phoneNumber = "";
         this.drivingType = new Passenger();
         this.memberType = new Student("000000000");
-        this.vehicle = null;
         
         this.data = Context.getInstance().getDataHandler();
     }
@@ -56,7 +51,6 @@ public class MemberBuilder {
         member.setDrivingType(drivingType);
         member.setMemberType(memberType);
         member.setPhoneNumber(phoneNumber);
-        member.setVehicle(vehicle);
         return data.addMember(member);
     }
     
@@ -86,10 +80,6 @@ public class MemberBuilder {
 
     public void setMemberType(MemberType memberType) {
         this.memberType = memberType;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
     }
     
 }

@@ -21,6 +21,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Context;
+import model.member.Driver;
 import model.member.Member;
 import model.member.Vehicle;
 import model.member.Vehicle.VehicleStyle;
@@ -110,7 +111,10 @@ public class VehicleInfoSceneController implements Initializable {
     private void handleSubmitButton(ActionEvent event) {
     	Vehicle vehicle = new Vehicle(vehicleYear, makeField.getText(), modelField.getText(),
     			colorField.getText(), plateNumberField.getText(), vehicleStyle, vehicleSeats);
-    	member.setVehicle(vehicle);
+    	if (member.getDrivingType().isDriver()); {
+            Driver d = (Driver) member.getDrivingType();
+            d.setVehicle(vehicle);
+    }
     	
     	
     	//JUST TESTING FOR NOW REMOVE PRINTS LATER

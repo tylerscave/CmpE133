@@ -57,5 +57,21 @@ public class Driver extends DrivingType {
     public boolean isDriver() {
         return true;
     }
-        
+
+    public void setDepartureLocation(Address departureLocation) {
+        this.departureLocation = departureLocation;
+    }
+
+    public void setDriverLicenseNumber(String DriverLicenseNumber) {
+        this.DriverLicenseNumber = DriverLicenseNumber;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Address getDepartureLocation() {
+        return departureLocation;
+    }
+    
 }
