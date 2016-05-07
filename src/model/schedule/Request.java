@@ -109,11 +109,12 @@ public class Request {
     /**
      * Constructor for requesting a weekly schedule
      * @param member
+     * @param startFrom the time from which new individual rides will be scheduled, use current time for a new schedule
      * @param location
      */
-    public Request(Member member, Location location) {
+    public Request(Member member, GregorianCalendar startFrom, Location location) {
         this.member = member;
-        this.startTime = new GregorianCalendar();
+        this.startTime = startFrom;
         this.endTime = startTime;
         this.startLocation = location;
         this.endLocation = location;

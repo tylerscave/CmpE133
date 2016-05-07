@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -43,6 +44,13 @@ public class CLIMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        GregorianCalendar cal = new GregorianCalendar();
+        GregorianCalendar cal2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR), cal.get(GregorianCalendar.MONTH), cal.get(GregorianCalendar.DATE));
+        cal.setTime(cal2.getTime());
+        if (cal.before(cal2))
+            System.out.println("cal before");
+        if (cal.after(cal2))
+            System.out.println("cal after");
         context = Context.getInstance();
         data = context.getDataHandler();
         map = context.getMap();
@@ -479,7 +487,7 @@ public class CLIMain {
     }
     
     private static String getDateFromCalendar(GregorianCalendar gc) {
-        return gc.get(GregorianCalendar.MONTH)+"/"+gc.get(GregorianCalendar.DATE)+"/"+gc.get(GregorianCalendar.YEAR);
+        return (gc.get(GregorianCalendar.MONTH)+1)+"/"+gc.get(GregorianCalendar.DATE)+"/"+gc.get(GregorianCalendar.YEAR);
     }
     
     private static String getTimeFromCalendar(GregorianCalendar gc) {
@@ -521,7 +529,7 @@ public class CLIMain {
         while (!valid) {
             String input = in.nextLine();    
             try {
-                int month = Integer.parseInt(input.substring(0, 2));
+                int month = Integer.parseInt(input.substring(0, 2))-1;
                 int day = Integer.parseInt(input.substring(3, 5));
                 int year = Integer.parseInt(input.substring(6, 10));
                 int hour = Integer.parseInt(input.substring(11, 13));

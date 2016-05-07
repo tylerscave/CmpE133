@@ -9,9 +9,113 @@ package model.schedule;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-public class WeeklySchedule {
-	//declare all variables for member schedule
-	private Location pickupLocation;
+public class WeeklySchedule{
+    //new    
+    private Location pickupLocation;
+    private GregorianCalendar startTime, endTime, lastUpdate;
+    
+    private boolean[] drive = new boolean[7];
+    private GregorianCalendar[] arrive = new GregorianCalendar[7];
+    private GregorianCalendar[] depart = new GregorianCalendar[7];
+    
+    private static final int OFFSET = GregorianCalendar.SUNDAY;
+
+    public WeeklySchedule() {
+        for (boolean d : drive)
+            d = false;
+        for (GregorianCalendar g : arrive)
+            g = null;
+        for (GregorianCalendar g : depart)
+            g = null;
+        pickupLocation = null;
+        startTime = null;
+        endTime = null;
+        lastUpdate = null;
+    }
+
+    /**
+     *
+     * @param dayOfWeek use the weekday constants from the Calendar class
+     * @return
+     */
+    public boolean isDrive(int dayOfWeek) {
+        return drive[dayOfWeek-OFFSET];
+    }
+
+    /**
+     *
+     * @param dayOfWeek use the weekday constants from the Calendar class
+     * @return
+     */
+    public GregorianCalendar getArrive(int dayOfWeek) {
+        return arrive[dayOfWeek-OFFSET];
+    }
+
+    /**
+     *
+     * @param dayOfWeek use the weekday constants from the Calendar class
+     * @param arrive
+     */
+    public void setArrive(int dayOfWeek, GregorianCalendar arrive) {
+        this.arrive[dayOfWeek-OFFSET] = arrive;
+    }
+    
+    /**
+     *
+     * @param dayOfWeek use the weekday constants from the Calendar class
+     * @return
+     */
+    public GregorianCalendar getDepart(int dayOfWeek) {
+        return depart[dayOfWeek-OFFSET];
+    }
+
+    /**
+     *
+     * @param dayOfWeek use the weekday constants from the Calendar class
+     * @param depart
+     */
+    public void setDepart(int dayOfWeek, GregorianCalendar depart) {
+        this.depart[dayOfWeek-OFFSET] = depart;
+    }
+    
+    public GregorianCalendar getStartTime() {
+        return startTime;
+    }
+
+    public GregorianCalendar getEndTime() {
+        return endTime;
+    }
+
+    public GregorianCalendar getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setStartTime(GregorianCalendar startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(GregorianCalendar endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setLastUpdate(GregorianCalendar lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public void remove() {
+        //todo
+    }
+    public Location getPickupLocation() {
+        return pickupLocation;
+    }
+
+    public void setPickupLocation(Location pickupLocation) {
+        this.pickupLocation = pickupLocation;
+    }
+    
+    //rest of code is legacy
+        
+        //declare all variables for member schedule
 	private GregorianCalendar monArrive, tuesArrive, wedArrive, thursArrive, friArrive;
 	private GregorianCalendar monDepart, tuesDepart, wedDepart, thursDepart, friDepart;
 	private boolean monDrive = false; 
@@ -19,16 +123,9 @@ public class WeeklySchedule {
 	private boolean wedDrive = false; 
 	private boolean thursDrive = false;
 	private boolean friDrive = false;
-	
+        
 	//using default constructor for now...
-	
-	public Location getPickupLocation() {
-		return pickupLocation;
-	}
-	
-	public void setPickupLocation(Location pickupLocation) {
-		this.pickupLocation = pickupLocation;
-	}
+
 //*********************************MONDAY*************************************
 	
 	public GregorianCalendar getMonArrive() {
@@ -39,7 +136,7 @@ public class WeeklySchedule {
 		this.monArrive = monArrive;
 	}
 	
-	public GregorianCalendar getmonDepart() {
+	public GregorianCalendar getMonDepart() {
 		return monDepart;
 	}
 	

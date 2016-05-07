@@ -59,6 +59,7 @@ public class Member extends Observable {
         this.oldNotifications = new ArrayList<>();
         this.newNotifications = new ArrayList<>();
         this.newNotifications.add(new Notification("Welcome to SpartanPool!"));
+        this.weeklySchedule = new WeeklySchedule();
         }
     
     public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, DrivingType drivingType){
@@ -75,6 +76,7 @@ public class Member extends Observable {
         this.oldNotifications = new ArrayList<>();
         this.newNotifications = new ArrayList<>();
         this.newNotifications.add(new Notification("Welcome to SpartanPool!"));
+        this.weeklySchedule = new WeeklySchedule();
     }
     
     public Address getAddress() {
@@ -186,6 +188,10 @@ public class Member extends Observable {
 
     public WeeklySchedule getWeeklySchedule() {
         return weeklySchedule;
+    }
+
+    public void setWeeklySchedule(WeeklySchedule weeklySchedule) {
+        this.weeklySchedule = weeklySchedule;
     }
 
     public int getIdNumber() {
