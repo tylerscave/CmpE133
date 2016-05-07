@@ -30,7 +30,7 @@ import model.member.Member;
 import model.schedule.WeeklySchedule;
 import model.schedule.Location;
 
-public class MemberScheduleSceneController implements Initializable{
+public class MemberScheduleController implements Initializable{
 	
     private Context context;
     private Member member;

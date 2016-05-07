@@ -6,11 +6,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,22 +26,21 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import model.Context;
-import model.schedule.DriveChoice;
 import model.schedule.Location;
 import model.member.Member;
+import model.schedule.DriveChoice;
 import model.schedule.WeeklySchedule;
 import model.schedule.RideRequest;
 import model.schedule.RideRequest.TimeType;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
- * The controller for the PickDriverScheduleScene
+ * The controller for the DriveRequestScene
  * Solves CmpE133 Carpool System
  * @author Tyler Jones,
 */
 
-public class PickDriverScheduleSceneController implements Initializable {
-	
+public class DriveRequestController implements Initializable {
     private Context context;
     private Member member;
     private WeeklySchedule memberSchedule;
@@ -51,12 +50,11 @@ public class PickDriverScheduleSceneController implements Initializable {
     private int minuteTime;
     private boolean byStartTime;
     private TimeType timeType;
-//    private RideRequest selectedDriver;
+//    private DriveChoice selectedRider;	//NEED TO CHANGE THIS 
     private ObservableList<GregorianCalendar> hours = FXCollections.observableArrayList();;
     private ObservableList<Location> locations = FXCollections.observableArrayList();
     private ObservableList<Integer> minutes = FXCollections.observableArrayList();
-    private ObservableList<DriveChoice> driveChoices = FXCollections.observableArrayList();
-    
+	
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -76,8 +74,8 @@ public class PickDriverScheduleSceneController implements Initializable {
     @FXML
     private ComboBox<TimeType> timeTypeCombo;
     @FXML
-    private ComboBox<DriveChoice> pickDriverCombo;
-    
+    private ComboBox<DriveChoice> pickRiderCombo;
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
@@ -102,6 +100,7 @@ public class PickDriverScheduleSceneController implements Initializable {
         
         //setup timeType ComboBox
         timeTypeCombo.getItems().setAll(TimeType.values());
+		
 	}
 	
 	@FXML
@@ -139,7 +138,7 @@ public class PickDriverScheduleSceneController implements Initializable {
 	private void handleMinuteCombo(ActionEvent event) {
 		minuteTime = minuteCombo.getSelectionModel().getSelectedItem();
 		// after all needed data is collected make the ride request to populate the pickRideCombo box
-		makeRideRequest();
+		makeDriveRequest();
 	}
 	
 	@FXML
@@ -148,8 +147,8 @@ public class PickDriverScheduleSceneController implements Initializable {
 	}
 	
 	@FXML
-	private void handlePickDriverCombo(ActionEvent event) {
-//		selectedDriver = pickDriverCombo.getSelectionModel().getSelectedItem();
+	private void handlePickRiderCombo(ActionEvent event) {
+//		selectedRider = pickRiderCombo.getSelectionModel().getSelectedItem();
 	}
 
     @FXML
@@ -235,11 +234,11 @@ public class PickDriverScheduleSceneController implements Initializable {
 	}
 	
 	/**
-	 * makeRideRequest is called after all data needed has been collected. This method
-	 * makes a request and populates the pickDriverCombo box with a list of available 
-	 * rides by driver that can then be selected
+	 * makeDriveRequest is called after all data needed has been collected. This method
+	 * makes a request and populates the pickRiderCombo box with a list of available 
+	 * drives by rider that can then be selected
 	 */
-	private void makeRideRequest() {
+	private void makeDriveRequest() {
 		GregorianCalendar startTime = new GregorianCalendar();
 		GregorianCalendar endTime = new GregorianCalendar();;
 		TimeType startType = null;
@@ -254,13 +253,7 @@ public class PickDriverScheduleSceneController implements Initializable {
 			endType = timeType;
 		}
 		
-		//THIS ERRORS OUT DUE TO LINE 43 IN RIDEREQUEST.JAVA --> NOT SURE WHY YET
-		/*
-		RideRequest rideRequest = new RideRequest(member, startTime, endTime, pickup, 
-				destination, startType, endType);
-		List<DriveChoice> dc = rideRequest.getAvailableDriveChoices();
-		driveChoices.addAll(dc);
-		pickRideCombo.setItems(driveChoices);
-		*/
+		
 	}
+
 }

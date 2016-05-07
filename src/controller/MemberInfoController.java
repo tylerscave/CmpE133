@@ -29,7 +29,7 @@ import model.Context;
 import model.member.Member;
 import model.member.DrivingType;
 
-public class MemberInfoSceneController implements Initializable {
+public class MemberInfoController implements Initializable {
 	
     private Context context;
     private Member member;

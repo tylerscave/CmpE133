@@ -107,7 +107,20 @@ public class LoginSceneController implements Initializable {
     @FXML
     protected void handleCreateAccountButton(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/CreateAccountScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    @FXML
+    protected void handleRetrieveAccount(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/RetrieveAccountScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);

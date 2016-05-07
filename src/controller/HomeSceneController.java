@@ -31,7 +31,7 @@ public class HomeSceneController implements Initializable {
     }    
     
     @FXML
-    protected void handleUpdateInfo(ActionEvent event) {
+    protected void handleUpdateMember(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
             Scene scene = new Scene(root);
@@ -46,7 +46,7 @@ public class HomeSceneController implements Initializable {
     @FXML
     protected void handleUpdateSchedule(ActionEvent event) {
         try {
-        	Parent root = FXMLLoader.load(getClass().getResource("/view/MemberScheduleOptionScene.fxml"));
+        	Parent root = FXMLLoader.load(getClass().getResource("/view/MemberScheduleScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
@@ -57,9 +57,22 @@ public class HomeSceneController implements Initializable {
     } 
     
     @FXML
-    protected void handleUpdateRides(ActionEvent event) {
+    protected void handleRideRequest(ActionEvent event) {
         try {
-        	Parent root = FXMLLoader.load(getClass().getResource("/view/RideScheduleOptionScene.fxml"));
+        	Parent root = FXMLLoader.load(getClass().getResource("/view/RideRequestScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    } 
+    
+    @FXML
+    protected void handleDriveRequest(ActionEvent event) {
+        try {
+        	Parent root = FXMLLoader.load(getClass().getResource("/view/DriveRequestScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
@@ -74,6 +87,19 @@ public class HomeSceneController implements Initializable {
         try {
             //currently links to info scene, must change to appropriate scene when it's implemented
             Parent root = FXMLLoader.load(getClass().getResource("/view/ViewScheduleScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    } 
+    
+    @FXML
+    protected void handleNotificationMenu(ActionEvent event) {
+        try {
+        	Parent root = FXMLLoader.load(getClass().getResource("/view/NotificationMenuScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);

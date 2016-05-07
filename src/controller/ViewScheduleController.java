@@ -30,7 +30,7 @@ import model.schedule.Route;
  *
  * @author David
  */
-public class ViewScheduleSceneController implements Initializable {
+public class ViewScheduleController implements Initializable {
 
     private Context context;
     private Member member;

@@ -33,7 +33,7 @@ import model.member.Vehicle.VehicleStyle;
  * @author Tyler Jones,
 */
 
-public class VehicleInfoSceneController implements Initializable {
+public class VehicleInfoController implements Initializable {
 
     private Context context;
     private Member member;

@@ -1,18 +1,15 @@
 package controller;
-
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
- * The controller for the Ride Schedule Option Scene
- * Solves CmpE133 Assignment 2
+ * The controller for the NotificationMenuScene
+ * Solves CmpE133 SpartanPool
  * @author Tyler Jones,
 */
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,40 +21,55 @@ import javafx.stage.Stage;
 import model.Context;
 import model.member.Member;
 
-public class RideScheduleOptionSceneController implements Initializable {
+public class NotificationMenuController implements Initializable {
+
     private Context context;
     private Member member;
 	
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
-	}
-	
+        
+    }     
+    
     @FXML
-    private void handleSelectDrivers(ActionEvent event) {
-    	try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/PickDriverScheduleScene.fxml"));
+    protected void handleNewNotifications(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/NewNotificaionScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }     
+    } 
+    
+    @FXML
+    protected void handleOldNotifications(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/OldNotificationScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
     }
     
     @FXML
-    private void handleSelectPassengers(ActionEvent event) {
-    	try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/PickRiderScheduleScene.fxml"));
+    protected void handleSendNotification(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/SendNotificationScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }     
     }
     
     @FXML
@@ -72,5 +84,5 @@ public class RideScheduleOptionSceneController implements Initializable {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+	
 }
