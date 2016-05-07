@@ -134,7 +134,8 @@ public class LoginSceneController implements Initializable {
         context.setLogin(new LoginHandler());
         if (!context.getLogin().handleLogin(loginInfo).equals(""))
         {
-            return;
+        	//commented out the return for testing
+            //return;
         }
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));

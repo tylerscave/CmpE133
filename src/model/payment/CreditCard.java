@@ -1,12 +1,18 @@
 package model.payment;
-
+/**
+ *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
+ * The model for the CreditCard.  
+ * Solves CmpE133 SpartanPool
+ * @author David Lerner
+*/
 import model.member.Member;
 import model.schedule.Ride;
 
 public class CreditCard extends Reward {
-    
+	
     private CreditCardInfo info;
     private double balance;
+
     
     public CreditCard(CreditCardInfo info, RewardCalculator rewardCalculator) {
         super(rewardCalculator);

@@ -74,7 +74,7 @@ public class DriveRequestController implements Initializable {
     @FXML
     private ComboBox<TimeType> timeTypeCombo;
     @FXML
-    private ComboBox<DriveChoice> pickRiderCombo;
+    private ComboBox<DriveChoice> pickDriveCombo;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -147,7 +147,7 @@ public class DriveRequestController implements Initializable {
 	}
 	
 	@FXML
-	private void handlePickRiderCombo(ActionEvent event) {
+	private void handlePickDriveCombo(ActionEvent event) {
 //		selectedRider = pickRiderCombo.getSelectionModel().getSelectedItem();
 	}
 

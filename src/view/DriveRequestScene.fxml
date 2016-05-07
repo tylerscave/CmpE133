@@ -132,7 +132,7 @@
               </rowConstraints>
                <children>
                   <Label text="Choose from Available Drives:    " GridPane.halignment="CENTER" />
-                  <ComboBox fx:id="pickDriverCombo" onAction="#handlePickDriverCombo" prefHeight="26.0" prefWidth="512.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="pickDriveCombo" onAction="#handlePickDriveCombo" prefHeight="26.0" prefWidth="512.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane GridPane.rowIndex="2">
