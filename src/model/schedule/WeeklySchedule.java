@@ -33,13 +33,35 @@ public class WeeklySchedule{
         lastUpdate = null;
     }
 
+    public boolean isSet() {
+        return (pickupLocation != null && startTime != null && endTime != null);
+    }
+    
     /**
+     *
+     * @param dayOfWeek use the weekday constants from the Calendar class
+     * @return
+     */
+    public boolean isValid(int dayOfWeek) {
+        return (arrive[dayOfWeek-OFFSET] != null && depart[dayOfWeek-OFFSET] != null);
+    }
+    
+     /**
      *
      * @param dayOfWeek use the weekday constants from the Calendar class
      * @return
      */
     public boolean isDrive(int dayOfWeek) {
         return drive[dayOfWeek-OFFSET];
+    }
+
+    /**
+     *
+     * @param dayOfWeek use the weekday constants from the Calendar class
+     * @param isDrive
+     */
+    public void setDrive(int dayOfWeek, boolean isDrive) {
+        drive[dayOfWeek-OFFSET] = isDrive;
     }
 
     /**

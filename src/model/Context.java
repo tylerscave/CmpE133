@@ -1,7 +1,9 @@
 package model;
 
+import java.util.List;
 import model.member.Member;
 import model.graph.GraphMap;
+import model.schedule.Location;
 
 /**
  *
@@ -15,12 +17,21 @@ public class Context {
     private LocationMap map;
     private DataHandler dataHandler;
     private Tracker tracker;
+    private Location central;
     
     private Context() {
         // Exists only to defeat instantiation.
         map = new GraphMap();
         dataHandler = new NewDataHandler();
         tracker = new GPSTracker();
+        central = new Location("San Jose State University");
+        List<Location> locations = map.getLocations();
+        for (Location l : locations) {
+            if (l.equals(central)) {
+                central = l;
+                break;
+            }
+        }
     }
     
     public static Context getInstance() {
@@ -60,6 +71,10 @@ public class Context {
 
     public Tracker getTracker() {
         return tracker;
+    }
+
+    public Location getCentral() {
+        return central;
     }
     
 }

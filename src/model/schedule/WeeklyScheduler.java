@@ -2,7 +2,6 @@ package model.schedule;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.List;
 import model.member.Member;
@@ -20,7 +19,7 @@ public class WeeklyScheduler extends Scheduler{
             return fail;
         Member member = r.getMember();
         WeeklySchedule ws = member.getWeeklySchedule();
-        if (ws.getStartTime() == null)
+        if (!ws.isSet())
             return "Failure: No weekly schedule";
         Location location = r.getStartLocation();
         
@@ -46,6 +45,8 @@ public class WeeklyScheduler extends Scheduler{
         //final is min of the 2 dates
         if (ret.before(endTime))
             endTime = ws.getEndTime();
+        //set last time scheduled to new endtime
+        ws.setLastUpdate(endTime);
         
         GregorianCalendar scheduleTime = new GregorianCalendar(startTime.get(GregorianCalendar.YEAR), 
                 startTime.get(GregorianCalendar.MONTH), startTime.get(GregorianCalendar.DAY_OF_MONTH));
@@ -58,13 +59,13 @@ public class WeeklyScheduler extends Scheduler{
             if (!scheduleTime.before(endTime))
                 break;
             //skip if nothing scheduled
-            if (!ws.isDrive(scheduleTime.get(GregorianCalendar.DAY_OF_WEEK)))
+            if (!ws.isValid(scheduleTime.get(GregorianCalendar.DAY_OF_WEEK)))
                 continue;
             GregorianCalendar arrive = ws.getArrive(scheduleTime.get(GregorianCalendar.DAY_OF_WEEK));
             
             GregorianCalendar locationTime = new GregorianCalendar();
             locationTime.setTime(scheduleTime.getTime());
-            locationTime.add(GregorianCalendar.HOUR, arrive.get(GregorianCalendar.HOUR));
+            locationTime.add(GregorianCalendar.HOUR_OF_DAY, arrive.get(GregorianCalendar.HOUR_OF_DAY));
             locationTime.add(GregorianCalendar.MINUTE, arrive.get(GregorianCalendar.MINUTE));
             Request request = new Request(member, locationTime, locationTime, ws.getPickupLocation(), location, Request.TimeType.Anytime, Request.TimeType.Near);
             RideScheduler rs = new RideScheduler();
@@ -77,11 +78,7 @@ public class WeeklyScheduler extends Scheduler{
                 }
                 scheduleRideBack(scheduleTime, member, location);
             }
-            else if (!r.getMember().getDrivingType().isDriver()) {
-                saveRequest(request, "Weekly ride request");
-                scheduleRideBack(scheduleTime, member, location);
-            }
-            else {
+            else if (r.getMember().getDrivingType().isDriver() && ws.isDrive(scheduleTime.get(GregorianCalendar.DAY_OF_WEEK))){
                 DriveScheduler ds = new DriveScheduler();
                 request = new Request(member, locationTime, ws.getPickupLocation(), location, Request.TimeType.Near, false);
                 ds.schedule(request, s);
@@ -89,7 +86,7 @@ public class WeeklyScheduler extends Scheduler{
                 GregorianCalendar depart = ws.getDepart(scheduleTime.get(GregorianCalendar.DAY_OF_WEEK));
                 GregorianCalendar locationTime2 = new GregorianCalendar();
                 locationTime2.setTime(scheduleTime.getTime());
-                locationTime2.add(GregorianCalendar.HOUR, depart.get(GregorianCalendar.HOUR));
+                locationTime2.add(GregorianCalendar.HOUR_OF_DAY, depart.get(GregorianCalendar.HOUR_OF_DAY));
                 locationTime2.add(GregorianCalendar.MINUTE, depart.get(GregorianCalendar.MINUTE));
                 request = new Request(member, locationTime2, location, ws.getPickupLocation(), Request.TimeType.Near, true);
                 ds.schedule(request, s);
@@ -100,6 +97,10 @@ public class WeeklyScheduler extends Scheduler{
                 Collections.shuffle(parks);
                 if (parks.size() > 0)
                     ps.schedule(request, parks.get(0));
+            }
+            else {
+                saveRequest(request, "Weekly ride request");
+                scheduleRideBack(scheduleTime, member, location);
             }
         }
         
@@ -113,7 +114,7 @@ public class WeeklyScheduler extends Scheduler{
         
         GregorianCalendar time = new GregorianCalendar();
         time.setTime(scheduleTime.getTime());
-        time.add(GregorianCalendar.HOUR, depart.get(GregorianCalendar.HOUR));
+        time.add(GregorianCalendar.HOUR_OF_DAY, depart.get(GregorianCalendar.HOUR_OF_DAY));
         time.add(GregorianCalendar.MINUTE, depart.get(GregorianCalendar.MINUTE));
         Request request = new Request(member, time, time, location, ws.getPickupLocation(), Request.TimeType.Near, Request.TimeType.Anytime);
         List<Schedulable> drives = rs.getAvailable(request);
@@ -131,7 +132,7 @@ public class WeeklyScheduler extends Scheduler{
     
     private void saveRequest(Request request, String name) {
         SchedulingContext sc = new SchedulingContext();
-        sc.addToRequests(request, name);
+        sc.addRideToRequests(request, name);
     }
     
     @Override

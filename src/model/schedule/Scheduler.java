@@ -33,9 +33,27 @@ public abstract class Scheduler {
         if (r.getStartTime().after(r.getEndTime()) && r.getStartType() != Request.TimeType.Anytime 
                 && r.getEndType() != Request.TimeType.Anytime)
             return "Failure: Start time after end time";
-        if ((r.getEndTime().before(new GregorianCalendar()) && r.getEndType() != Request.TimeType.Anytime)
-                || (r.getStartTime().before(new GregorianCalendar()) && r.getStartType() != Request.TimeType.Anytime))
+        GregorianCalendar currentTime = new GregorianCalendar();
+        if ((r.getEndTime().before(currentTime) && r.getEndType() != Request.TimeType.Anytime)
+                || (r.getStartTime().before(currentTime) && r.getStartType() != Request.TimeType.Anytime))
             return "Failure: Scheduled time is in the past";
         return SUCCESS;
+    }
+    
+    protected String getDateFromCalendar(GregorianCalendar gc) {
+        return gc.get(GregorianCalendar.MONTH)+"/"+gc.get(GregorianCalendar.DATE)+"/"+gc.get(GregorianCalendar.YEAR);
+    }
+    
+    protected String getTimeFromCalendar(GregorianCalendar gc) {
+        String ampm[] = new String[2];
+        ampm[0] = " AM";
+        ampm[1] = " PM";
+        int hour = gc.get(GregorianCalendar.HOUR);
+        if (hour == 0)
+            hour = 12;
+        String minute = Integer.toString(gc.get(GregorianCalendar.MINUTE));
+        if (minute.length() == 1)
+            minute = "0"+minute;
+        return hour+":"+minute+ampm[gc.get(GregorianCalendar.AM_PM)];
     }
 }

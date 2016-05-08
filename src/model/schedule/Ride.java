@@ -1,6 +1,7 @@
 package model.schedule;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 import model.member.Member;
 
 /**
@@ -43,5 +44,9 @@ public class Ride extends Schedulable{
     @Override
     public GregorianCalendar getEndTime() {
         return route.getEndTime();
+    }
+    
+    public List<Location> getStops() {
+        return route.getStops();
     }
 }

@@ -3,6 +3,8 @@ package model;
 import java.util.List;
 import model.member.LoginInformation;
 import model.member.Member;
+import model.schedule.Request;
+import model.schedule.WeeklyScheduler;
 
 /**
  *
@@ -34,6 +36,7 @@ public class LoginHandler {
                 loggedIn = true;
                 context.setMember(data.getMember(m.getIdNumber()));
                 context.getMember().addObserver(data);
+                (new WeeklyScheduler()).schedule(new Request(m, m.getWeeklySchedule().getLastUpdate(), context.getCentral()), null);
                 return "";
             }
         }

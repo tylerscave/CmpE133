@@ -12,6 +12,7 @@ import model.schedule.Stop;
 import model.graph.DijkstraAllPairsSP;
 import model.graph.DirectedEdge;
 import model.graph.EdgeWeightedDigraph;
+import model.schedule.ParkingSpot;
 
 /**
  *
@@ -27,7 +28,10 @@ public class GraphMap implements LocationMap {
 
     public GraphMap() {
         locations = new ArrayList<>();
-        locations.add(new Location("San Jose State"));
+        List<ParkingSpot> parkingSpots = new ArrayList<>();
+        for (int i = 0; i < 100; i++)
+            parkingSpots.add(new ParkingSpot("Parking "+i));
+        locations.add(new Location("San Jose State University", parkingSpots));
         locations.add(new Location("Location A"));
         locations.add(new Location("Location B"));
         locations.add(new Location("Location C"));

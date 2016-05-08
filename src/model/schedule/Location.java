@@ -18,6 +18,11 @@ public class Location {
         this.name = name;
         this.parkingSpots = new ArrayList<>();
     }
+    
+    public Location (String name, List<ParkingSpot> parkingSpots) {
+        this.name = name;
+        this.parkingSpots = parkingSpots;
+    }
 
     /*public String getName() {
         return name;

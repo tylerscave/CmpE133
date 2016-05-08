@@ -37,7 +37,24 @@ public class RideScheduler extends Scheduler{
             member.getRequests().remove(r);
         
         Member driver = data.getMember(drive.getMemberId());
-        driver.addNewNotification(new Notification("You have a new passenger!"));
+        
+        String ls = System.lineSeparator();
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(ride.getMemberName()).append(" is a new passenger for your drive on ").append(getDateFromCalendar(drive.getStartTime())).append(ls);
+        sb.append("Details: ");
+        List<Location> stops = ride.getStops();
+        sb.append(stops.get(0)).append(" at ").append(getTimeFromCalendar(ride.getStartTime())).append(" to ");
+        sb.append(stops.get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(ride.getEndTime()));
+        driver.addNewNotification(new Notification(sb.toString()));
+        
+        sb = new StringBuilder();
+        sb.append("You have scheduled a new ride on ").append(getDateFromCalendar(ride.getStartTime())).append(", ").append(driver).append(" is your driver.").append(ls);
+        sb.append("Details: ");
+        sb.append(stops.get(0)).append(" at ").append(getTimeFromCalendar(ride.getStartTime())).append(" to ");
+        sb.append(stops.get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(ride.getEndTime()));
+        member.addNewNotification(new Notification(sb.toString()));
+        
         List<Member> changed = new ArrayList<>();
         changed.add(driver);
         
@@ -74,11 +91,11 @@ public class RideScheduler extends Scheduler{
             if (r.conflicts(ride))
                 return null;
         }
-        //may not want to check for this 
+        /*may not want to check for this 
         for (ParkingTime p : member.getParkingTimes()) {
             if (p.conflicts(ride))
                 return null;
-        }
+        }*/
         
         return ride;
     }

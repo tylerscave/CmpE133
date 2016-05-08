@@ -2,6 +2,7 @@ package model.schedule;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.Notification;
 import model.member.Member;
 
 /**
@@ -25,7 +26,8 @@ public class ParkingScheduler extends Scheduler {
         
         if (!noParkingConflicts(park, parkingTimes))
             return "Failure: Parking spot already reserved";
-        //may not want to check for this 
+        
+        /*//may not want to check for this 
         for (Drive d : member.getDrives()) {
             if (d.conflicts(park))
                 return "Failure: Conflict with prior schedule";
@@ -38,10 +40,15 @@ public class ParkingScheduler extends Scheduler {
         for (ParkingTime p : member.getParkingTimes()) {
             if (p.conflicts(park))
                 return "Failure: Conflict with prior schedule";
-        }
+        }*/
         
         park.setIdNumber(data.getNewSchedulableId());
         member.getParkingTimes().add(park);
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("You have reserved a parking spot at ").append(park.getLocation()).append(" on ").append(getDateFromCalendar(park.getStartTime())).append(System.lineSeparator());
+        sb.append("Details: ").append(park.getParkingSpot()).append(". From ").append(getTimeFromCalendar(park.getStartTime())).append(" to ").append(getTimeFromCalendar(park.getEndTime()));
+        member.addNewNotification(new Notification(sb.toString()));
 
         member.setChanged();
         member.notifyObservers();

@@ -26,6 +26,7 @@ import model.schedule.ScheduleViewer;
 import model.schedule.Scheduler;
 import model.schedule.SchedulingContext;
 import model.schedule.WeeklySchedule;
+import model.schedule.WeeklyScheduler;
 
 /**
  *
@@ -260,14 +261,14 @@ public class CLIMain {
         int option = getOptionIntFromInput(2);
         boolean byStartTime;
         if (option == 1) {
-            System.out.println("Enter destination time mm/dd/yyyy/xx:xx");
+            System.out.println("Enter destination time mm/dd/yyyy/hh:mm");
             byStartTime = false;
         }
         else {
-            System.out.println("Enter departure time mm/dd/yyyy/xx:xx");
+            System.out.println("Enter departure time mm/dd/yyyy/hh:mm");
             byStartTime = true;
         }
-        GregorianCalendar time = getTimeFromInput();
+        GregorianCalendar time = getTimeDateFromInput();
         
         Request r = new Request(member, time, startLocation, endLocation, Request.TimeType.Near, byStartTime);
         SchedulingContext sc = new SchedulingContext();
@@ -334,8 +335,8 @@ public class CLIMain {
         Request.TimeType startType = types[index];
         GregorianCalendar startTime = new GregorianCalendar();
         if (startType != Request.TimeType.Anytime) {
-            System.out.println("Enter departure time mm/dd/yyyy/xx:xx");    
-            startTime = getTimeFromInput();
+            System.out.println("Enter departure time mm/dd/yyyy/hh:mm");    
+            startTime = getTimeDateFromInput();
         }
         System.out.println("Choose destination location");
         for (int i = 0; i < locations.size(); i++)
@@ -352,8 +353,8 @@ public class CLIMain {
         Request.TimeType EndType = types[index];
         GregorianCalendar endTime = new GregorianCalendar();
         if (EndType != Request.TimeType.Anytime) {
-            System.out.println("Enter destination time mm/dd/yyyy/xx:xx");   
-            endTime = getTimeFromInput();
+            System.out.println("Enter destination time mm/dd/yyyy/hh:mm");   
+            endTime = getTimeDateFromInput();
         }
         
         Request request = new Request(member, startTime, endTime, locations.get(startLocation), locations.get(endLocation), startType, EndType);
@@ -388,7 +389,7 @@ public class CLIMain {
             if (request.getName() == null) {
                 System.out.println("Enter a name for the Ride Request: ");
                 name = in.nextLine();
-                sc.addToRequests(request, name);
+                sc.addRideToRequests(request, name);
             }            
         }
         else {
@@ -412,9 +413,71 @@ public class CLIMain {
     private static void setWeekly() {
         Member member = context.getMember();
         WeeklySchedule ws = member.getWeeklySchedule();
-        
+        System.out.println("Enter start date for weekly schedule (mm/dd/yyyy)):");
+        ws.setStartTime(getDateFromInput());
+        System.out.println("Enter end date for weekly schedule (mm/dd/yyyy)):");
+        ws.setEndTime(getDateFromInput());
+        System.out.println("Choose starting location for traveling to and from "+context.getCentral());
+        for (int i = 0; i < locations.size(); i++)
+            System.out.println(i + ": " + locations.get(i));
+        ws.setPickupLocation(locations.get(getOptionIntFromInput(locations.size())));
+        boolean exit = false;
+        while (! exit) {
+            System.out.println("Enter daily schedules:");
+            System.out.println("0: Save weekly schedule & Return");
+            System.out.println("1: Monday");
+            System.out.println("2: Tuesday");
+            System.out.println("3: Wednesday");
+            System.out.println("4: Thursday");
+            System.out.println("5: Friday");
+            int option = getOptionIntFromInput(6);
+            switch (option) {
+                case 0:
+                    exit = true;
+                    break;
+                case 1:
+                    setDailySchedule(GregorianCalendar.MONDAY, ws);
+                    break;
+                case 2:
+                    setDailySchedule(GregorianCalendar.TUESDAY, ws);
+                    break;
+                case 3:
+                    setDailySchedule(GregorianCalendar.WEDNESDAY, ws);
+                    break;
+                case 4:
+                    setDailySchedule(GregorianCalendar.THURSDAY, ws);
+                    break;
+                case 5:
+                    setDailySchedule(GregorianCalendar.FRIDAY, ws);
+                    break;
+                default:
+                    break;
+            }
+        }
+        WeeklyScheduler scheduler = new WeeklyScheduler();
+        String fail = scheduler.schedule(new Request(member, new GregorianCalendar(), context.getCentral()), null);
+        if (fail.equals(Scheduler.SUCCESS)) 
+            System.out.println("Weekly Schedule Saved!");
+        else
+            System.out.println(fail);
+        System.out.println("Press Enter to continue...");
+        in.nextLine();
     }
 
+    private static void setDailySchedule(int day, WeeklySchedule ws) {
+        System.out.println("Enter arrival time at "+context.getCentral()+" from "+ws.getPickupLocation()+" (hh:mm):");
+        ws.setArrive(day, getTimeFromInput());
+        System.out.println("Enter departure time from "+context.getCentral()+" to "+ws.getPickupLocation()+" (hh:mm):");
+        ws.setDepart(day, getTimeFromInput());
+        System.out.println("Available to drive?");
+        System.out.println("0: Yes");
+        System.out.println("1: No");
+        if (getOptionIntFromInput(2) == 0)
+            ws.setDrive(day, true);
+        else
+            ws.setDrive(day, false);
+    }
+    
     private static void viewSchedule() {
         Member member = context.getMember();
         System.out.print((new ScheduleViewer()).getScheduleText(member));
@@ -494,10 +557,13 @@ public class CLIMain {
         String ampm[] = new String[2];
         ampm[0] = " AM";
         ampm[1] = " PM";
+        int hour = gc.get(GregorianCalendar.HOUR);
+        if (hour == 0)
+            hour = 12;
         String minute = Integer.toString(gc.get(GregorianCalendar.MINUTE));
         if (minute.length() == 1)
             minute = "0"+minute;
-        return gc.get(GregorianCalendar.HOUR)+":"+minute+ampm[gc.get(GregorianCalendar.AM_PM)];
+        return hour+":"+minute+ampm[gc.get(GregorianCalendar.AM_PM)];
     }
     
     private static int getOptionIntFromInput(int lessThan) {
@@ -523,7 +589,7 @@ public class CLIMain {
         return option;
     } 
     
-    private static GregorianCalendar getTimeFromInput() {
+    private static GregorianCalendar getTimeDateFromInput() {
         GregorianCalendar time = null;
         boolean valid = false;
         while (!valid) {
@@ -543,6 +609,43 @@ public class CLIMain {
         return time;
     } 
 
+        private static GregorianCalendar getTimeFromInput() {
+        GregorianCalendar time = null;
+        boolean valid = false;
+        while (!valid) {
+            String input = in.nextLine();    
+            try {
+                int hour = Integer.parseInt(input.substring(0, 2));
+                int minute = Integer.parseInt(input.substring(3, 5));
+                time = new GregorianCalendar();
+                time = new GregorianCalendar(time.get(GregorianCalendar.YEAR), time.get(GregorianCalendar.MONTH), 
+                time.get(GregorianCalendar.DAY_OF_MONTH), hour, minute);
+                valid = true;
+            } catch (Exception e) {
+                System.out.println("Invalid Input. try again");
+            }         
+        }
+        return time;
+    }
+        
+    private static GregorianCalendar getDateFromInput() {
+        GregorianCalendar time = null;
+        boolean valid = false;
+        while (!valid) {
+            String input = in.nextLine();    
+            try {
+                int month = Integer.parseInt(input.substring(0, 2))-1;
+                int day = Integer.parseInt(input.substring(3, 5));
+                int year = Integer.parseInt(input.substring(6, 10));
+                time = new GregorianCalendar(year, month, day);
+                valid = true;
+            } catch (Exception e) {
+                System.out.println("Invalid Input. try again");
+            }         
+        }
+        return time;
+    } 
+    
     private static void updateLoginInfo(Member member) {
         System.out.print("Enter the Email address: ");
         String email, password1, password2;

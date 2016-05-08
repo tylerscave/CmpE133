@@ -39,6 +39,16 @@ public class DriveScheduler extends Scheduler{
         drive.setIdNumber(data.getNewSchedulableId());
         member.getDrives().add(drive);
         
+        String ls = System.lineSeparator();
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("You have scheduled a new drive on ").append(getDateFromCalendar(drive.getStartTime())).append(ls);
+        sb.append("Details: ");
+        List<Location> stops = drive.getStops();
+        sb.append(stops.get(0)).append(" at ").append(getTimeFromCalendar(drive.getStartTime())).append(" to ");
+        sb.append(stops.get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(drive.getEndTime()));
+        member.addNewNotification(new Notification(sb.toString()));
+        
         /*member.setChanged();
         member.notifyObservers();
         
@@ -77,8 +87,22 @@ public class DriveScheduler extends Scheduler{
                     m.getRides().add(ride);
                     //remove saved request
                     it.remove();
-                    member.addNewNotification(new Notification("You have a new passenger!"));
-                    m.addNewNotification(new Notification("You have a new driver!"));
+                    
+                    sb = new StringBuilder();
+                    sb.append(m).append(" is a new passenger for your drive on ").append(getDateFromCalendar(drive.getStartTime())).append(ls);
+                    sb.append("Details: ");
+                    stops = ride.getStops();
+                    sb.append(stops.get(0)).append(" at ").append(getTimeFromCalendar(ride.getStartTime())).append(" to ");
+                    sb.append(stops.get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(ride.getEndTime()));
+                    member.addNewNotification(new Notification(sb.toString()));
+                    
+                    sb = new StringBuilder();
+                    sb.append(member).append(" is now your driver for your ride on ").append(getDateFromCalendar(ride.getStartTime())).append(ls);
+                    sb.append("Details: ");
+                    sb.append(stops.get(0)).append(" at ").append(getTimeFromCalendar(ride.getStartTime())).append(" to ");
+                    sb.append(stops.get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(ride.getEndTime()));
+                    m.addNewNotification(new Notification(sb.toString()));
+                    
                     changed.add(m);
                 }
             }
@@ -131,11 +155,11 @@ public class DriveScheduler extends Scheduler{
             if (r.conflicts(drive))
                 return null;
         }
-        //may not want to check for this 
+        /*//may not want to check for this 
         for (ParkingTime p : member.getParkingTimes()) {
             if (p.conflicts(drive))
                 return null;
-        }
+        }*/
         
         return drive;
     }

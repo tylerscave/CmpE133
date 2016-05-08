@@ -111,4 +111,8 @@ public class Drive extends Schedulable{
     public GregorianCalendar getEndTime() {
         return route.getEndTime();
     }
+    
+    public List<Location> getStops() {
+        return route.getStops();
+    }
 }
