@@ -19,18 +19,24 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import model.Context;
-import model.schedule.DriveChoice;
+import model.schedule.Drive;
 import model.schedule.Location;
+import model.schedule.Request;
+import model.schedule.Ride;
 import model.member.Member;
-import model.schedule.WeeklySchedule;
-import model.schedule.RideRequest;
-import model.schedule.RideRequest.TimeType;
+import model.schedule.Schedulable;
+import model.schedule.ScheduleViewer;
+import model.schedule.Scheduler;
+import model.schedule.SchedulingContext;
+import model.schedule.Request.TimeType;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -41,19 +47,22 @@ import model.schedule.RideRequest.TimeType;
 public class RideRequestController implements Initializable {
 	
     private Context context;
+    private SchedulingContext sc;
     private Member member;
-    private WeeklySchedule memberSchedule;
-    private Location pickup, destination;
+    private Location pickup;
+    private Location destination;
     private LocalDate date;
-    private GregorianCalendar hourTime, selectedDateTime;
+    private GregorianCalendar hourTime;
+    private GregorianCalendar selectedDateTime;
     private int minuteTime;
     private boolean byStartTime;
     private TimeType timeType;
-//    private RideRequest selectedDriver;
+    private Request request;
+    private Drive selectedRide;
     private ObservableList<GregorianCalendar> hours = FXCollections.observableArrayList();;
     private ObservableList<Location> locations = FXCollections.observableArrayList();
     private ObservableList<Integer> minutes = FXCollections.observableArrayList();
-    private ObservableList<DriveChoice> driveChoices = FXCollections.observableArrayList();
+    private ObservableList<Object> rideChoices = FXCollections.observableArrayList();
     
     @FXML
     private DatePicker datePicker;
@@ -74,13 +83,12 @@ public class RideRequestController implements Initializable {
     @FXML
     private ComboBox<TimeType> timeTypeCombo;
     @FXML
-    private ComboBox<DriveChoice> pickDriverCombo;
+    private ComboBox<Object> pickRideCombo;
     
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
-        memberSchedule = member.getWeeklySchedule();
         
         //set up the location ComboBox
         for (Location l : context.getMap().getLocations())
@@ -136,7 +144,7 @@ public class RideRequestController implements Initializable {
 	@FXML
 	private void handleMinuteCombo(ActionEvent event) {
 		minuteTime = minuteCombo.getSelectionModel().getSelectedItem();
-		// after all needed data is collected make the ride request to populate the pickRideCombo box
+		// after all needed data is collected call makeRideRequest to populate the pickRideCombo box with available rides
 		makeRideRequest();
 	}
 	
@@ -146,8 +154,12 @@ public class RideRequestController implements Initializable {
 	}
 	
 	@FXML
-	private void handlePickDriverCombo(ActionEvent event) {
-//		selectedDriver = pickDriverCombo.getSelectionModel().getSelectedItem();
+	private void handlePickRideCombo(ActionEvent event) {		
+		if(pickRideCombo.getSelectionModel().getSelectedItem() instanceof Request) {
+			selectedRide = (Drive)pickRideCombo.getSelectionModel().getSelectedItem();
+		} else {
+			selectedRide = null;
+		}
 	}
 
     @FXML
@@ -165,18 +177,45 @@ public class RideRequestController implements Initializable {
     
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	//store the selected ride somewhere like Ride?
-    	
-    	//TEST OUTPUT - REMOVE LATER
-    	System.out.println("selected date = " +  selectedDateTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()) + " " +
-				(selectedDateTime.get(GregorianCalendar.MONTH)+1) + "/" + //GregorianCalendar Jan=0
-				selectedDateTime.get(GregorianCalendar.DAY_OF_MONTH) + "/" +
-				selectedDateTime.get(GregorianCalendar.YEAR) + " " +
-				selectedDateTime.get(GregorianCalendar.HOUR) + ":" +
-				selectedDateTime.get(GregorianCalendar.MINUTE) + " " +
-				selectedDateTime.getDisplayName(GregorianCalendar.AM_PM, 
-						GregorianCalendar.LONG, Locale.getDefault()));
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	if(selectedRide == null) {
+    		//make a new RideRequest with given data from form
+    		sc.addToRequests(request, member.getFirstName());
+    		String requestAlert =  selectedDateTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+    				GregorianCalendar.LONG, Locale.getDefault()) + " " +
+    				(selectedDateTime.get(GregorianCalendar.MONTH)+1) + "/" + //GregorianCalendar Jan=0
+    				selectedDateTime.get(GregorianCalendar.DAY_OF_MONTH) + "/" +
+    				selectedDateTime.get(GregorianCalendar.YEAR) + " " +
+    				selectedDateTime.get(GregorianCalendar.HOUR) + ":" +
+    				selectedDateTime.get(GregorianCalendar.MINUTE) + " " +
+    				selectedDateTime.getDisplayName(GregorianCalendar.AM_PM, 
+    						GregorianCalendar.LONG, Locale.getDefault());
+        	alert.setTitle("Schedule Information");
+        	alert.setHeaderText("New Ride Request Made!");
+        	alert.setContentText(requestAlert);
+        	alert.showAndWait();
+    	} else {
+            //get selected drive
+     		String fail = sc.schedule(request, selectedRide);
+            if (fail.equals(Scheduler.SUCCESS)) {
+                Ride ride = request.getMember().getRides().get(request.getMember().getRides().size()-1);
+                List<Location> stops = ride.getRoute().getStops();
+                Drive drive = (new ScheduleViewer()).getDriveById(ride.getDriveId());
+            	String alertMsg = "From "+stops.get(0)+" at "+getTimeFromCalendar(ride.getStartTime())+
+            			"\nto "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(ride.getEndTime())+
+            			"\non "+getDateFromCalendar(ride.getEndTime())+
+            			"\nYour Driver is "+drive.getMemberName();
+            	alert.setTitle("Schedule Information");
+            	alert.setHeaderText("New Ride Scheduled!");
+            	alert.setContentText(alertMsg);
+            	alert.showAndWait();
+            } else {
+            	alert.setTitle("Schedule Information");
+            	alert.setHeaderText(null);
+            	alert.setContentText(fail);
+            	alert.showAndWait();
+            }
+    	}
     	handleCancelButton(event);
     }
     
@@ -234,8 +273,8 @@ public class RideRequestController implements Initializable {
 	
 	/**
 	 * makeRideRequest is called after all data needed has been collected. This method
-	 * makes a request and populates the pickDriverCombo box with a list of available 
-	 * rides by driver that can then be selected
+	 * makes a request and populates the pickRideCombo box with a list of available 
+	 * rides that can then be selected
 	 */
 	private void makeRideRequest() {
 		GregorianCalendar startTime = new GregorianCalendar();
@@ -251,14 +290,28 @@ public class RideRequestController implements Initializable {
 			endTime = selectedDateTime;
 			endType = timeType;
 		}
-		
-		//THIS ERRORS OUT DUE TO LINE 43 IN RIDEREQUEST.JAVA --> NOT SURE WHY YET
-		/*
-		RideRequest rideRequest = new RideRequest(member, startTime, endTime, pickup, 
-				destination, startType, endType);
-		List<DriveChoice> dc = rideRequest.getAvailableDriveChoices();
-		driveChoices.addAll(dc);
-		pickRideCombo.setItems(driveChoices);
-		*/
+	     
+        //setup dropdown of available rides
+        request = new Request(member, startTime, endTime, pickup, destination, startType, endType);
+        sc = new SchedulingContext();
+        List<Schedulable> drives = sc.getAvailable(request);   
+        rideChoices.addAll(drives);
+        rideChoices.add("Don't see the ride you want? Make a New Ride Request");
+        pickRideCombo.setItems(rideChoices);		
 	}
+
+	
+	//Helper methods to help print strings
+    private static String getDateFromCalendar(GregorianCalendar gc) {
+        return (gc.get(GregorianCalendar.MONTH)+1)+"/"+gc.get(GregorianCalendar.DATE)+"/"+gc.get(GregorianCalendar.YEAR);
+    }
+    private static String getTimeFromCalendar(GregorianCalendar gc) {
+        String ampm[] = new String[2];
+        ampm[0] = " AM";
+        ampm[1] = " PM";
+        String minute = Integer.toString(gc.get(GregorianCalendar.MINUTE));
+        if (minute.length() == 1)
+            minute = "0"+minute;
+        return gc.get(GregorianCalendar.HOUR)+":"+minute+ampm[gc.get(GregorianCalendar.AM_PM)];
+    }
 }
