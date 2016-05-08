@@ -180,7 +180,7 @@ public class RideRequestController implements Initializable {
     	Alert alert = new Alert(AlertType.INFORMATION);
     	if(selectedRide == null) {
     		//make a new RideRequest with given data from form
-    		sc.addToRequests(request, member.getFirstName());
+    		sc.addRideToRequests(request, member.getFirstName());
     		String requestAlert =  selectedDateTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
     				GregorianCalendar.LONG, Locale.getDefault()) + " " +
     				(selectedDateTime.get(GregorianCalendar.MONTH)+1) + "/" + //GregorianCalendar Jan=0
