@@ -139,12 +139,9 @@ public class ScheduleViewer {
                 List<Location> rideStops = ride.getStops();
                 sb.append("    ").append(ride.getMemberName()).append(": ");
                 sb.append(rideStops.get(0)).append(" at ").append(getTimeFromCalendar(ride.getStartTime())).append(" to ");
-                sb.append(rideStops.get(rideStops.size()-1)).append(" at ").append(getTimeFromCalendar(ride.getEndTime()));
+                sb.append(rideStops.get(rideStops.size()-1)).append(" at ").append(getTimeFromCalendar(ride.getEndTime())).append(nl);
+                sb.append("      Ride Status: ").append(ride.getRideStatus().getStatus()).append(nl);
             }
-            Location status = d.getRoute().getLocationAtTime(new GregorianCalendar());
-            if (status == null)
-                status = new Location("Not yet started");
-            sb.append("    Current Status: ").append(status).append(nl);
         }
         sb.append(nl);
         
@@ -167,10 +164,7 @@ public class ScheduleViewer {
             sb.append(stops.get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(r.getEndTime())).append(" on ").append(getDateFromCalendar(r.getStartTime())).append(nl);
             Drive drive = (Drive) data.getSchedulable(r.getDriveId());
             sb.append("  Passenger in ").append(drive.getMemberName()).append("'s vehicle").append(nl);
-            Location status = r.getRoute().getLocationAtTime(new GregorianCalendar());
-            if (status == null)
-                status = new Location("Not yet started");
-            sb.append("  Current Status: ").append(status).append(nl);
+            sb.append("  Ride Status: ").append(r.getRideStatus().getStatus()).append(nl);
         }
         sb.append(nl);
         

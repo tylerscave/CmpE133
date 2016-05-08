@@ -49,4 +49,15 @@ public class Ride extends Schedulable{
     public List<Location> getStops() {
         return route.getStops();
     }
+
+    @Override
+    public void setIdNumber(int idNumber) {
+        super.setIdNumber(idNumber);
+        rideStatus.setRideId(driveId);
+    }
+
+    public RideStatus getRideStatus() {
+        return rideStatus;
+    }
+    
 }
