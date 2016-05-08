@@ -1,11 +1,4 @@
 package controller;
-/**
- *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
- * The controller for the member information form 
- * Solves CmpE133 Assignment 2
- * @author Tyler Jones,
-*/
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,6 +22,12 @@ import model.Context;
 import model.member.Member;
 import model.member.DrivingType;
 
+/**
+ *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
+ * The controller for the member information form 
+ * Solves CmpE133 SpartanPool
+ * @author Tyler Jones,
+*/
 public class MemberInfoController implements Initializable {
 	
     private Context context;
@@ -57,10 +56,6 @@ public class MemberInfoController implements Initializable {
     private RadioButton staff;        
     @FXML
     private RadioButton faculty; 
-    @FXML
-    private RadioButton drive;        
-    @FXML
-    private RadioButton ride;
     
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -79,7 +74,6 @@ public class MemberInfoController implements Initializable {
             city.setText(address.getCity());
             zipCode.setText(address.getZipCode());
 	}
-	
     
     @FXML
     protected void onEnter(ActionEvent event) {
@@ -90,12 +84,7 @@ public class MemberInfoController implements Initializable {
     protected void handleStatusRadio(ActionEvent event) {
     	//TODO
     }
-    
-    @FXML
-    protected void handleRidePrefRadio(ActionEvent event) {
-    	//TODO
-    }
-    
+       
     @FXML
     protected void handleVehicleButton(ActionEvent event) {
     	try {

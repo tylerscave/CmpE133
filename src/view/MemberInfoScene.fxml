@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MemberInfoController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MemberInfoController">
    <children>
       <ScrollPane>
          <content>
@@ -36,7 +36,6 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="First Name: " GridPane.halignment="RIGHT" />
@@ -45,9 +44,8 @@
                   <Label text="City: " GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
                   <Label text="Zip Code: " GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
                   <Label text="Status: " GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
-                  <Label text="Ride Preference: " GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
-                  <Label text="Vehicle: " GridPane.halignment="RIGHT" GridPane.rowIndex="11" />
-                  <Label text="Payment: " GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
+                  <Label text="Vehicle: " GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
+                  <Label text="Payment: " GridPane.halignment="RIGHT" GridPane.rowIndex="11" />
                   <TextField fx:id="firstName" onAction="#onEnter" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
@@ -107,40 +105,17 @@
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="10">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <RadioButton fx:id="drive" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride and Drive" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="ridePreferenceGroup" />
-                           </toggleGroup>
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </RadioButton>
-                        <RadioButton fx:id="ride" mnemonicParsing="false" onAction="#handleRidePrefRadio" text="Ride Only" toggleGroup="$ridePreferenceGroup" GridPane.halignment="CENTER" />
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="50.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <Button mnemonicParsing="false" onAction="#handleVehicleButton" prefWidth="360.0" text="Click to Enter Vehicle Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11">
+                  <Button mnemonicParsing="false" onAction="#handleVehicleButton" prefWidth="360.0" text="Click to Enter Vehicle Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handlePaymentButton" prefWidth="360.0" text="Click to Enter Payment Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12">
+                  <Button mnemonicParsing="false" onAction="#handlePaymentButton" prefWidth="360.0" text="Click to Enter Payment Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </Button>
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="13">
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="12">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

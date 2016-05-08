@@ -1,5 +1,4 @@
 package controller;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,10 +28,9 @@ import model.member.Vehicle.VehicleStyle;
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
  * The controller for the vehicle information form.  
- * Solves CmpE133 Carpool System
+ * Solves CmpE133 SpartanPool
  * @author Tyler Jones,
 */
-
 public class VehicleInfoController implements Initializable {
 
     private Context context;
@@ -97,7 +95,7 @@ public class VehicleInfoController implements Initializable {
 	@FXML
     private void handleCancelButton(ActionEvent event) {
     	try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);

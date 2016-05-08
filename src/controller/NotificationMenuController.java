@@ -1,10 +1,4 @@
 package controller;
-/**
- *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
- * The controller for the NotificationMenuScene
- * Solves CmpE133 SpartanPool
- * @author Tyler Jones,
-*/
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +15,12 @@ import javafx.stage.Stage;
 import model.Context;
 import model.member.Member;
 
+/**
+ *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
+ * The controller for the NotificationMenuScene
+ * Solves CmpE133 SpartanPool
+ * @author Tyler Jones,
+*/
 public class NotificationMenuController implements Initializable {
 
     private Context context;

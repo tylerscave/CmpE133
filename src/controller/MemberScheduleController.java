@@ -1,10 +1,4 @@
 package controller;
-/**
- *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
- * The controller for the Member Schedule Scene
- * Solves CmpE133 SpartanPool
- * @author Tyler Jones,
-*/
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -30,6 +24,12 @@ import model.member.Member;
 import model.schedule.WeeklySchedule;
 import model.schedule.Location;
 
+/**
+ *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
+ * The controller for the Member Schedule Scene
+ * Solves CmpE133 SpartanPool
+ * @author Tyler Jones,
+*/
 public class MemberScheduleController implements Initializable {
 	
     private Context context;

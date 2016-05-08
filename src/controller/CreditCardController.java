@@ -1,10 +1,4 @@
 package controller;
-/**
- *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
- * The controller for the CreditCardSene.  
- * Solves CmpE133 SpartanPool
- * @author Tyler Jones,
-*/
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,6 +23,12 @@ import model.Context;
 import model.member.Member;
 import model.payment.CreditCardInfo.CardType;
 
+/**
+ *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
+ * The controller for the CreditCardScene.  
+ * Solves CmpE133 SpartanPool
+ * @author Tyler Jones,
+*/
 public class CreditCardController implements Initializable {
 
     private Context context;
@@ -84,7 +84,7 @@ public class CreditCardController implements Initializable {
 	@FXML
     private void handleCancelButton(ActionEvent event) {
     	try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/PaymentMenuScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);

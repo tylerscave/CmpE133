@@ -1,5 +1,4 @@
 package controller;
-
 import model.LoginHandler;
 import model.member.LoginInformation;
 import model.member.Member;
@@ -107,7 +106,7 @@ public class LoginSceneController implements Initializable {
     @FXML
     protected void handleCreateAccountButton(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/CreateAccountScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
