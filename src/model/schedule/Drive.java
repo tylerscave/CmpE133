@@ -111,4 +111,24 @@ public class Drive extends Schedulable{
     public GregorianCalendar getEndTime() {
         return route.getEndTime();
     }
+    
+    //Adding to string to populate comboBoxes with actual drive objects
+    public String tostring() {
+    	return super.getMemberName()+": "+numSeats+" seats available. "+getTimeFromCalendar(route.getStartTime())+" to "+getTimeFromCalendar(route.getEndTime());
+    }
+    
+    //Helper methods for tostring()
+    private static String getDateFromCalendar(GregorianCalendar gc) {
+        return (gc.get(GregorianCalendar.MONTH)+1)+"/"+gc.get(GregorianCalendar.DATE)+"/"+gc.get(GregorianCalendar.YEAR);
+    } 
+    private static String getTimeFromCalendar(GregorianCalendar gc) {
+        String ampm[] = new String[2];
+        ampm[0] = " AM";
+        ampm[1] = " PM";
+        String minute = Integer.toString(gc.get(GregorianCalendar.MINUTE));
+        if (minute.length() == 1)
+            minute = "0"+minute;
+        return gc.get(GregorianCalendar.HOUR)+":"+minute+ampm[gc.get(GregorianCalendar.AM_PM)];
+    }
+
 }
