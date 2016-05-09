@@ -857,7 +857,7 @@ public class CLIMain {
     }
 
     private static void updateAddress(Member member) {
-    	System.out.print("Enter the street address (ex:320 turk st) ");
+    	System.out.print("Enter the street address (ex:320 turk st): ");
     	member.getAddress().setStreet1(in.nextLine());
     	System.out.print("Enter the unit number(if applicable): ");
     	member.getAddress().setStreet2(in.nextLine());
