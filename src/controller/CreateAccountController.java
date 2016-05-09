@@ -69,6 +69,7 @@ public class CreateAccountController implements Initializable {
 		} else {
                 MemberBuilder mb = new MemberBuilder();
                 mb.setLoginInfo(new LoginInformation(email.getText(), password.getText()));
+                member.setLoginInfo(new LoginInformation(email.getText(), password.getText()));
                 if (mb.build() == -1)
                     return;
 			try {
