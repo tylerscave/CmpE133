@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Context;
+import model.NotificationSender;
 import model.member.Member;
 
 /**
@@ -49,9 +50,34 @@ public class SendNotificationController implements Initializable {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	//TODO
-    	handleCancelButton(event);
+    	sendMessage(event);
+    }
+    
+    @FXML
+    private void onEnter(ActionEvent event) {
+    	sendMessage(event);
+    }
+    
+    private void sendMessage(ActionEvent event) {
+        String email = recipiantEmailField.getText();
+        String text = notificationField.getText();
+        System.out.println(email+", "+text);
+        if (email.equals("") || text.equals(""))
+            return;
+        
+        NotificationSender ns = new NotificationSender(member);
+        ns.send(email, text);
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/NotificationMenuScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package controller;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Context;
 import model.DataHandler;
+import model.Notification;
+import model.StringFormat;
 import model.member.Member;
 
 /**
@@ -56,8 +59,13 @@ public class OldNotificationController implements Initializable {
     }
 
     private String getText() {
+        List<Notification> notifications = member.getOldNotifications();
         StringBuilder sb = new StringBuilder();
-        //TODO
+        for (int i = 0; i < notifications.size(); i++) {
+            sb.append("Notification ").append(Integer.toString(i+1)).append(": Created ").append(StringFormat.getTimeFromCalendar(notifications.get(i).getTime())).append(" ").append(StringFormat.getDateFromCalendar(notifications.get(i).getTime())).append(System.lineSeparator());
+            sb.append(notifications.get(i).getMessage()).append(System.lineSeparator());
+            sb.append(System.lineSeparator());
+        }
         return sb.toString();
     }
 

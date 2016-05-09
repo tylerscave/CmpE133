@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Context;
+import model.PasswordSender;
 import model.member.Member;
 
 /**
@@ -27,15 +28,15 @@ public class RetrieveAccountController implements Initializable {
     private Context context;
     private Member member;
     @FXML
-    private TextField EmailField;
+    private TextField emailField;
     
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
 	}
 	
-	@FXML
+    @FXML
     private void handleCancelButton(ActionEvent event) {
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/LoginScene.fxml"));
@@ -50,8 +51,30 @@ public class RetrieveAccountController implements Initializable {
 	
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	//TODO
-    	
-    	handleCancelButton(event);
+    	sendPassword(event);
+    }
+    
+    @FXML
+    private void onEnter(ActionEvent event) {
+        sendPassword(event);
+    }
+    
+    private void sendPassword(ActionEvent event) {
+        PasswordSender ps = new PasswordSender();
+        
+        if (emailField.getText().equals(""))
+            return;
+        
+    	ps.sendPassword(emailField.getText());
+        
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/LoginScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -25,8 +25,12 @@ public class NotificationSender {
         List<Member> members = data.getMembers();
         for (Member m : members) {
             if (m.getLoginInfo().getEmail().equals(email)) {
-                data.notify(m.getIdNumber(), new Notification("From "+member.getFirstName()+" "+member.getLastName()+": "+message));
-            break;
+                Member loggedIn = Context.getInstance().getMember();
+                if (m.getIdNumber() == loggedIn.getIdNumber())
+                    loggedIn.addNewNotification(new Notification("From "+member.toString()+": "+message));
+                else
+                    data.notify(m.getIdNumber(), new Notification("From "+member.toString()+": "+message));
+                break;
             }       
         }
     }

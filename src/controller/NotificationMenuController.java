@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.Context;
 import model.member.Member;
@@ -25,12 +26,16 @@ public class NotificationMenuController implements Initializable {
 
     private Context context;
     private Member member;
+    
+    @FXML
+    private Button newNotifications;
 	
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
         
+        newNotifications.setText("New Notifications ("+member.getNumberOfNewNotifications()+")");
     }     
     
     @FXML
