@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -17,7 +16,7 @@
    <children>
       <ScrollPane>
          <content>
-            <GridPane prefWidth="600.0" vgap="15.0">
+            <GridPane prefHeight="525.0" prefWidth="600.0" vgap="15.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="152.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="448.0" />
@@ -26,64 +25,68 @@
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="First Name: " GridPane.halignment="RIGHT" />
+                  <TextField fx:id="firstName" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
                   <Label text="Last Name: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <Label text="Street: " GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                  <Label text="City: " GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
-                  <Label text="Zip Code: " GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
-                  <Label text="Status: " GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
-                  <Label text="Vehicle: " GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
-                  <Label text="Payment: " GridPane.halignment="RIGHT" GridPane.rowIndex="11" />
-                  <TextField fx:id="firstName" onAction="#onEnter" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                  <TextField fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="lastName" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label text="SJSU ID: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <TextField fx:id="idNum" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="street" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="50.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField fx:id="city" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="50.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField fx:id="zipCode" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="50.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField fx:id="phone" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="50.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Phone Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
                   <Label text="Email: " GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                  <TextField fx:id="email" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </TextField>
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="9">
+                  <Label text="Phone Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                  <TextField fx:id="phone" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Street: " GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                  <TextField fx:id="street" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="City: " GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                  <TextField fx:id="city" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Zip Code: " GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+                  <TextField fx:id="zipCode" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Status: " GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -93,23 +96,31 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <RadioButton fx:id="faculty" mnemonicParsing="false" onAction="#handleStatusRadio" text="Faculty" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                        <RadioButton fx:id="student" mnemonicParsing="false" onAction="#handleStatusRadio" text="Student" GridPane.halignment="CENTER">
                            <toggleGroup>
                               <ToggleGroup fx:id="statusGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="student" mnemonicParsing="false" onAction="#handleStatusRadio" text="Student" toggleGroup="$statusGroup" GridPane.halignment="CENTER" />
                         <RadioButton fx:id="staff" mnemonicParsing="false" onAction="#handleStatusRadio" text="Staff" toggleGroup="$statusGroup" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <RadioButton fx:id="faculty" mnemonicParsing="false" onAction="#handleStatusRadio" text="Faculty" toggleGroup="$statusGroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                      </children>
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </GridPane>
+                  <Label text="Login: " GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
+                  <Button mnemonicParsing="false" onAction="#handleUpdateLogin" prefWidth="360.0" text="Click to Update Login Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="50.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Label text="Vehicle: " GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
                   <Button mnemonicParsing="false" onAction="#handleVehicleButton" prefWidth="360.0" text="Click to Enter Vehicle Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </Button>
+                  <Label text="Payment: " GridPane.halignment="RIGHT" GridPane.rowIndex="11" />
                   <Button mnemonicParsing="false" onAction="#handlePaymentButton" prefWidth="360.0" text="Click to Enter Payment Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
@@ -132,18 +143,6 @@
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <Label text="SJSU ID: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <TextField fx:id="idNum" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="50.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Password: " GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                  <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="50.0" />
-                     </GridPane.margin>
-                  </PasswordField>
                </children>
                <padding>
                   <Insets top="15.0" />

@@ -72,7 +72,8 @@ public class LoginSceneController implements Initializable {
     	//}
     	
     	
-        loginMessage.setText("Sign in successful");
+        //loginMessage.setText("Sign in successful");
+    	loginMessage.setText("Incorrect login. Do you have an account yet?");
         System.out.println("Sign in button pressed");
         login(event);
     }
@@ -131,11 +132,9 @@ public class LoginSceneController implements Initializable {
     
     private void login(ActionEvent event) {
         context.setLogin(new LoginHandler());
-        if (!context.getLogin().handleLogin(loginInfo).equals(""))
-        {
-        	//commented out the return for testing
-            //return;
-        }
+        if (!context.getLogin().handleLogin(loginInfo).equals("")) {
+            return;
+        } 
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
             Scene scene = new Scene(root);
