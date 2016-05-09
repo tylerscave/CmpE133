@@ -32,6 +32,7 @@ import model.schedule.Location;
 import model.schedule.Request;
 import model.schedule.Ride;
 import model.member.Member;
+import model.member.Passenger;
 import model.schedule.Schedulable;
 import model.schedule.ScheduleViewer;
 import model.schedule.Scheduler;
@@ -52,11 +53,10 @@ public class RideRequestController implements Initializable {
     private Location pickup;
     private Location destination;
     private LocalDate date;
-    private GregorianCalendar hourTime;
-    private GregorianCalendar selectedDateTime;
-    private int minuteTime;
-    private boolean byStartTime;
-    private TimeType timeType;
+    private GregorianCalendar pickupHourTime, destinationHourTime;
+    private GregorianCalendar pickupSelectedDateTime, destinationSelectedDateTime;
+    private Integer pickupMinuteTime, destinationMinuteTime;
+    private TimeType pickupTimeType, destinationTimeType;
     private Request request;
     private Drive selectedRide;
     private ObservableList<GregorianCalendar> hours = FXCollections.observableArrayList();;
@@ -71,17 +71,17 @@ public class RideRequestController implements Initializable {
     @FXML
     private ComboBox<Location> destinationLocation;
     @FXML
-    private RadioButton arrivalRadio;
+    private ComboBox<GregorianCalendar> pickupHourCombo;
     @FXML
-    private RadioButton departureRadio;
+    private ComboBox<GregorianCalendar> destinationHourCombo;
     @FXML
-    private ToggleGroup group;
+    private ComboBox<Integer> pickupMinuteCombo;
     @FXML
-    private ComboBox<GregorianCalendar> hourCombo;
+    private ComboBox<Integer> destinationMinuteCombo;
     @FXML
-    private ComboBox<Integer> minuteCombo;
+    private ComboBox<TimeType> pickupTimeTypeCombo;
     @FXML
-    private ComboBox<TimeType> timeTypeCombo;
+    private ComboBox<TimeType> destinationTimeTypeCombo;
     @FXML
     private ComboBox<Object> pickRideCombo;
     
@@ -89,6 +89,8 @@ public class RideRequestController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
+        
+        member.setDrivingType(new Passenger());
         
         //set up the location ComboBox
         for (Location l : context.getMap().getLocations())
@@ -101,13 +103,16 @@ public class RideRequestController implements Initializable {
         //they are set up for todays date until a new date is picked from datePicker
         date = LocalDate.now();
         hours = hoursMaker(date);   
-        hourCombo.setItems(hours);
+        pickupHourCombo.setItems(hours);
+        destinationHourCombo.setItems(hours);
         ArrayList<Integer> mins = new ArrayList<>(Arrays.asList(0, 10, 20, 30, 40, 50));
         minutes.addAll(mins);
-        minuteCombo.setItems(minutes);
+        pickupMinuteCombo.setItems(minutes);
+        destinationMinuteCombo.setItems(minutes);
         
         //setup timeType ComboBox
-        timeTypeCombo.getItems().setAll(TimeType.values());
+        pickupTimeTypeCombo.getItems().setAll(TimeType.values());
+        destinationTimeTypeCombo.getItems().setAll(TimeType.values());
 	}
 	
 	@FXML
@@ -117,44 +122,48 @@ public class RideRequestController implements Initializable {
         //update the arrive and depart boxes with correct date from datePicker
 		hours.clear();		
         hours = hoursMaker(date);     
-        hourCombo.setItems(hours);     
+        pickupHourCombo.setItems(hours);
+        destinationHourCombo.setItems(hours);
 	}
 	
 	@FXML
 	private void handleLocationCombos(ActionEvent event) {
 		pickup = pickupLocation.getSelectionModel().getSelectedItem();
 		destination = destinationLocation.getSelectionModel().getSelectedItem();
+		if(checkData()) {
+			makeRideRequest();
+		}
 	}
 	
 	@FXML
-	private void handleRadios(ActionEvent event) {
-    	RadioButton radio = (RadioButton) event.getSource();
-    	if (radio == arrivalRadio) {
-    		byStartTime = false;
-    	} else if(radio == departureRadio){
-    		byStartTime = true;
-    	}
+	private void handleHourCombos(ActionEvent event) {
+		pickupHourTime = pickupHourCombo.getSelectionModel().getSelectedItem();
+		destinationHourTime = destinationHourCombo.getSelectionModel().getSelectedItem();
+		if(checkData()) {
+			makeRideRequest();
+		}
 	}
 	
 	@FXML
-	private void handleHourCombo(ActionEvent event) {
-		hourTime = hourCombo.getSelectionModel().getSelectedItem();
+	private void handleMinuteCombos(ActionEvent event) {
+		pickupMinuteTime = pickupMinuteCombo.getSelectionModel().getSelectedItem();
+		destinationMinuteTime = destinationMinuteCombo.getSelectionModel().getSelectedItem();
+		if(checkData()) {
+			makeRideRequest();
+		}
 	}
 	
 	@FXML
-	private void handleMinuteCombo(ActionEvent event) {
-		minuteTime = minuteCombo.getSelectionModel().getSelectedItem();
-		// after all needed data is collected call makeRideRequest to populate the pickRideCombo box with available rides
-		makeRideRequest();
+	private void handleTimeTypeCombos(ActionEvent event) {
+		pickupTimeType = pickupTimeTypeCombo.getSelectionModel().getSelectedItem();
+		destinationTimeType = destinationTimeTypeCombo.getSelectionModel().getSelectedItem();
+		if(checkData()) {
+			makeRideRequest();
+		}
 	}
 	
 	@FXML
-	private void handleTimeTypeCombo(ActionEvent event) {
-		timeType = timeTypeCombo.getSelectionModel().getSelectedItem();
-	}
-	
-	@FXML
-	private void handlePickRideCombo(ActionEvent event) {		
+	private void handlePickRideCombo(ActionEvent event) {
 		if(pickRideCombo.getSelectionModel().getSelectedItem() instanceof Request) {
 			selectedRide = (Drive)pickRideCombo.getSelectionModel().getSelectedItem();
 		} else {
@@ -178,17 +187,30 @@ public class RideRequestController implements Initializable {
     @FXML
     private void handleSubmitButton(ActionEvent event) {
     	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setResizable(true);
+    	alert.getDialogPane().setPrefSize(500, 250);
     	if(selectedRide == null) {
     		//make a new RideRequest with given data from form
     		sc.addRideToRequests(request, member.getFirstName());
-    		String requestAlert =  selectedDateTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+    		String requestAlert = "From "+pickup+ " ";
+    		requestAlert = requestAlert+pickupSelectedDateTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
     				GregorianCalendar.LONG, Locale.getDefault()) + " " +
-    				(selectedDateTime.get(GregorianCalendar.MONTH)+1) + "/" + //GregorianCalendar Jan=0
-    				selectedDateTime.get(GregorianCalendar.DAY_OF_MONTH) + "/" +
-    				selectedDateTime.get(GregorianCalendar.YEAR) + " " +
-    				selectedDateTime.get(GregorianCalendar.HOUR) + ":" +
-    				selectedDateTime.get(GregorianCalendar.MINUTE) + " " +
-    				selectedDateTime.getDisplayName(GregorianCalendar.AM_PM, 
+    				(pickupSelectedDateTime.get(GregorianCalendar.MONTH)+1) + "/" + //GregorianCalendar Jan=0
+    				pickupSelectedDateTime.get(GregorianCalendar.DAY_OF_MONTH) + "/" +
+    				pickupSelectedDateTime.get(GregorianCalendar.YEAR) + " " +
+    				pickupSelectedDateTime.get(GregorianCalendar.HOUR) + ":" +
+    				pickupSelectedDateTime.get(GregorianCalendar.MINUTE) + " " +
+    				pickupSelectedDateTime.getDisplayName(GregorianCalendar.AM_PM, 
+    						GregorianCalendar.LONG, Locale.getDefault());
+    		requestAlert = requestAlert+"\nTo "+destination;
+    		requestAlert = requestAlert+destinationSelectedDateTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
+    				GregorianCalendar.LONG, Locale.getDefault()) + " " +
+    				(destinationSelectedDateTime.get(GregorianCalendar.MONTH)+1) + "/" + //GregorianCalendar Jan=0
+    				destinationSelectedDateTime.get(GregorianCalendar.DAY_OF_MONTH) + "/" +
+    				destinationSelectedDateTime.get(GregorianCalendar.YEAR) + " " +
+    				destinationSelectedDateTime.get(GregorianCalendar.HOUR) + ":" +
+    				destinationSelectedDateTime.get(GregorianCalendar.MINUTE) + " " +
+    				destinationSelectedDateTime.getDisplayName(GregorianCalendar.AM_PM, 
     						GregorianCalendar.LONG, Locale.getDefault());
         	alert.setTitle("Schedule Information");
         	alert.setHeaderText("New Ride Request Made!");
@@ -201,19 +223,20 @@ public class RideRequestController implements Initializable {
                 Ride ride = request.getMember().getRides().get(request.getMember().getRides().size()-1);
                 List<Location> stops = ride.getRoute().getStops();
                 Drive drive = (new ScheduleViewer()).getDriveById(ride.getDriveId());
-            	String alertMsg = "From "+stops.get(0)+" at "+getTimeFromCalendar(ride.getStartTime())+
-            			"\nto "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(ride.getEndTime())+
-            			"\non "+getDateFromCalendar(ride.getEndTime())+
+            	String alertMsg = "on "+getDateFromCalendar(ride.getEndTime())+
+            			"\nFrom "+stops.get(0)+" at "+getTimeFromCalendar(ride.getStartTime())+
+            			"\nTo "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(ride.getEndTime())+    			
             			"\nYour Driver is "+drive.getMemberName();
             	alert.setTitle("Schedule Information");
             	alert.setHeaderText("New Ride Scheduled!");
             	alert.setContentText(alertMsg);
             	alert.showAndWait();
             } else {
-            	alert.setTitle("Schedule Information");
-            	alert.setHeaderText(null);
-            	alert.setContentText(fail);
-            	alert.showAndWait();
+            	Alert errorAlert = new Alert(AlertType.ERROR);
+            	errorAlert.setTitle("Schedule Information");
+            	errorAlert.setHeaderText(null);
+            	errorAlert.setContentText(fail);
+            	errorAlert.showAndWait();
             }
     	}
     	handleCancelButton(event);
@@ -278,19 +301,16 @@ public class RideRequestController implements Initializable {
 	 */
 	private void makeRideRequest() {
 		GregorianCalendar startTime = new GregorianCalendar();
-		GregorianCalendar endTime = new GregorianCalendar();;
-		TimeType startType = null;
-		TimeType endType =null;
-		hourTime.set(GregorianCalendar.MINUTE, minuteTime);
-		selectedDateTime = hourTime;
-		if(byStartTime) {
-			startTime = selectedDateTime;
-			startType = timeType;
-		} else {
-			endTime = selectedDateTime;
-			endType = timeType;
-		}
-	     
+		GregorianCalendar endTime = new GregorianCalendar();
+		pickupHourTime.set(GregorianCalendar.MINUTE, pickupMinuteTime);
+		destinationHourTime.set(GregorianCalendar.MINUTE, destinationMinuteTime);
+		TimeType startType = pickupTimeType;
+		TimeType endType = destinationTimeType;
+		pickupSelectedDateTime = pickupHourTime;
+		destinationSelectedDateTime = destinationHourTime;
+		startTime = pickupSelectedDateTime;
+		endTime = destinationSelectedDateTime;
+ 
         //setup dropdown of available rides
         request = new Request(member, startTime, endTime, pickup, destination, startType, endType);
         sc = new SchedulingContext();
@@ -313,5 +333,11 @@ public class RideRequestController implements Initializable {
         if (minute.length() == 1)
             minute = "0"+minute;
         return gc.get(GregorianCalendar.HOUR)+":"+minute+ampm[gc.get(GregorianCalendar.AM_PM)];
+    }
+    
+    private boolean checkData() {
+    	return (pickup != null && destination != null && pickupHourTime != null && destinationHourTime != null &&
+    			pickupMinuteTime != null && destinationMinuteTime != null && pickupTimeType != null && destinationTimeType != null);
+
     }
 }

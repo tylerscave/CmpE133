@@ -109,21 +109,10 @@ public class VehicleInfoController implements Initializable {
     private void handleSubmitButton(ActionEvent event) {
     	Vehicle vehicle = new Vehicle(vehicleYear, makeField.getText(), modelField.getText(),
     			colorField.getText(), plateNumberField.getText(), vehicleStyle, vehicleSeats);
-    	if (member.getDrivingType().isDriver()); {
+    	if (member.getDrivingType().isDriver()) {
             Driver d = (Driver) member.getDrivingType();
             d.setVehicle(vehicle);
-    }
-    	
-    	
-    	//JUST TESTING FOR NOW REMOVE PRINTS LATER
-    	System.out.println("year = " + vehicleYear);
-    	System.out.println("make = " + makeField.getText());
-    	System.out.println("model = " + modelField.getText());
-    	System.out.println("color = " + colorField.getText());
-    	System.out.println("plate number = " + plateNumberField.getText());
-    	System.out.println("style = " + vehicleStyle);
-    	System.out.println("available seats = " + vehicleSeats);
-    	
+    	} 	
     	handleCancelButton(event);
     }
 }

@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import model.member.Address;
 import model.Context;
 import model.member.Member;
+import model.member.MemberBuilder;
 import model.member.MemberType;
 import model.member.Staff;
 import model.member.Student;
