@@ -758,7 +758,7 @@ public class CLIMain {
             if (lessThan == 1) {
                 valid = true;
                 option = 0;
-            }
+            } 
             else {
                 try {
                     option = Integer.parseInt(input);
