@@ -11,6 +11,9 @@ import java.util.Observable;
 import java.util.Observer;
 import model.Context;
 import model.Notification;
+import model.payment.BankAccountInfo;
+import model.payment.CreditCard;
+import model.payment.CreditCardInfo;
 import model.schedule.Request;
 
 /**
@@ -39,6 +42,9 @@ public class Member extends Observable {
     private List<Notification> newNotifications;
     private WeeklySchedule weeklySchedule;
     private int idNumber;
+    
+    private CreditCardInfo creditCardInfo;
+    private BankAccountInfo bankAccountInfo;
 
     public Member() {
         this.loginInfo = new LoginInformation("", "");
@@ -59,6 +65,9 @@ public class Member extends Observable {
         this.newNotifications = new ArrayList<>();
         this.newNotifications.add(new Notification("Welcome to SpartanPool!"));
         this.weeklySchedule = new WeeklySchedule();
+        
+        this.creditCardInfo = new CreditCardInfo(toString(), CreditCardInfo.CardType.Visa, "", "", 0, 0);
+        this.bankAccountInfo = new BankAccountInfo(toString(), "", "", "");
         }
     
     public Member(LoginInformation loginInfo, String lastName, String firstName, Address address, String phoneNumber, DrivingType drivingType){
@@ -76,6 +85,9 @@ public class Member extends Observable {
         this.newNotifications = new ArrayList<>();
         this.newNotifications.add(new Notification("Welcome to SpartanPool!"));
         this.weeklySchedule = new WeeklySchedule();
+        
+        this.creditCardInfo = new CreditCardInfo(toString(), CreditCardInfo.CardType.Visa, "", "", 0, 0);
+        this.bankAccountInfo = new BankAccountInfo(toString(), "", "", "");
     }
     
     public Address getAddress() {
@@ -212,5 +224,22 @@ public class Member extends Observable {
     public String toString() {
         return firstName+" "+lastName;
     }
+
+    public BankAccountInfo getBankAccountInfo() {
+        return bankAccountInfo;
+    }
+
+    public CreditCardInfo getCreditCardInfo() {
+        return creditCardInfo;
+    }
+
+    public void setBankAccountInfo(BankAccountInfo bankAccountInfo) {
+        this.bankAccountInfo = bankAccountInfo;
+    }
+
+    public void setCreditCardInfo(CreditCardInfo creditCardInfo) {
+        this.creditCardInfo = creditCardInfo;
+    }
+    
     
 }

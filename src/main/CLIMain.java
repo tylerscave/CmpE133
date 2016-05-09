@@ -221,7 +221,8 @@ public class CLIMain {
             System.out.println("4: Phone Number");
             System.out.println("5: Driving Type");
             System.out.println("6: Member Type");
-            int option = getOptionIntFromInput(7);
+            System.out.println("7: Payment Information");
+            int option = getOptionIntFromInput(8);
             switch (option) {
                 case 0:
                     exit = true;
@@ -253,6 +254,11 @@ public class CLIMain {
                     break;
                 case 6:
                     updateMemberType(member);
+                    member.setChanged();
+                    member.notifyObservers();
+                    break;
+                case 7:
+                    updatePaymentInfo(member);
                     member.setChanged();
                     member.notifyObservers();
                     break;
@@ -612,30 +618,8 @@ public class CLIMain {
         System.out.println("2: Pay by Bank Account");
         System.out.println("3: Send message to driver");
         int option = getOptionIntFromInput(4);
-        if (option == 1) {
-            System.out.println("Select Credit Card type:");
-            CreditCardInfo.CardType[] types = CreditCardInfo.CardType.values();
-            for (int i = 0; i < types.length; i++)
-                System.out.println(i+": "+types[i].name());
-            int index = getOptionIntFromInput(types.length);
-            System.out.println("Enter name on card:");
-            String name = in.nextLine();
-            System.out.println("Enter card number:");
-            String number = in.nextLine();
-            System.out.println("Enter security code:");
-            String code = in.nextLine();
-            System.out.println("Enter expiration date (mm/yy):");
-            String expr = in.nextLine();
-            int mon;
-            int year;
-            try {
-                mon = Integer.parseInt(expr.substring(0, 2));
-                year = Integer.parseInt(expr.substring(3));
-            } catch (Exception e) {
-                mon = 0;
-                year = 0;
-            }
-            reward = new CreditCard(new CreditCardInfo(name, types[index], number, code, mon, year), d.getPayBy());
+        if (option == 1) {           
+            reward = new CreditCard(member.getCreditCardInfo(), d.getPayBy());
             if (reward.payReward(driver, r, amount))
                 System.out.println("Payment accepted!");
             else
@@ -644,16 +628,7 @@ public class CLIMain {
             in.nextLine();
         }
         else if (option == 2) {
-            System.out.println("Enter name on Account:");
-            String name = in.nextLine();
-            System.out.println("Enter the name of the bank");
-            String bank = in.nextLine();
-            System.out.println("Enter your bank account number:");
-            String number = in.nextLine();
-            System.out.println("Enter your routing number:");
-            String routing = in.nextLine();
-            
-            reward = new BankAccount(new BankAccountInfo(name, bank, number, routing), d.getPayBy());
+            reward = new BankAccount(member.getBankAccountInfo(), d.getPayBy());
             if (reward.payReward(driver, r, amount))
                 System.out.println("Payment accepted!");
             else
@@ -965,6 +940,74 @@ public class CLIMain {
     		System.out.println("Driving Type: Passenger");
         System.out.println("Press Enter to continue...");
         in.nextLine();
+    }
+
+    private static void updatePaymentInfo(Member member) {
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Payment Information");
+            System.out.println("0: Return");
+            System.out.println("1: Update Credit Card Information");
+            System.out.println("2: Update Bank Account Information");
+            int option = getOptionIntFromInput(3);
+            if (option == 0)
+                exit = true;
+            else if (option == 1) {
+                System.out.println("Select Credit Card type:");
+                CreditCardInfo.CardType[] types = CreditCardInfo.CardType.values();
+                for (int i = 0; i < types.length; i++)
+                    System.out.println(i+": "+types[i].name());
+                int index = getOptionIntFromInput(types.length);
+                System.out.println("Enter name on card:");
+                String name = in.nextLine();
+                System.out.println("Enter card number:");
+                String number = in.nextLine();
+                System.out.println("Enter security code:");
+                String code = in.nextLine();
+                System.out.println("Enter expiration date (mm/yy):");
+                String expr = in.nextLine();
+                int mon;
+                int year;
+                try {
+                    mon = Integer.parseInt(expr.substring(0, 2));
+                    year = Integer.parseInt(expr.substring(3));
+                } catch (Exception e) {
+                    mon = 0;
+                    year = 0;
+                }
+
+                member.setCreditCardInfo(new CreditCardInfo(name, types[index], number, code, mon, year));
+                System.out.println("Credit Card Info:");
+                System.out.println("Name on card: "+name);
+                System.out.println("Card Type: "+types[index].name());
+                System.out.println("Credit card number: "+number);
+                System.out.println("Security code: "+code);
+                System.out.println("Expiration date: "+mon+"/"+year);
+                System.out.println();
+                System.out.println("Press Enter to continue...");
+                in.nextLine();
+            }
+            else if (option == 2) {
+                System.out.println("Enter name on Account:");
+                String name = in.nextLine();
+                System.out.println("Enter the name of the bank");
+                String bank = in.nextLine();
+                System.out.println("Enter your bank account number:");
+                String number = in.nextLine();
+                System.out.println("Enter your routing number:");
+                String routing = in.nextLine();
+
+                member.setBankAccountInfo(new BankAccountInfo(name, bank, number, routing));
+                System.out.println("Bank Account Info:");
+                System.out.println("Name on account: "+name);
+                System.out.println("Name of the bank: "+bank);
+                System.out.println("Bank account number: "+number);
+                System.out.println("Routing number: "+routing);
+                System.out.println();
+                System.out.println("Press Enter to continue...");
+                in.nextLine();
+            }
+        }
     }
 
 }
