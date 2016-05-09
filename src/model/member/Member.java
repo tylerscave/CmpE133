@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import model.Context;
 import model.Notification;
+import model.ParkingNotifier;
 import model.schedule.Request;
 
 /**
@@ -162,6 +164,8 @@ public class Member extends Observable {
      * @return the list of new notifications
      */
     public List<Notification> readNewNotifications() {
+        Context context = Context.getInstance();
+        context.getParkingNotifier().addNewParkingNotifcations(context.getCentral(), this);
         List<Notification> tempNotifications = newNotifications;
         oldNotifications.addAll(tempNotifications);
         newNotifications = new ArrayList<>();

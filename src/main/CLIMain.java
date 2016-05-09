@@ -15,6 +15,7 @@ import model.member.Member;
 import model.member.MemberBuilder;
 import model.Notification;
 import model.NotificationSender;
+import model.PasswordSender;
 import model.StringFormat;
 import model.member.Passenger;
 import model.schedule.Ride;
@@ -75,8 +76,9 @@ public class CLIMain {
             System.out.println("0: Exit");
             System.out.println("1: Login");
             System.out.println("2: Create new account");
-            System.out.println("3: Cheat Login");
-            int option = getOptionIntFromInput(4);
+            System.out.println("3: Forgot Password");
+            System.out.println("4: Cheat Login");
+            int option = getOptionIntFromInput(5);
             switch (option) {
                 case 0:
                     exit = true;
@@ -88,6 +90,9 @@ public class CLIMain {
                     createAccount();
                     break;
                 case 3:
+                    forgotPassword();
+                    break;
+                case 4:
                     cheatLogin();
                     break;
                 default:
@@ -139,6 +144,14 @@ public class CLIMain {
             menu();
     }
 
+    private static void forgotPassword() {
+        System.out.println("Enter email to send password to:");
+        (new PasswordSender()).sendPassword(in.nextLine());
+        System.out.println("Email sent");
+        System.out.println("Press Enter to continue...");
+        in.nextLine();
+    }
+    
     private static void cheatLogin() {
         if (loginHandler.handleLogin(selectMember().getLoginInfo()).equals(""))
             menu();

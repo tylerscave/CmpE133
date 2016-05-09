@@ -22,6 +22,7 @@ public class Context {
     private DataHandler dataHandler;
     private Tracker tracker;
     private Location central;
+    private ParkingNotifier parkingNotifier;
     
     private CreditCardHandler cardHandler;
     private BankHandler bankHandler;
@@ -42,6 +43,7 @@ public class Context {
         
         cardHandler = new StubCreditCard();
         bankHandler = new StubBankAccount();
+        parkingNotifier = new NewParkingNotifier();
     }
     
     public static Context getInstance() {
@@ -93,6 +95,10 @@ public class Context {
 
     public BankHandler getBankHandler() {
         return bankHandler;
+    }
+
+    public ParkingNotifier getParkingNotifier() {
+        return parkingNotifier;
     }
     
 }
