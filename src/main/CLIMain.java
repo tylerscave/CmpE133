@@ -1,6 +1,5 @@
 package main;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -21,6 +20,11 @@ import model.member.Passenger;
 import model.schedule.Ride;
 import model.member.Vehicle;
 import model.member.Vehicle.VehicleStyle;
+import model.payment.BankAccount;
+import model.payment.BankAccountInfo;
+import model.payment.CreditCard;
+import model.payment.CreditCardInfo;
+import model.payment.Reward;
 import model.schedule.Request;
 import model.schedule.Schedulable;
 import model.schedule.ScheduleViewer;
@@ -536,9 +540,184 @@ public class CLIMain {
     }
     
     private static void payments() {
-        //todo
+        System.out.println("Manage Payments:");
+        System.out.println("0: Return");
+        System.out.println("1: View payments you owe");
+        System.out.println("2: View payments you are owed");
+        int option = getOptionIntFromInput(3);
+        if (option == 1)
+            payer();
+        else if (option == 2)
+            payee();
     }
 
+    private static void payer() {
+        ScheduleViewer sv = new ScheduleViewer();
+        Member member = context.getMember();
+        boolean exit = false;
+        while (! exit) {
+            List<Ride> rides = sv.getRidesToPay(member);
+            System.out.println("Select a ride to pay for:");
+            System.out.println("0: Return to menu");
+            for (int i = 0; i < rides.size(); i++) {
+                System.out.println(Integer.toString(i+1)+": Ride on "+getDateFromCalendar(rides.get(i).getEndTime()));
+            }
+            int option = getOptionIntFromInput(rides.size()+1);
+            if (option == 0)
+                exit = true;
+            else
+                payForRide(rides.get(option-1));
+        }       
+    }
+    
+    private static void payForRide(Ride r) {
+        Member member = context.getMember();
+        StringBuilder sb = new StringBuilder();
+        String nl = System.lineSeparator();
+        ScheduleViewer sv = new ScheduleViewer();
+        
+        sb.append("Ride details:").append(nl);
+        List<Location> stops = r.getStops();
+        sb.append("  ").append(stops.get(0)).append(" at ").append(getTimeFromCalendar(r.getStartTime())).append(" to ");
+        sb.append(stops.get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(r.getEndTime())).append(" on ").append(getDateFromCalendar(r.getStartTime())).append(nl);
+        sb.append("Amount you owe: ");
+        System.out.print(sb.toString());
+        
+        Member driver = data.getMember(sv.getDriveById(r.getDriveId()).getMemberId());
+        if (!driver.getDrivingType().isDriver()) {
+            System.out.println("$0, not a driver");
+            System.out.println("Press Enter to continue...");
+            in.nextLine();
+            return;
+        }
+        Driver d = (Driver) driver.getDrivingType();
+        Reward reward = new CreditCard(null, d.getPayBy());
+        double amount = (Double)reward.findReward(driver, r);
+        System.out.printf("$%.2f%n", amount);
+        System.out.println("0: Return");
+        System.out.println("1: Pay by Credit Card");
+        System.out.println("2: Pay by Bank Account");
+        System.out.println("3: Send message to driver");
+        int option = getOptionIntFromInput(4);
+        if (option == 1) {
+            System.out.println("Select Credit Card type:");
+            CreditCardInfo.CardType[] types = CreditCardInfo.CardType.values();
+            for (int i = 0; i < types.length; i++)
+                System.out.println(i+": "+types[i].name());
+            int index = getOptionIntFromInput(types.length);
+            System.out.println("Enter name on card:");
+            String name = in.nextLine();
+            System.out.println("Enter card number:");
+            String number = in.nextLine();
+            System.out.println("Enter security code:");
+            String code = in.nextLine();
+            System.out.println("Enter expiration date (mm/yy):");
+            String expr = in.nextLine();
+            int mon;
+            int year;
+            try {
+                mon = Integer.parseInt(expr.substring(0, 2));
+                year = Integer.parseInt(expr.substring(3));
+            } catch (Exception e) {
+                mon = 0;
+                year = 0;
+            }
+            reward = new CreditCard(new CreditCardInfo(name, types[index], number, code, mon, year), d.getPayBy());
+            if (reward.payReward(driver, r, amount))
+                System.out.println("Payment accepted!");
+            else
+                System.out.println("Payment failed!");
+            System.out.println("Press Enter to continue...");
+            in.nextLine();
+        }
+        else if (option == 2) {
+            System.out.println("Enter name on Account:");
+            String name = in.nextLine();
+            System.out.println("Enter the name of the bank");
+            String bank = in.nextLine();
+            System.out.println("Enter your bank account number:");
+            String number = in.nextLine();
+            System.out.println("Enter your routing number:");
+            String routing = in.nextLine();
+            
+            reward = new BankAccount(new BankAccountInfo(name, bank, number, routing), d.getPayBy());
+            if (reward.payReward(driver, r, amount))
+                System.out.println("Payment accepted!");
+            else
+                System.out.println("Payment failed!");
+            System.out.println("Press Enter to continue...");
+            in.nextLine();
+        }
+        else if (option == 3) {
+            NotificationSender ns = new NotificationSender(member);
+            System.out.println("Enter message to send:");
+            ns.send(driver.getLoginInfo().getEmail(), in.nextLine());
+            System.out.println("Message sent");
+            System.out.println("Press Enter to continue...");
+            in.nextLine();
+        }
+    }
+    
+    private static void payee() {
+        ScheduleViewer sv = new ScheduleViewer();
+        Member member = context.getMember();
+        boolean exit = false;
+        while (! exit) {
+            List<Ride> rides = sv.getRidesToBePaid(member);
+            System.out.println("Select a ride:");
+            System.out.println("0: Return to menu");
+            for (int i = 0; i < rides.size(); i++) {
+                System.out.println(Integer.toString(i+1)+": Ride on "+getDateFromCalendar(rides.get(i).getEndTime()));
+            }
+            int option = getOptionIntFromInput(rides.size()+1);
+            if (option == 0)
+                exit = true;
+            else
+                paidForRide(rides.get(option-1));
+        }       
+    }
+    
+    private static void paidForRide(Ride r) {
+        Member member = context.getMember();
+        
+        if (!member.getDrivingType().isDriver()) {
+            System.out.println("You are not a driver");
+        }
+            
+        StringBuilder sb = new StringBuilder();
+        String nl = System.lineSeparator();
+        ScheduleViewer sv = new ScheduleViewer();
+        
+        sb.append("Ride details:").append(nl);
+        List<Location> stops = r.getStops();
+        sb.append("  ").append(stops.get(0)).append(" at ").append(getTimeFromCalendar(r.getStartTime())).append(" to ");
+        sb.append(stops.get(stops.size()-1)).append(" at ").append(getTimeFromCalendar(r.getEndTime())).append(" on ").append(getDateFromCalendar(r.getStartTime())).append(nl);
+        sb.append("Amount owed to you: ");
+        System.out.print(sb.toString());
+        
+        Driver d = (Driver) member.getDrivingType();
+        Reward reward = new CreditCard(null, d.getPayBy());
+        double amount = (Double)reward.findReward(member, r);
+        System.out.printf("$%.2f%n", amount);
+        System.out.println("0: Return");
+        System.out.println("1: Waive payment");
+        System.out.println("2: Send message to rider");
+        int option = getOptionIntFromInput(3);
+        if (option == 1) {
+            reward.waiveReward(r);
+            System.out.println("Payment waived");
+            System.out.println("Press Enter to continue...");
+            in.nextLine();
+        }
+        else if (option == 2) {
+            NotificationSender ns = new NotificationSender(member);
+            System.out.println("Enter message to send:");
+            ns.send(data.getMember(r.getMemberId()).getLoginInfo().getEmail(), in.nextLine());
+            System.out.println("Message sent");
+            System.out.println("Press Enter to continue...");
+            in.nextLine();
+        }
+    }
     
     private static Member selectMember() {
         System.out.println("Select Member");
@@ -771,6 +950,8 @@ public class CLIMain {
     		System.out.println("Driving Type: Driver");
     	else
     		System.out.println("Driving Type: Passenger");
+        System.out.println("Press Enter to continue...");
+        in.nextLine();
     }
 
 }

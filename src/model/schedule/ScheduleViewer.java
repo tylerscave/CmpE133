@@ -1,5 +1,6 @@
 package model.schedule;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import model.Context;
@@ -91,7 +92,8 @@ public class ScheduleViewer {
         return sb.toString();
     }
     
-    public String getScheduleText(Member member) {
+    public String getScheduleText(Member m) {
+        Member member = data.getMember(m.getIdNumber());
         String nl = System.lineSeparator();
         StringBuilder sb = new StringBuilder();
         
@@ -207,5 +209,28 @@ public class ScheduleViewer {
     
     public ParkingTime getParkById(int id) {
         return (ParkingTime)data.getSchedulable(id);
+    }
+    
+    public List<Ride> getRidesToPay(Member m) {
+        Member member = data.getMember(m.getIdNumber());
+        List<Ride> rides = new ArrayList<>();
+        for (Ride r : member.getRides()) {
+            if (r.getRideStatus().isUnpaid())
+                rides.add(r);
+        }
+        return rides;
+    }
+    
+    public List<Ride> getRidesToBePaid(Member m) {
+        Member member = data.getMember(m.getIdNumber());
+        List<Ride> rides = new ArrayList<>();
+        for (Drive d : member.getDrives()) {
+            for (int i = 0; i < d.numberOfRides(); i++) {
+                Ride ride = (Ride) data.getSchedulable(d.getRideId(i));
+                if (ride.getRideStatus().isUnpaid())
+                    rides.add(ride);
+            }
+        }
+        return rides;
     }
 }
