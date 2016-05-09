@@ -102,7 +102,7 @@ public class ScheduleTester {
         if (option == 0) 
             mb.setDrivingType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4), null));
         else
-            mb.setDrivingType(new Passenger(null, null));
+            mb.setDrivingType(new Passenger());
         mb.setLoginInfo(new LoginInformation(fn, ln));
         
         if (mb.build() == -1)

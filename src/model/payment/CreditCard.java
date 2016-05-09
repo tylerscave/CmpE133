@@ -5,6 +5,7 @@ package model.payment;
  * Solves CmpE133 SpartanPool
  * @author David Lerner
 */
+import model.Context;
 import model.member.Member;
 import model.schedule.Ride;
 
@@ -29,7 +30,7 @@ public class CreditCard extends Reward {
     @Override
     public boolean resolveReward(Member recipient, Ride ride, Object compensation) {
         
-        if (CreditCardHandler.makePayment(info, balance))
+        if (Context.getInstance().getCardHandler().makePayment(info, balance))
             return rewardCalculator.payReward(recipient, ride, compensation);
         return false;
     }

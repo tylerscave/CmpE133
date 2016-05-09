@@ -3,6 +3,10 @@ package model;
 import java.util.List;
 import model.member.Member;
 import model.graph.GraphMap;
+import model.payment.BankHandler;
+import model.payment.CreditCardHandler;
+import model.payment.StubBankAccount;
+import model.payment.StubCreditCard;
 import model.schedule.Location;
 
 /**
@@ -19,6 +23,9 @@ public class Context {
     private Tracker tracker;
     private Location central;
     
+    private CreditCardHandler cardHandler;
+    private BankHandler bankHandler;
+    
     private Context() {
         // Exists only to defeat instantiation.
         map = new GraphMap();
@@ -32,6 +39,9 @@ public class Context {
                 break;
             }
         }
+        
+        cardHandler = new StubCreditCard();
+        bankHandler = new StubBankAccount();
     }
     
     public static Context getInstance() {
@@ -75,6 +85,14 @@ public class Context {
 
     public Location getCentral() {
         return central;
+    }
+
+    public CreditCardHandler getCardHandler() {
+        return cardHandler;
+    }
+
+    public BankHandler getBankHandler() {
+        return bankHandler;
     }
     
 }

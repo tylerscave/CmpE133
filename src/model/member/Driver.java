@@ -1,5 +1,8 @@
 package model.member;
 
+import model.payment.PayFlatCalculator;
+import model.payment.RewardCalculator;
+
 
 public class Driver implements DrivingType {
 	private String DriverLicenseNumber;
@@ -8,8 +11,13 @@ public class Driver implements DrivingType {
         private double hourlyRate;
         private double perMileRate;
         private double flatrate;
+        private RewardCalculator payBy;
         
     public Driver() {
+        this.hourlyRate = 0;
+        this.perMileRate = 0;
+        this.flatrate = 0;
+        payBy = new PayFlatCalculator();
     }
 
     public Driver(String DriverLicenseNumber, Vehicle vehicle, Address departureLocation) {
@@ -19,6 +27,7 @@ public class Driver implements DrivingType {
         this.hourlyRate = 0;
         this.perMileRate = 0;
         this.flatrate = 0;
+        payBy = new PayFlatCalculator();
     }
 
     public Vehicle getVehicle() {
@@ -53,6 +62,7 @@ public class Driver implements DrivingType {
         this.flatrate = flatrate;
     }
 
+    @Override
     public boolean isDriver() {
         return true;
     }
@@ -71,6 +81,14 @@ public class Driver implements DrivingType {
 
     public Address getDepartureLocation() {
         return departureLocation;
+    }
+
+    public RewardCalculator getPayBy() {
+        return payBy;
+    }
+
+    public void setPayBy(RewardCalculator payBy) {
+        this.payBy = payBy;
     }
     
 }

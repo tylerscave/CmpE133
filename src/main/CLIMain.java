@@ -123,7 +123,7 @@ public class CLIMain {
         if (option == 0) 
             mb.setDrivingType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4), null));
         else
-            mb.setDrivingType(new Passenger(null, null));
+            mb.setDrivingType(new Passenger());
         
         if (mb.build() == -1)
             System.out.println("Failed to create new account");

@@ -1,5 +1,6 @@
 package model.payment;
 
+import model.Context;
 import model.member.Member;
 import model.payment.RewardCalculator;
 import model.payment.Reward;
@@ -7,19 +8,13 @@ import model.schedule.Ride;
 
 public class BankAccount extends Reward{
 	
-	private String nameOnAccount;
-	private String bank;
-	private String accountNumber;
-	private String routingNumber;
         private double payment;
+        private BankAccountInfo info;
 
-    public BankAccount(String nameOnAccount, String bank, String accountNumber, String routingNumber, RewardCalculator rewardCalculator) {
+    public BankAccount(BankAccountInfo info, RewardCalculator rewardCalculator) {
         super(rewardCalculator);
-        this.nameOnAccount = nameOnAccount;
-        this.bank = bank;
-        this.accountNumber = accountNumber;
-        this.routingNumber = routingNumber;
-        payment = 0;
+        this.payment = 0;
+        this.info = info;
     }
 
     @Override
@@ -30,8 +25,9 @@ public class BankAccount extends Reward{
 
     @Override
     public boolean resolveReward(Member recipient, Ride ride, Object compensation) {
-        //stub
-        throw new UnsupportedOperationException("Not supported yet."); 
+    if (Context.getInstance().getBankHandler().makePayment(info, payment))
+            return rewardCalculator.payReward(recipient, ride, compensation);
+        return false;
     }
 	
 	

@@ -4,10 +4,7 @@ package model.payment;
  *
  * @author David
  */
-public class CreditCardHandler {
+public interface CreditCardHandler {
     
-    public static boolean makePayment(CreditCardInfo info, double amount) {
-        //Stub
-        return true;
-    }
+    public boolean makePayment(CreditCardInfo info, double amount);
 }
