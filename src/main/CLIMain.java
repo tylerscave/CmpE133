@@ -25,6 +25,9 @@ import model.payment.BankAccount;
 import model.payment.BankAccountInfo;
 import model.payment.CreditCard;
 import model.payment.CreditCardInfo;
+import model.payment.PayByDistCalculator;
+import model.payment.PayByTimeCalculator;
+import model.payment.PayFlatCalculator;
 import model.payment.Reward;
 import model.schedule.Request;
 import model.schedule.Schedulable;
@@ -122,7 +125,7 @@ public class CLIMain {
         System.out.println("1: No");
         int option = getOptionIntFromInput(2);
         if (option == 0) 
-            mb.setDrivingType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4), null));
+            mb.setDrivingType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4)));
         else
             mb.setDrivingType(new Passenger());
         
@@ -851,12 +854,45 @@ public class CLIMain {
     		System.out.print("Enter your driver License number: ");
     		String licenseNumber = in.nextLine();
     		Vehicle vehicle = updateVehicle();
-    		member.setDrivingType(new Driver(licenseNumber, vehicle, null));
+    		member.setDrivingType(new Driver(licenseNumber, vehicle));
+                setPayBy(member);
     	}
     	else
     		member.setDrivingType(new Passenger());
     }
 
+    private static void setPayBy(Member member) {
+        Driver driver = (Driver) member.getDrivingType();
+        System.out.println("select how you wish to be compensated: ");
+        System.out.println("0: Free");        
+        System.out.printf("1: $%.2f per mile%n", Driver.PER_MILE_RATE);
+        System.out.printf("2: $%.2f hourly%n", Driver.HOURLY_RATE);
+        System.out.printf("3: $%.2f Flat%n", Driver.FLAT_RATE);
+        int option = getOptionIntFromInput(4);
+        switch (option) {
+            case 0:
+                driver.setPayBy(new PayFlatCalculator());
+                driver.setFlatrate(0);
+                break;
+            case 1:
+                driver.setPayBy(new PayByDistCalculator());
+                driver.setPerMileRate(Driver.PER_MILE_RATE);
+                break;
+            case 2:
+                driver.setPayBy(new PayByTimeCalculator());
+                driver.setPerMileRate(Driver.HOURLY_RATE);
+                break;
+            case 3:
+                driver.setPayBy(new PayFlatCalculator());
+                driver.setFlatrate(Driver.FLAT_RATE);
+                break;
+            default:
+                break;
+        }
+        System.out.println("Press Enter to continue...");
+        in.nextLine();
+    }
+    
     private static void updateMemberType(Member member) {
     	System.out.print("Are you a staff(0), faculty(1), or student(2)?");
     	int type = getOptionIntFromInput(3);

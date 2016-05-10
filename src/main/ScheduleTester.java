@@ -100,7 +100,7 @@ public class ScheduleTester {
         System.out.println("1: No");
         int option = getOptionIntFromInput(2);
         if (option == 0) 
-            mb.setDrivingType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4), null));
+            mb.setDrivingType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4)));
         else
             mb.setDrivingType(new Passenger());
         mb.setLoginInfo(new LoginInformation(fn, ln));

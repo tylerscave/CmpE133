@@ -85,8 +85,8 @@ public class DriveRequestController implements Initializable {
         context = Context.getInstance();
         member = context.getMember();
         
-        Vehicle vehicle = new Vehicle();
-        member.setDrivingType(new Driver("licenseNumber", vehicle, null));
+        /*Vehicle vehicle = new Vehicle();
+        member.setDrivingType(new Driver("licenseNumber", vehicle));*/
         
         //set up the location ComboBox
         for (Location l : context.getMap().getLocations())

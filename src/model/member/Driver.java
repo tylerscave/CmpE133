@@ -5,9 +5,12 @@ import model.payment.RewardCalculator;
 
 
 public class Driver implements DrivingType {
+    public static final double HOURLY_RATE = 12.50;
+    public static final double PER_MILE_RATE = 2.99;
+    public static final double FLAT_RATE = 25;
+    
 	private String DriverLicenseNumber;
 	private Vehicle vehicle;
-	private Address departureLocation;
         private double hourlyRate;
         private double perMileRate;
         private double flatrate;
@@ -21,10 +24,9 @@ public class Driver implements DrivingType {
         vehicle = new Vehicle();
     }
 
-    public Driver(String DriverLicenseNumber, Vehicle vehicle, Address departureLocation) {
+    public Driver(String DriverLicenseNumber, Vehicle vehicle) {
         this.DriverLicenseNumber = DriverLicenseNumber;
         this.vehicle = vehicle;
-        this.departureLocation = departureLocation;
         this.hourlyRate = 0;
         this.perMileRate = 0;
         this.flatrate = 0;
@@ -68,20 +70,12 @@ public class Driver implements DrivingType {
         return true;
     }
 
-    public void setDepartureLocation(Address departureLocation) {
-        this.departureLocation = departureLocation;
-    }
-
     public void setDriverLicenseNumber(String DriverLicenseNumber) {
         this.DriverLicenseNumber = DriverLicenseNumber;
     }
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
-    }
-
-    public Address getDepartureLocation() {
-        return departureLocation;
     }
 
     public RewardCalculator getPayBy() {
