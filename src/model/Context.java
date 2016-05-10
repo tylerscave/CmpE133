@@ -31,7 +31,7 @@ public class Context {
         // Exists only to defeat instantiation.
         map = new GraphMap();
         dataHandler = new NewDataHandler();
-        tracker = new GPSTracker();
+        tracker = new ScheduleTracker();
         central = new Location("San Jose State University");
         List<Location> locations = map.getLocations();
         for (Location l : locations) {
