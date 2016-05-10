@@ -15,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -23,7 +22,6 @@ import model.member.Address;
 import model.Context;
 import model.member.Driver;
 import model.member.Member;
-import model.member.MemberBuilder;
 import model.member.MemberType;
 import model.member.Staff;
 import model.member.Student;
@@ -134,8 +132,6 @@ public class MemberInfoController implements Initializable {
     @FXML
     protected void handleVehicleButton(ActionEvent event) {
         maintainMemberInfo();
-        member.setChanged();
-        member.notifyObservers();
         
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/VehicleInfoScene.fxml"));
@@ -151,8 +147,6 @@ public class MemberInfoController implements Initializable {
     @FXML
     private void handlePaymentButton(ActionEvent event) {
         maintainMemberInfo();
-        member.setChanged();
-        member.notifyObservers();
        
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/PaymentMenuScene.fxml"));
@@ -168,8 +162,6 @@ public class MemberInfoController implements Initializable {
     @FXML
     private void handleUpdatePassord(ActionEvent event) {
         maintainMemberInfo();
-        member.setChanged();
-        member.notifyObservers();
         
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/ChangePasswordScene.fxml"));

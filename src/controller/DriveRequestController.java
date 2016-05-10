@@ -156,7 +156,11 @@ public class DriveRequestController implements Initializable {
     
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	GregorianCalendar selectedDateTime = new GregorianCalendar();
+        if (hourTime == null || minuteTime == null || pickup == null || destination == null || date == null
+                || (!arrivalRadio.isSelected() && !departureRadio.isSelected())) {
+            return;
+        }
+    	GregorianCalendar selectedDateTime;
     	hourTime.set(GregorianCalendar.MINUTE, minuteTime);
     	selectedDateTime = hourTime;
         Request request = new Request(member, selectedDateTime, pickup, destination, Request.TimeType.Near, byStartTime);

@@ -55,7 +55,7 @@
               </rowConstraints>
                <children>
                   <Button mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <Button mnemonicParsing="false" text="Submit and Return" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#handleSubmitButton" text="Submit and Return" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
          </children>
