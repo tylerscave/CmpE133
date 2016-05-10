@@ -320,16 +320,20 @@ public class RideRequestController implements Initializable {
 	private void makeRideRequest() {
             //in case anytime was picked
             if (pickupTimeType != TimeType.Anytime) {
-                pickupSelectedDateTime = pickupHourTime;
-		pickupSelectedDateTime.set(GregorianCalendar.MINUTE, pickupMinuteTime);
+            	pickupHourTime.set(GregorianCalendar.MINUTE, pickupMinuteTime);
+            	pickupSelectedDateTime = pickupHourTime;
+//                pickupSelectedDateTime = pickupHourTime;
+//		pickupSelectedDateTime.set(GregorianCalendar.MINUTE, pickupMinuteTime);
             }
-            else
+            else 
                 pickupSelectedDateTime = new GregorianCalendar();
             TimeType startType = pickupTimeType;
             
             if (destinationTimeType != TimeType.Anytime) {
-                destinationSelectedDateTime = destinationHourTime;
-                destinationSelectedDateTime.set(GregorianCalendar.MINUTE, destinationMinuteTime);
+            	destinationHourTime.set(GregorianCalendar.MINUTE, destinationMinuteTime);
+            	destinationSelectedDateTime = destinationHourTime;
+//                destinationSelectedDateTime = destinationHourTime;
+//                destinationSelectedDateTime.set(GregorianCalendar.MINUTE, destinationMinuteTime);
             }
             else
                 destinationSelectedDateTime = new GregorianCalendar();
