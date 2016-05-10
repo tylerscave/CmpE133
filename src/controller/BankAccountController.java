@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Context;
 import model.member.Member;
+import model.payment.BankAccountInfo;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -41,6 +42,11 @@ public class BankAccountController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
+        BankAccountInfo bankAccountInfo = member.getBankAccountInfo();
+        NameField.setText(bankAccountInfo.getNameOnAccount());
+        bankField.setText(bankAccountInfo.getBank());
+        accountField.setText(bankAccountInfo.getAccountNumber());
+        routingField.setText(bankAccountInfo.getRoutingNumber());
 	}
 	
 	@FXML
@@ -58,7 +64,7 @@ public class BankAccountController implements Initializable {
 	
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	//TODO
+    	member.setBankAccountInfo(new BankAccountInfo(NameField.getText(), bankField.getText(), accountField.getText(), routingField.getText()));
     	
     	handleCancelButton(event);
     }

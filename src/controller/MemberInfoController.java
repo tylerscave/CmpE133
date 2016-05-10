@@ -13,12 +13,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.member.Address;
 import model.Context;
+import model.member.Driver;
 import model.member.Member;
 import model.member.MemberBuilder;
 import model.member.MemberType;
@@ -26,6 +29,7 @@ import model.member.Staff;
 import model.member.Student;
 import model.member.DrivingType;
 import model.member.Faculty;
+import model.member.Passenger;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -38,6 +42,7 @@ public class MemberInfoController implements Initializable {
     private Context context;
     private Member member;
     private MemberType memberType;
+    private DrivingType drivingType;
     @FXML
     private TextField firstName;
     @FXML
@@ -59,7 +64,15 @@ public class MemberInfoController implements Initializable {
     @FXML
     private RadioButton staff;        
     @FXML
-    private RadioButton faculty; 
+    private RadioButton faculty;
+    @FXML
+    private RadioButton driver;        
+    @FXML
+    private RadioButton rider; 
+    @FXML
+    private Button vehicle;
+    @FXML
+    private Label typeLabel; 
     
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -78,6 +91,15 @@ public class MemberInfoController implements Initializable {
             	idNum.setText(((Student)member.getMemberType()).getStudentID());
             	memberType = new Student("000000000");
             }
+            if(member.getDrivingType().isDriver()) {
+            	driver.setSelected(true);
+            	vehicle.setVisible(true);
+                typeLabel.setVisible(true);
+            } else {
+            	rider.setSelected(true);
+            	vehicle.setVisible(false);
+                typeLabel.setVisible(false);
+            } 
             email.setText(member.getLoginInfo().getEmail());
             phone.setText(member.getPhoneNumber());
             Address address = member.getAddress();
@@ -85,8 +107,9 @@ public class MemberInfoController implements Initializable {
             city.setText(address.getCity());
             zipCode.setText(address.getZipCode());
 	}
-	@FXML
-	private void handleStatusRadio(ActionEvent event) {
+        
+    @FXML
+    private void handleStatusRadio(ActionEvent event) {
     	RadioButton radio = (RadioButton) event.getSource();
     	if(radio == staff) {
     		memberType = new Staff(idNum.getText());
@@ -96,9 +119,24 @@ public class MemberInfoController implements Initializable {
     		memberType = new Student(idNum.getText());
     	}
 	}
-      
+    @FXML
+    private void handleDriveRadio(ActionEvent event) {
+    	RadioButton radio = (RadioButton) event.getSource();
+    	if(radio == rider) {
+            vehicle.setVisible(false);
+            typeLabel.setVisible(false);
+    	} else {
+            vehicle.setVisible(true);
+            typeLabel.setVisible(true);
+	}
+    }
+    
     @FXML
     protected void handleVehicleButton(ActionEvent event) {
+        maintainMemberInfo();
+        member.setChanged();
+        member.notifyObservers();
+        
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/VehicleInfoScene.fxml"));
             Scene scene = new Scene(root);
@@ -112,6 +150,10 @@ public class MemberInfoController implements Initializable {
     
     @FXML
     private void handlePaymentButton(ActionEvent event) {
+        maintainMemberInfo();
+        member.setChanged();
+        member.notifyObservers();
+        
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/PaymentMenuScene.fxml"));
             Scene scene = new Scene(root);
@@ -124,7 +166,11 @@ public class MemberInfoController implements Initializable {
     }
     
     @FXML
-    private void handleUpdateLogin(ActionEvent event) {
+    private void handleUpdatePassord(ActionEvent event) {
+        maintainMemberInfo();
+        member.setChanged();
+        member.notifyObservers();
+        
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/CreateAccountScene.fxml"));
             Scene scene = new Scene(root);
@@ -160,12 +206,7 @@ public class MemberInfoController implements Initializable {
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
-            primaryStage.show();
-            
-            model.Database.add(email.getText(),member.getLoginInfo().getPassword(),lastName.getText(),firstName.getText(),
-            		street.getText()+" "+city.getText()+ " CA "+ zipCode.getText(), phone.getText(),
-            		memberType,"payment method");
-            
+            primaryStage.show();          
         } catch (IOException ex) {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }     
@@ -181,6 +222,10 @@ public class MemberInfoController implements Initializable {
         } else {
         	((Student)memberType).setStudentID(idNum.getText());
         }
+        if (rider.isSelected())
+            member.setDrivingType(new Passenger());
+        else if (!member.getDrivingType().isDriver())
+            member.setDrivingType(new Driver());
         member.getLoginInfo().setEmail(email.getText());
         member.setPhoneNumber(phone.getText());
         member.setMemberType(memberType);

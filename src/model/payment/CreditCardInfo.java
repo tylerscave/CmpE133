@@ -29,4 +29,29 @@ public class CreditCardInfo {
         this.expMonth = expMonth;
         this.expYear = expYear;
     }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public String getCardSecurityCode() {
+        return cardSecurityCode;
+    }
+
+    public CardType getCardType() {
+        return cardType;
+    }
+
+    public int getExpMonth() {
+        return expMonth;
+    }
+
+    public int getExpYear() {
+        return expYear;
+    }
+
+    public String getNameOnCard() {
+        return nameOnCard;
+    }
+    
 }

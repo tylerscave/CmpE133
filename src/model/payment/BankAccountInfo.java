@@ -16,6 +16,22 @@ public class BankAccountInfo {
         this.accountNumber = accountNumber;
         this.routingNumber = routingNumber;
     }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public String getNameOnAccount() {
+        return nameOnAccount;
+    }
+
+    public String getRoutingNumber() {
+        return routingNumber;
+    }
     
     
 }

@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Context;
 import model.member.Member;
+import model.payment.CreditCardInfo;
 import model.payment.CreditCardInfo.CardType;
 
 /**
@@ -50,6 +52,8 @@ public class CreditCardController implements Initializable {
     @FXML
     private ComboBox<Integer> expYearCombo;
     
+    private int currentYear;
+    
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
@@ -58,7 +62,10 @@ public class CreditCardController implements Initializable {
         ArrayList<Integer> months = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
         monthList.addAll(months);
         expMonthCombo.setItems(monthList);
-        ArrayList<Integer> years = new ArrayList<>(Arrays.asList(2016, 2017, 2018, 2019, 2020, 2021, 2022));
+        currentYear = (new GregorianCalendar()).get(GregorianCalendar.YEAR);
+        ArrayList<Integer> years = new ArrayList<>();
+        for (int i = 0; i < 7; i++)
+            years.add(i+currentYear);
         yearList.addAll(years);
         expYearCombo.setItems(yearList);
         
@@ -96,7 +103,7 @@ public class CreditCardController implements Initializable {
 	
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	//TODO
+    	member.setCreditCardInfo(new CreditCardInfo(NameField.getText(), cardType, cardNumberField.getText(), cardSecurityCodeField.getText(), currentYear, currentYear));
     	
     	handleCancelButton(event);
     }
