@@ -51,18 +51,10 @@ public class CLIMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        GregorianCalendar cal = new GregorianCalendar();
-        GregorianCalendar cal2 = new GregorianCalendar(cal.get(GregorianCalendar.YEAR), cal.get(GregorianCalendar.MONTH), cal.get(GregorianCalendar.DATE));
-        cal.setTime(cal2.getTime());
-        if (cal.before(cal2))
-            System.out.println("cal before");
-        if (cal.after(cal2))
-            System.out.println("cal after");
         context = Context.getInstance();
         data = context.getDataHandler();
         map = context.getMap();
         locations = map.getLocations();
-        context.setLogin(new LoginHandler());
         loginHandler = context.getLogin();
         in = new Scanner(System.in);
         start();
@@ -140,7 +132,10 @@ public class CLIMain {
             System.out.println("New Account created!");
         System.out.println("Press Enter to continue...");
         in.nextLine();
-        if (loginHandler.handleLogin(new LoginInformation(email, pw)).equals(""))
+        if (loginHandler.isLoggedIn())
+            loginHandler.handleLogout();
+        System.out.println(loginHandler.handleLogin(new LoginInformation(email, pw)));
+        if (loginHandler.isLoggedIn())
             menu();
     }
 

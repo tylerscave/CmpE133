@@ -49,9 +49,7 @@ public class LoginSceneController implements Initializable {
     }    
     
     @FXML
-    protected void handleSubmitButton(ActionEvent event) {
-    	loginInfo = new LoginInformation(emailField.getText(), passwordField.getText());
-    	
+    protected void handleSubmitButton(ActionEvent event) {    	
     	//
     	//getting members from database to check the one who tries to login is registered.
     	//member.add();
@@ -74,7 +72,6 @@ public class LoginSceneController implements Initializable {
     	
         //loginMessage.setText("Sign in successful");
     	loginMessage.setText("Incorrect login. Do you have an account yet?");
-        System.out.println("Sign in button pressed");
         login(event);
     }
 
@@ -100,7 +97,6 @@ public class LoginSceneController implements Initializable {
     		
     	//}
     	
-    	System.out.println("Enter key pressed");
         login(event);
     }
     
@@ -131,10 +127,14 @@ public class LoginSceneController implements Initializable {
     }
     
     private void login(ActionEvent event) {
-        context.setLogin(new LoginHandler());
-        if (!context.getLogin().handleLogin(loginInfo).equals("")) {
+        loginInfo = new LoginInformation(emailField.getText(), passwordField.getText());
+        LoginHandler loginHandler = context.getLogin();
+        if (loginHandler.isLoggedIn())
+            loginHandler.handleLogout();
+        loginMessage.setText(loginHandler.handleLogin(loginInfo));
+        if (!loginHandler.isLoggedIn())
             return;
-        } 
+        
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
             Scene scene = new Scene(root);

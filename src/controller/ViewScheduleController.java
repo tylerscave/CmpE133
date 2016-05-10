@@ -35,7 +35,6 @@ public class ViewScheduleController implements Initializable {
 
     private Context context;
     private Member member;
-    private DataHandler data;
     
     @FXML
     Text text;
@@ -47,7 +46,6 @@ public class ViewScheduleController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
-        data = context.getDataHandler();
         ScheduleViewer sv = new ScheduleViewer();
         text.setText(sv.getScheduleText(member));
     }    

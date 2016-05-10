@@ -28,13 +28,13 @@ public class Main extends Application
     //Database database;
     
     public static void main(String[] args) {
-    	Database database = new Database();
+    	/*Database database = new Database();
     	try {
 			database.load();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
         launch(args);	//call start(javafx.stage.Stage) method
     }
 

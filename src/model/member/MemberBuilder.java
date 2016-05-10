@@ -38,6 +38,8 @@ public class MemberBuilder {
      * @return the unique id number of the member, -1 on failure
      */
     public int build() {
+        if (loginInfo.getEmail().equals("") || loginInfo.getPassword().equals(""))
+            return -1;
         List<Member> members = data.getMembers();
         for (Member m : members) {
             if (m.getLoginInfo().equals(loginInfo))

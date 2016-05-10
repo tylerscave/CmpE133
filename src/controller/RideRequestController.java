@@ -27,6 +27,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import model.Context;
+import model.StringFormat;
 import model.schedule.Drive;
 import model.schedule.Location;
 import model.schedule.Request;
@@ -223,9 +224,9 @@ public class RideRequestController implements Initializable {
                 Ride ride = request.getMember().getRides().get(request.getMember().getRides().size()-1);
                 List<Location> stops = ride.getRoute().getStops();
                 Drive drive = (new ScheduleViewer()).getDriveById(ride.getDriveId());
-            	String alertMsg = "on "+getDateFromCalendar(ride.getEndTime())+
-            			"\nFrom "+stops.get(0)+" at "+getTimeFromCalendar(ride.getStartTime())+
-            			"\nTo "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(ride.getEndTime())+    			
+            	String alertMsg = "on "+StringFormat.getDateFromCalendar(ride.getEndTime())+
+            			"\nFrom "+stops.get(0)+" at "+StringFormat.getTimeFromCalendar(ride.getStartTime())+
+            			"\nTo "+stops.get(stops.size()-1)+" at "+StringFormat.getTimeFromCalendar(ride.getEndTime())+    			
             			"\nYour Driver is "+drive.getMemberName();
             	alert.setTitle("Schedule Information");
             	alert.setHeaderText("New Ride Scheduled!");
@@ -320,21 +321,6 @@ public class RideRequestController implements Initializable {
         pickRideCombo.setItems(rideChoices);		
 	}
 
-	
-	//Helper methods to help print strings
-    private static String getDateFromCalendar(GregorianCalendar gc) {
-        return (gc.get(GregorianCalendar.MONTH)+1)+"/"+gc.get(GregorianCalendar.DATE)+"/"+gc.get(GregorianCalendar.YEAR);
-    }
-    private static String getTimeFromCalendar(GregorianCalendar gc) {
-        String ampm[] = new String[2];
-        ampm[0] = " AM";
-        ampm[1] = " PM";
-        String minute = Integer.toString(gc.get(GregorianCalendar.MINUTE));
-        if (minute.length() == 1)
-            minute = "0"+minute;
-        return gc.get(GregorianCalendar.HOUR)+":"+minute+ampm[gc.get(GregorianCalendar.AM_PM)];
-    }
-    
     private boolean checkData() {
     	return (pickup != null && destination != null && pickupHourTime != null && destinationHourTime != null &&
     			pickupMinuteTime != null && destinationMinuteTime != null && pickupTimeType != null && destinationTimeType != null);

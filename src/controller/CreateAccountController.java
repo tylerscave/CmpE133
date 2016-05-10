@@ -18,6 +18,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Context;
+import model.LoginHandler;
 import model.member.LoginInformation;
 import model.member.Member;
 import model.member.MemberBuilder;
@@ -31,7 +32,6 @@ import model.member.MemberBuilder;
 public class CreateAccountController implements Initializable {
 
     private Context context;
-    private Member member;
     
     @FXML
     private TextField email;
@@ -40,14 +40,13 @@ public class CreateAccountController implements Initializable {
     @FXML
     private PasswordField confirmPassword;
 	
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-        context = Context.getInstance();
-        member = context.getMember();		
-	}
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        context = Context.getInstance();		
+    }
 	
-	@FXML
-	public void handleCancelButton(ActionEvent event) throws Exception {
+    @FXML
+    public void handleCancelButton(ActionEvent event) throws Exception {
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/LoginScene.fxml"));
             Scene scene = new Scene(root);
@@ -57,30 +56,44 @@ public class CreateAccountController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
-	}
+    }
 
-	@FXML
-	public void handleSubmitButton(ActionEvent event) throws Exception {
-		//check to make sure passwords match
-		if(!(password.getText().equals(confirmPassword.getText()))) {
-			confirmPassword.setStyle("-fx-text-box-border: red ; -fx-focus-color: red ;");
-			JOptionPane.showMessageDialog(null, "Passwords must match!", "Error",
-											JOptionPane.ERROR_MESSAGE);
-		} else {
-                MemberBuilder mb = new MemberBuilder();
-                mb.setLoginInfo(new LoginInformation(email.getText(), password.getText()));
-                member.setLoginInfo(new LoginInformation(email.getText(), password.getText()));
-                if (mb.build() == -1)
-                    return;
-			try {
-				Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
-				Scene scene = new Scene(root);
-				Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				primaryStage.setScene(scene);
-				primaryStage.show();
-			} catch (IOException ex) {
-				Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-	}
+    @FXML
+    public void handleSubmitButton(ActionEvent event) {
+        createAccount(event);
+    }
+    
+    @FXML
+    public void onEnter(ActionEvent event) {
+        createAccount(event);
+    }
+    
+    private void createAccount(ActionEvent event) {
+        //check to make sure passwords match
+	if(!(password.getText().equals(confirmPassword.getText()))) {
+            confirmPassword.setStyle("-fx-text-box-border: red ; -fx-focus-color: red ;");
+            JOptionPane.showMessageDialog(null, "Passwords must match!", "Error", JOptionPane.ERROR_MESSAGE);
+	} else {
+            MemberBuilder mb = new MemberBuilder();
+            LoginInformation newInfo = new LoginInformation(email.getText(), password.getText()); 
+            mb.setLoginInfo(newInfo);
+            if (mb.build() == -1)
+                return;
+            LoginHandler loginHandler = context.getLogin();
+            if (loginHandler.isLoggedIn())
+                loginHandler.handleLogout();
+            loginHandler.handleLogin(newInfo);
+            if (!loginHandler.isLoggedIn())
+                return;
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
+                Scene scene = new Scene(root);
+                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                primaryStage.setScene(scene);
+                primaryStage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

@@ -29,6 +29,10 @@ public class LoginHandler {
     public String handleLogin(LoginInformation loginInfo) {
         if (loggedIn)
             return "Already logged in";
+        if (loginInfo.getEmail().equals(""))
+            return "Email field empty";
+        if (loginInfo.getPassword().equals(""))
+            return "Passord field empty";
         DataHandler data = context.getDataHandler();
         List<Member> members = data.getMembers();
         for (Member m : members) {

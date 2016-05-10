@@ -28,6 +28,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.Context;
+import model.StringFormat;
 import model.schedule.Location;
 import model.schedule.Request;
 import model.schedule.Ride;
@@ -167,9 +168,9 @@ public class DriveRequestController implements Initializable {
         if (fail.equals(Scheduler.SUCCESS)) {
         	Drive drive = member.getDrives().get(member.getDrives().size()-1);
         	List<Location> stops = drive.getRoute().getStops();
-        	String alertMsg = "On "+getDateFromCalendar(drive.getEndTime())+
-        			"\nFrom "+stops.get(0)+" at "+getTimeFromCalendar(drive.getStartTime())+
-        			"\nTo "+stops.get(stops.size()-1)+" at "+getTimeFromCalendar(drive.getEndTime());
+        	String alertMsg = "On "+StringFormat.getDateFromCalendar(drive.getEndTime())+
+        			"\nFrom "+stops.get(0)+" at "+StringFormat.getTimeFromCalendar(drive.getStartTime())+
+        			"\nTo "+stops.get(stops.size()-1)+" at "+StringFormat.getTimeFromCalendar(drive.getEndTime());
             if (stops.size() > 2) {
                 alertMsg = alertMsg+"\nStops at: ";
                 for (int j = 1; j < stops.size()-1; j++) {
@@ -184,12 +185,12 @@ public class DriveRequestController implements Initializable {
                 ScheduleViewer sv = new ScheduleViewer();
                 Ride ride = sv.getRideById(drive.getRideId(i));
                 List<Location> rideStops = ride.getRoute().getStops();
-                alertMsg = alertMsg+"  "+ride.getMemberName() + ": From "+rideStops.get(0)+" at "+getTimeFromCalendar(ride.getStartTime())+
+                alertMsg = alertMsg+"  "+ride.getMemberName() + ": From "+rideStops.get(0)+" at "+StringFormat.getTimeFromCalendar(ride.getStartTime())+
                 		"\nto "+rideStops.get(rideStops.size()-1)+
-                		"\nat "+getTimeFromCalendar(ride.getEndTime());
+                		"\nat "+StringFormat.getTimeFromCalendar(ride.getEndTime());
             }      	
         	alert.setTitle("Schedule Information");
-        	alert.setHeaderText("New Drive Request Made!");
+        	alert.setHeaderText("New Drive Scheduled!");
         	alert.setContentText(alertMsg);
         	alert.showAndWait();	
         } else {
@@ -265,19 +266,5 @@ public class DriveRequestController implements Initializable {
 		}
 		return hours;
 	}
-
-	//Helper methods to help print strings
-    private static String getDateFromCalendar(GregorianCalendar gc) {
-        return (gc.get(GregorianCalendar.MONTH)+1)+"/"+gc.get(GregorianCalendar.DATE)+"/"+gc.get(GregorianCalendar.YEAR);
-    }
-    private static String getTimeFromCalendar(GregorianCalendar gc) {
-        String ampm[] = new String[2];
-        ampm[0] = " AM";
-        ampm[1] = " PM";
-        String minute = Integer.toString(gc.get(GregorianCalendar.MINUTE));
-        if (minute.length() == 1)
-            minute = "0"+minute;
-        return gc.get(GregorianCalendar.HOUR)+":"+minute+ampm[gc.get(GregorianCalendar.AM_PM)];
-    }
 
 }
