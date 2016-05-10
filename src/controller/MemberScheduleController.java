@@ -2,6 +2,7 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -16,13 +17,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Context;
 import model.member.Member;
 import model.schedule.WeeklySchedule;
 import model.schedule.Location;
+import model.schedule.Request;
+import model.schedule.Scheduler;
+import model.schedule.SchedulingContext;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -34,20 +41,25 @@ public class MemberScheduleController implements Initializable {
 	
     private Context context;
     private Member member;
-    private WeeklySchedule memberSchedule;
     private Location selectedLocation;
-    private GregorianCalendar monTime, monArriveTime, monDepartTime;
-    private GregorianCalendar tuesTime, tuesArriveTime, tuesDepartTime;
-    private GregorianCalendar wedTime, wedArriveTime, wedDepartTime;
-    private GregorianCalendar thursTime, thursArriveTime, thursDepartTime;
-    private GregorianCalendar friTime, friArriveTime, friDepartTime;
-    private boolean monDrive, tuesDrive, wedDrive, thursDrive, friDrive;
-    private ObservableList<Location> locations = FXCollections.observableArrayList();
+    private ObservableList<Location> locations = FXCollections.observableArrayList();   
     private ObservableList<GregorianCalendar> monTimes;
     private ObservableList<GregorianCalendar> tuesTimes;
     private ObservableList<GregorianCalendar> wedTimes;
     private ObservableList<GregorianCalendar> thursTimes;
     private ObservableList<GregorianCalendar> friTimes;
+    //legacy mostly
+    private GregorianCalendar monTime, monArriveTime, monDepartTime;
+    private GregorianCalendar tuesTime, tuesArriveTime, tuesDepartTime;
+    private GregorianCalendar wedTime, wedArriveTime, wedDepartTime;
+    private GregorianCalendar thursTime, thursArriveTime, thursDepartTime;
+    private GregorianCalendar friTime, friArriveTime, friDepartTime;
+    private boolean monDrive, tuesDrive, wedDrive, thursDrive, friDrive; 
+    
+    //new
+    private GregorianCalendar[] arriveTime, departTime;
+    private boolean[] drive;
+    private LocalDate start, end;
     
     @FXML
     private ComboBox<Location> location;
@@ -81,12 +93,17 @@ public class MemberScheduleController implements Initializable {
     private CheckBox thursDriveCheck;        
     @FXML
     private CheckBox friDriveCheck;
+    @FXML
+    private Text central;
+    @FXML
+    private DatePicker startDate;
+    @FXML
+    private DatePicker endDate;        
     
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
             context = Context.getInstance();
             member = context.getMember();
-            memberSchedule = member.getWeeklySchedule();
             
             //set up the location ComboBox
             for (Location l : context.getMap().getLocations())
@@ -109,6 +126,50 @@ public class MemberScheduleController implements Initializable {
             friTimes = timesMaker(6, friTime);
             friArrive.setItems(friTimes);
             friDepart.setItems(friTimes);
+            
+            //setup current schedule
+            WeeklySchedule ws = member.getWeeklySchedule();
+            
+            GregorianCalendar time = ws.getStartTime();
+            if (time != null) {
+                start = LocalDate.ofYearDay(time.get(GregorianCalendar.YEAR), time.get(GregorianCalendar.DAY_OF_YEAR));
+                startDate.setValue(start);
+            }
+            time = ws.getEndTime();
+            if (time != null) {
+                end = LocalDate.ofYearDay(time.get(GregorianCalendar.YEAR), time.get(GregorianCalendar.DAY_OF_YEAR));
+                endDate.setValue(end);
+            }
+            selectedLocation = ws.getPickupLocation();
+            location.setValue(selectedLocation);
+            
+            arriveTime = new GregorianCalendar[5];
+            departTime = new GregorianCalendar[5];
+            drive = new boolean[5];
+            
+            for (int i = 0; i < 5; i++) {
+                arriveTime[i] = ws.getArrive(i+2);
+                departTime[i] = ws.getDepart(i+2);
+                drive[i] = ws.isDrive(i+2);
+            }
+            monArrive.setValue(arriveTime[0]);
+            monDepart.setValue(departTime[0]);
+            monDriveCheck.setSelected(drive[0]);
+            tuesArrive.setValue(arriveTime[1]);
+            tuesDepart.setValue(departTime[1]);
+            tuesDriveCheck.setSelected(drive[1]);
+            wedArrive.setValue(arriveTime[2]);
+            wedDepart.setValue(departTime[2]);
+            wedDriveCheck.setSelected(drive[2]);
+            thursArrive.setValue(arriveTime[3]);
+            thursDepart.setValue(departTime[3]);
+            thursDriveCheck.setSelected(drive[3]);
+            friArrive.setValue(arriveTime[4]);
+            friDepart.setValue(departTime[4]);
+            friDriveCheck.setSelected(drive[4]);
+            
+            //change text
+            central.setText(context.getCentral().toString());
 	}
 	
     @FXML
@@ -118,62 +179,69 @@ public class MemberScheduleController implements Initializable {
    
     @FXML
     private void handleMonArriveCombo(ActionEvent event) {
-    	monArriveTime = monArrive.getSelectionModel().getSelectedItem();
+    	//monArriveTime = monArrive.getSelectionModel().getSelectedItem();
+        arriveTime[0] = monArrive.getSelectionModel().getSelectedItem();
     }
     
     @FXML
     private void handleMonDepartCombo(ActionEvent event) {
-    	monDepartTime = monDepart.getSelectionModel().getSelectedItem();
+    	//monDepartTime = monDepart.getSelectionModel().getSelectedItem();
+        departTime[0] = monDepart.getSelectionModel().getSelectedItem();
     }
     
     @FXML
     private void handleTuesArriveCombo(ActionEvent event) {
-    	tuesArriveTime = tuesArrive.getSelectionModel().getSelectedItem();
+    	arriveTime[1] = tuesArrive.getSelectionModel().getSelectedItem();
 
     }
     
     @FXML
     private void handleTuesDepartCombo(ActionEvent event) {
-    	tuesDepartTime = tuesDepart.getSelectionModel().getSelectedItem();
+    	departTime[1] = tuesDepart.getSelectionModel().getSelectedItem();
     }
     
     @FXML
     private void handleWedArriveCombo(ActionEvent event) {
-    	wedArriveTime = wedArrive.getSelectionModel().getSelectedItem();
+    	arriveTime[2] = wedArrive.getSelectionModel().getSelectedItem();
     }
     
     @FXML
     private void handleWedDepartCombo(ActionEvent event) {
-    	wedDepartTime = wedDepart.getSelectionModel().getSelectedItem();
+    	departTime[2] = wedDepart.getSelectionModel().getSelectedItem();
     }
     
     @FXML
     private void handleThursArriveCombo(ActionEvent event) {
-    	thursArriveTime = thursArrive.getSelectionModel().getSelectedItem();
+    	arriveTime[3] = thursArrive.getSelectionModel().getSelectedItem();
     }
     
     @FXML
     private void handleThursDepartCombo(ActionEvent event) {
-    	thursDepartTime = thursDepart.getSelectionModel().getSelectedItem();
+    	departTime[3] = thursDepart.getSelectionModel().getSelectedItem();
     }
     
     @FXML
     private void handleFriArriveCombo(ActionEvent event) {
-    	friArriveTime = friArrive.getSelectionModel().getSelectedItem();
+    	arriveTime[4] = friArrive.getSelectionModel().getSelectedItem();
     }
     
     @FXML
     private void handleFriDepartCombo(ActionEvent event) {
-    	friDepartTime = friDepart.getSelectionModel().getSelectedItem();
+    	departTime[4] = friDepart.getSelectionModel().getSelectedItem();
     }
      
     @FXML
     private void handleDriveChecks(ActionEvent event) {
-    	monDrive = monDriveCheck.isSelected();
+    	/*monDrive = monDriveCheck.isSelected();
     	tuesDrive = tuesDriveCheck.isSelected();
     	wedDrive = wedDriveCheck.isSelected();
     	thursDrive = thursDriveCheck.isSelected();
-    	friDrive = friDriveCheck.isSelected();
+    	friDrive = friDriveCheck.isSelected();*/
+        drive[0] = monDriveCheck.isSelected();
+    	drive[1] = tuesDriveCheck.isSelected();
+    	drive[2] = wedDriveCheck.isSelected();
+    	drive[3] = thursDriveCheck.isSelected();
+    	drive[4] = friDriveCheck.isSelected();
     }
     
     @FXML
@@ -189,13 +257,20 @@ public class MemberScheduleController implements Initializable {
         }
     }
     
-    //NEED TO ADD ERROR CHECKING TO MAKE SURE ALL FIELDS HAVE BEEN FILLED IN
+    @FXML
+    private void handleStartDate(ActionEvent event) {
+        start = startDate.getValue();
+    }
+    
+    @FXML
+    private void handleEndDate(ActionEvent event) {
+        end = endDate.getValue();
+    }
+    
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	// set pickup location
-    	memberSchedule.setPickupLocation(selectedLocation);
-    	
-    	// set Arrival and Departure times
+    	//legacy
+    	/*// set Arrival and Departure times
     	memberSchedule.setMonArrive(monArriveTime);
     	memberSchedule.setMonDepart(monDepartTime);
     	memberSchedule.setTuesArrive(tuesArriveTime);
@@ -215,8 +290,49 @@ public class MemberScheduleController implements Initializable {
     	memberSchedule.setFriDrive(friDrive);
     	
     	//FOR TESTING REMOVE LATER
-    	memberSchedule.test();
+    	memberSchedule.test();*/
     	
+        //return if invalid
+        if (start == null || end == null || selectedLocation == null)
+            return;
+        
+        WeeklySchedule ws = member.getWeeklySchedule();
+            
+        ws.setStartTime(new GregorianCalendar(start.getYear(), start.getMonthValue()-1, start.getDayOfMonth()));
+        ws.setEndTime(new GregorianCalendar(end.getYear(), end.getMonthValue()-1, end.getDayOfMonth()));
+        
+        ws.setPickupLocation(selectedLocation);
+            
+        for (int i = 0; i < 5; i++) {
+            if (arriveTime[i] != null) {
+                GregorianCalendar tg = new GregorianCalendar();
+                tg.setTime(arriveTime[i].getTime());
+                ws.setArrive(i+2, tg);
+            }
+            if (departTime[i] != null) {
+                GregorianCalendar tg  = new GregorianCalendar();
+                tg.setTime(departTime[i].getTime());
+                ws.setDepart(i+2, tg);
+            }
+            ws.setDrive(i+2, drive[i]);
+        }
+        
+        SchedulingContext sc = new SchedulingContext();
+    	String fail = sc.schedule(new Request(member, new GregorianCalendar(), context.getCentral()), null);
+        if (fail.equals(Scheduler.SUCCESS)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Schedule Information");
+            alert.setHeaderText("Weekly Schedule Updated!");
+            alert.setContentText("Your weekly schedule has been updated. \nCheck your ride schedule to see the status of your upcoming rides.");
+            alert.showAndWait();
+        } else {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Schedule Information");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText(fail);
+            errorAlert.showAndWait();
+        }
+        
     	//return to home screen
     	handleReturnButton(event);
     }

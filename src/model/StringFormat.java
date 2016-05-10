@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
  */
 public class StringFormat {
     public static String getDateFromCalendar(GregorianCalendar gc) {
-        return gc.get(GregorianCalendar.MONTH)+"/"+gc.get(GregorianCalendar.DATE)+"/"+gc.get(GregorianCalendar.YEAR);
+        return Integer.toString(gc.get(GregorianCalendar.MONTH)+1)+"/"+gc.get(GregorianCalendar.DATE)+"/"+gc.get(GregorianCalendar.YEAR);
     }
     
     public static String getTimeFromCalendar(GregorianCalendar gc) {

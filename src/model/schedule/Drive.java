@@ -117,7 +117,8 @@ public class Drive extends Schedulable{
         return route.getStops();
     }
     //Adding to string to populate comboBoxes with actual drive objects
-    public String tostring() {
+    @Override
+    public String toString() {
     	return super.getMemberName()+": "+numSeats+" seats available. "+StringFormat.getTimeFromCalendar(route.getStartTime())+" to "+StringFormat.getTimeFromCalendar(route.getEndTime());
     }
 

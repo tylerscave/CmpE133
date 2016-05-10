@@ -473,8 +473,8 @@ public class CLIMain {
                     break;
             }
         }
-        WeeklyScheduler scheduler = new WeeklyScheduler();
-        String fail = scheduler.schedule(new Request(member, new GregorianCalendar(), context.getCentral()), null);
+        SchedulingContext sc = new SchedulingContext();
+    	String fail = sc.schedule(new Request(member, new GregorianCalendar(), context.getCentral()), null);
         if (fail.equals(Scheduler.SUCCESS)) 
             System.out.println("Weekly Schedule Saved!");
         else
