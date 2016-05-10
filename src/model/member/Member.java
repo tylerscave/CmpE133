@@ -66,7 +66,7 @@ public class Member extends Observable {
         this.newNotifications.add(new Notification("Welcome to SpartanPool!"));
         this.weeklySchedule = new WeeklySchedule();
         
-        this.creditCardInfo = new CreditCardInfo(toString(), CreditCardInfo.CardType.Visa, "", "", 0, 0);
+        this.creditCardInfo = new CreditCardInfo(toString(), CreditCardInfo.CardType.Visa, "", "", 1, 16);
         this.bankAccountInfo = new BankAccountInfo(toString(), "", "", "");
         }
     

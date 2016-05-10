@@ -153,7 +153,7 @@ public class MemberInfoController implements Initializable {
         maintainMemberInfo();
         member.setChanged();
         member.notifyObservers();
-        
+       
     	try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/PaymentMenuScene.fxml"));
             Scene scene = new Scene(root);
@@ -172,7 +172,7 @@ public class MemberInfoController implements Initializable {
         member.notifyObservers();
         
     	try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/CreateAccountScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/ChangePasswordScene.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);

@@ -36,6 +36,8 @@ public class CreditCardController implements Initializable {
     private Context context;
     private Member member;
     private CardType cardType;
+    private int month;
+    private int year;
     private ObservableList<Integer> monthList = FXCollections.observableArrayList();
     private ObservableList<Integer> yearList = FXCollections.observableArrayList();
     
@@ -53,9 +55,10 @@ public class CreditCardController implements Initializable {
     private ComboBox<Integer> expYearCombo;
     
     private int currentYear;
+    private final int yearOffset = 2000;
     
 	@Override
-	public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
         
@@ -68,24 +71,34 @@ public class CreditCardController implements Initializable {
             years.add(i+currentYear);
         yearList.addAll(years);
         expYearCombo.setItems(yearList);
-        
-      //setup cardType ComboBox
+        //setup cardType ComboBox
         cardTypeCombo.getItems().setAll(CardType.values());
+        
+        CreditCardInfo cardInfo = member.getCreditCardInfo();
+        NameField.setText(cardInfo.getNameOnCard());
+        cardNumberField.setText(cardInfo.getCardNumber());
+        cardSecurityCodeField.setText(cardInfo.getCardSecurityCode());
+        cardType = cardInfo.getCardType();
+        cardTypeCombo.setValue(cardType);
+        month = cardInfo.getExpMonth(); 
+        expMonthCombo.setValue(month);
+        year = yearOffset+cardInfo.getExpYear();
+        expYearCombo.setValue(year);
 	}
 	
 	@FXML
 	private void handleCardTypeCombo(ActionEvent event) {
-		//TODO
+            cardType = cardTypeCombo.getSelectionModel().getSelectedItem();
 	}
 	
 	@FXML
 	private void handleExpMonthCombo(ActionEvent event) {
-		//TODO
+		month = expMonthCombo.getSelectionModel().getSelectedItem();
 	}
 	
 	@FXML
 	private void handleExpYearCombo(ActionEvent event) {
-		//TODO
+		year = expYearCombo.getSelectionModel().getSelectedItem();
 	}
 	
 	@FXML
@@ -103,7 +116,7 @@ public class CreditCardController implements Initializable {
 	
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	member.setCreditCardInfo(new CreditCardInfo(NameField.getText(), cardType, cardNumberField.getText(), cardSecurityCodeField.getText(), currentYear, currentYear));
+    	member.setCreditCardInfo(new CreditCardInfo(NameField.getText(), cardType, cardNumberField.getText(), cardSecurityCodeField.getText(), month, year-yearOffset));
     	
     	handleCancelButton(event);
     }
