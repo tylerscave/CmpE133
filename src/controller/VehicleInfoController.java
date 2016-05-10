@@ -183,6 +183,8 @@ public class VehicleInfoController implements Initializable {
                 d.setFlatrate(0);
             }
     	} 	
+        member.setChanged();
+        member.notifyObservers();
     	handleCancelButton(event);
     }
     
