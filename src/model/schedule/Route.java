@@ -182,6 +182,12 @@ public class Route {
         for (Stop s : realStops) {
             l.add(s.getLocation());
         }
+        if (realStops.size() > 1)
+            return map.getMiles(l);
+        l = new ArrayList<>();
+        for (Stop s : stops) {
+            l.add(s.getLocation());
+        }
         return map.getMiles(l);
     }
 }

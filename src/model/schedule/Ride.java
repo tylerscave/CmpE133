@@ -56,7 +56,7 @@ public class Ride extends Schedulable{
     @Override
     public void setIdNumber(int idNumber) {
         super.setIdNumber(idNumber);
-        rideStatus.setRideId(driveId);
+        rideStatus.setRideId(idNumber);
     }
 
     public RideStatus getRideStatus() {

@@ -1,7 +1,6 @@
 package model.graph;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +8,6 @@ import java.util.Stack;
 import model.schedule.Location;
 import model.LocationMap;
 import model.schedule.Stop;
-import model.graph.DijkstraAllPairsSP;
-import model.graph.DirectedEdge;
-import model.graph.EdgeWeightedDigraph;
 import model.schedule.ParkingSpot;
 
 /**
@@ -32,13 +28,13 @@ public class GraphMap implements LocationMap {
         for (int i = 0; i < 100; i++)
             parkingSpots.add(new ParkingSpot("Parking "+i));
         locations.add(new Location("San Jose State University", parkingSpots));
-        locations.add(new Location("Location A"));
-        locations.add(new Location("Location B"));
-        locations.add(new Location("Location C"));
-        locations.add(new Location("Location D"));
-        locations.add(new Location("Location E"));
-        locations.add(new Location("Location F"));
-        locations.add(new Location("Location G"));
+        locations.add(new Location("West Valley College"));
+        locations.add(new Location("Campbell"));
+        locations.add(new Location("Cambrian Park"));
+        locations.add(new Location("SAP Center"));
+        locations.add(new Location("SJ International Airport"));
+        locations.add(new Location("SV University"));
+        locations.add(new Location("Alum Rock"));
         
         hash = new HashMap<>();
         for (int i = 0; i < locations.size(); i++) {
