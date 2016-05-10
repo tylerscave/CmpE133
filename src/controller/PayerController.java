@@ -2,9 +2,12 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,9 +19,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import model.Context;
+import model.member.Driver;
 import model.member.Member;
+import model.payment.BankAccount;
+import model.payment.CreditCard;
+import model.payment.Reward;
 import model.schedule.Ride;
+import model.schedule.ScheduleViewer;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -31,6 +40,9 @@ public class PayerController implements Initializable {
     private Context context;
     private Member member;
     private boolean notifyMember = false;
+    private ObservableList<Ride> ridesToPay = FXCollections.observableArrayList();
+    private Ride payFor;
+    
     @FXML
     private ComboBox<Ride> rideCombo;
     @FXML
@@ -43,25 +55,33 @@ public class PayerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
-        member = context.getMember();        
+        member = context.getMember(); 
+        
+        ScheduleViewer sv = new ScheduleViewer();
+        List<Ride> rides = sv.getRidesToPay(member);
+        for (Ride r : rides) {
+            Member driver = context.getDataHandler().getMember(sv.getDriveById(r.getDriveId()).getMemberId());
+            if (!driver.getDrivingType().isDriver())
+                continue;
+            Driver d = (Driver) driver.getDrivingType();
+            Reward reward = new CreditCard(null, d.getPayBy());
+            double amount = (Double)reward.findReward(driver, r);
+            r.setDescription(String.format("Amount to pay: $%.2f", amount));
+        }
+        ridesToPay.addAll(rides);
+        rideCombo.setItems(ridesToPay);
+        payFor = null;
     } 
     
     @FXML
     private void handleRideCombo(ActionEvent event) {
-    	
+    	payFor = rideCombo.getSelectionModel().getSelectedItem();
     }
     
-	@FXML
-	private void handlePaymentRadios(ActionEvent event) {
+    @FXML
+    private void handlePaymentRadios(ActionEvent event) {
     	RadioButton radio = (RadioButton) event.getSource();
-    	if (radio == creditRadio) {
-    		
-    	} else if (radio == bankRadio){
-    		
-    	} else if (radio == notificationRadio) {
-    		notifyMember = true;
-    	}
-	}
+    }
     
     @FXML
     private void handleNewPayment(ActionEvent event) {
@@ -91,11 +111,36 @@ public class PayerController implements Initializable {
     
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	
-    	if (notifyMember) {
+    	if (payFor == null)
+            return;
+        
+    	if (creditRadio.isSelected()) {
+            ScheduleViewer sv = new ScheduleViewer();
+            Member driver = context.getDataHandler().getMember(sv.getDriveById(payFor.getDriveId()).getMemberId());
+            if (!driver.getDrivingType().isDriver())
+                return;
+            Driver d = (Driver) driver.getDrivingType();
+            Reward reward = new CreditCard(member.getCreditCardInfo(), d.getPayBy());
+            double amount = (Double)reward.findReward(driver, payFor);
+            if (!reward.payReward(driver, payFor, amount))
+                JOptionPane.showMessageDialog(null, "Payment failed", "Error", JOptionPane.ERROR_MESSAGE);
+            handleCancelButton(event);
+            
+    	} else if (bankRadio.isSelected()){
+            ScheduleViewer sv = new ScheduleViewer();
+            Member driver = context.getDataHandler().getMember(sv.getDriveById(payFor.getDriveId()).getMemberId());
+            if (!driver.getDrivingType().isDriver())
+                return;
+            Driver d = (Driver) driver.getDrivingType();
+            Reward reward = new BankAccount(member.getBankAccountInfo(), d.getPayBy());
+            double amount = (Double)reward.findReward(driver, payFor);
+            if (!reward.payReward(driver, payFor, amount))
+                JOptionPane.showMessageDialog(null, "Payment failed", "Error", JOptionPane.ERROR_MESSAGE);
+            handleCancelButton(event);
+            
+    	} else if (notificationRadio.isSelected()) {
     		handleNotification(event);
     	}
-    	handleCancelButton(event);
     }
     
     private void handleNotification(ActionEvent event) {

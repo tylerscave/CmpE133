@@ -2,9 +2,12 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,10 +16,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import model.Context;
+import model.member.Driver;
 import model.member.Member;
+import model.payment.CreditCard;
+import model.payment.Reward;
+import model.schedule.Ride;
+import model.schedule.ScheduleViewer;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -30,30 +39,42 @@ public class PayeeController implements Initializable {
     private Member member;
     private boolean notifyMember;
     @FXML
+    private ComboBox<Ride> rideCombo;
+    @FXML
     private RadioButton waivePaymentRadio;
     @FXML
     private RadioButton notificationRadio;
+    private ObservableList<Ride> ridesToPay = FXCollections.observableArrayList();
+    private Ride payFor;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
-        member = context.getMember();        
+        member = context.getMember();
+        ScheduleViewer sv = new ScheduleViewer();
+        List<Ride> rides = sv.getRidesToBePaid(member);
+        for (Ride r : rides) {
+            if (!member.getDrivingType().isDriver())
+                break;
+            Driver d = (Driver) member.getDrivingType();
+            Reward reward = new CreditCard(null, d.getPayBy());
+            double amount = (Double)reward.findReward(member, r);
+            r.setDescription(String.format("Amount you are owed: $%.2f", amount));
+        }
+        ridesToPay.addAll(rides);
+        rideCombo.setItems(ridesToPay);
+        payFor = null;
     } 
     
     @FXML
     private void handleRideCombo(ActionEvent event) {
-    	//TODO
+    	payFor = rideCombo.getSelectionModel().getSelectedItem();
     }
     
-	@FXML
-	private void handleRadios(ActionEvent event) {
+    @FXML
+    private void handleRadios(ActionEvent event) {
     	RadioButton radio = (RadioButton) event.getSource();
-    	if (radio == waivePaymentRadio) {
-    		//TODO
-    	} else if (radio == notificationRadio) {
-    		//TODO
-    		notifyMember = true;
-    	}
+    	
 	}
     
     @FXML
@@ -71,11 +92,19 @@ public class PayeeController implements Initializable {
     
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-    	//TODO
-    	if (notifyMember) {
+        if (payFor == null)
+            return;
+    	if (waivePaymentRadio.isSelected()) {
+            if (!member.getDrivingType().isDriver())
+                return;
+            Driver d = (Driver) member.getDrivingType();
+            Reward reward = new CreditCard(null, d.getPayBy());
+            reward.waiveReward(payFor);
+            handleCancelButton(event);
+        }
+        else if (notificationRadio.isSelected()) {
     		handleNotification(event);
     	}
-    	handleCancelButton(event);
     }
     
     private void handleNotification(ActionEvent event) {

@@ -2,6 +2,7 @@ package model.schedule;
 
 import java.util.GregorianCalendar;
 import java.util.List;
+import model.StringFormat;
 import model.member.Member;
 
 /**
@@ -12,11 +13,13 @@ public class Ride extends Schedulable{
     private Route route;
     private int driveId;
     private RideStatus rideStatus;
+    private String description;
     
     public Ride(Member member, Drive drive) {
         super(member);
         this.driveId = drive.getIdNumber();
         this.rideStatus = new RideStatus();
+        description = "";
     }
 
     public int getDriveId() {
@@ -59,5 +62,17 @@ public class Ride extends Schedulable{
     public RideStatus getRideStatus() {
         return rideStatus;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
     
+    @Override
+    public String toString() {
+    	return getMemberName()+"Ride on "+StringFormat.getDateFromCalendar(route.getEndTime())+". "+description;
+    }
 }
