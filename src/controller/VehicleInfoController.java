@@ -116,7 +116,9 @@ public class VehicleInfoController implements Initializable {
             yearCombo.setValue(v.getYear());
             styleCombo.setValue(v.getStyle());
             seatsCombo.setValue(v.getCapacity());
-            
+            vehicleSeats = seatsCombo.getSelectionModel().getSelectedItem();
+            vehicleStyle = styleCombo.getSelectionModel().getSelectedItem();
+            vehicleYear = yearCombo.getSelectionModel().getSelectedItem();
             if (d.getPayBy() instanceof PayByDistCalculator)
                 payCombo.setValue("By distance");
             else if (d.getPayBy() instanceof PayByTimeCalculator)
@@ -132,17 +134,17 @@ public class VehicleInfoController implements Initializable {
 	
 	@FXML
 	private void handleYearCombo(ActionEvent event) {
-		vehicleYear = (int) yearCombo.getSelectionModel().getSelectedItem();
+		vehicleYear = yearCombo.getSelectionModel().getSelectedItem();
 	}
 	
 	@FXML
 	private void handleStyleCombo(ActionEvent event) {
-		vehicleStyle = (VehicleStyle) styleCombo.getSelectionModel().getSelectedItem();
+		vehicleStyle = styleCombo.getSelectionModel().getSelectedItem();
 	}
 	
 	@FXML
 	private void handleSeatsCombo(ActionEvent event) {
-		vehicleSeats = (int) seatsCombo.getSelectionModel().getSelectedItem();
+		vehicleSeats = seatsCombo.getSelectionModel().getSelectedItem();
 	}
 	
 	@FXML
