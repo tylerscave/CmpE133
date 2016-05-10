@@ -18,6 +18,7 @@ public class Driver implements DrivingType {
         this.perMileRate = 0;
         this.flatrate = 0;
         payBy = new PayFlatCalculator();
+        vehicle = new Vehicle();
     }
 
     public Driver(String DriverLicenseNumber, Vehicle vehicle, Address departureLocation) {

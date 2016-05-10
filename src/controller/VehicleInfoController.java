@@ -55,8 +55,8 @@ public class VehicleInfoController implements Initializable {
     @FXML
     private ComboBox<Integer> seatsCombo;
 	
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
         member = context.getMember();
         
@@ -72,9 +72,24 @@ public class VehicleInfoController implements Initializable {
         styleCombo.getItems().setAll(VehicleStyle.values());
         
         //setup seats comboBox
-        ArrayList<Integer> seatsList = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7));
+        ArrayList<Integer> seatsList = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
         seats.addAll(seatsList);
-        seatsCombo.setItems(seats);		
+        seatsCombo.setItems(seats);
+        
+        //set current
+        Driver d ;
+        Vehicle v;
+        if (member.getDrivingType().isDriver()) {
+            d = (Driver) member.getDrivingType();
+            v = d.getVehicle();
+            makeField.setText(v.getManufacturer());
+            modelField.setText(v.getModel());
+            colorField.setText(v.getColor());
+            plateNumberField.setText(v.getPlateNumber());
+            yearCombo.setValue(v.getYear());
+            styleCombo.setValue(v.getStyle());
+            seatsCombo.setValue(v.getCapacity());
+        }
 	}
 	
 	@FXML

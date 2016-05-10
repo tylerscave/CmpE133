@@ -130,14 +130,14 @@
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </GridPane>        
-                  <Label fx:id="typeLabel" text="Vehicle: " GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
-                  <Button fx:id="vehicle" mnemonicParsing="false" onAction="#handleVehicleButton" prefWidth="360.0" text="Click to Enter Vehicle Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                  <Label fx:id="typeLabel" text="Driver Information: " GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
+                  <Button fx:id="vehicle" mnemonicParsing="false" onAction="#handleVehicleButton" prefWidth="360.0" text="Click to Enter Driver Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>
                   </Button>
                   <Label text="Password: " GridPane.halignment="RIGHT" GridPane.rowIndex="11" />
-                  <Button mnemonicParsing="false" onAction="#handleUpdatePassord" prefWidth="360.0" text="Click to Update Login Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11">
+                  <Button mnemonicParsing="false" onAction="#handleUpdatePassord" prefWidth="360.0" text="Click to Update Password" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11">
                      <GridPane.margin>
                         <Insets left="10.0" right="50.0" />
                      </GridPane.margin>

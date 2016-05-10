@@ -165,7 +165,7 @@ public class RideRequestController implements Initializable {
 	
 	@FXML
 	private void handlePickRideCombo(ActionEvent event) {
-		if(pickRideCombo.getSelectionModel().getSelectedItem() instanceof Request) {
+		if(pickRideCombo.getSelectionModel().getSelectedItem() instanceof Drive) {
 			selectedRide = (Drive)pickRideCombo.getSelectionModel().getSelectedItem();
 		} else {
 			selectedRide = null;
@@ -193,7 +193,12 @@ public class RideRequestController implements Initializable {
     	if(selectedRide == null) {
     		//make a new RideRequest with given data from form
     		sc.addRideToRequests(request, member.getFirstName());
-    		String requestAlert = "From "+pickup+ " ";
+                String requestAlert = "From "+pickup+" on "+pickupSelectedDateTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, GregorianCalendar.LONG, Locale.getDefault())
+                        +", "+StringFormat.getDateFromCalendar(pickupSelectedDateTime)+" at "+StringFormat.getTimeFromCalendar(pickupSelectedDateTime)
+                        +"\nTo "+destination+" on "+destinationSelectedDateTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, GregorianCalendar.LONG, Locale.getDefault())
+                        + ", "+StringFormat.getDateFromCalendar(destinationSelectedDateTime)+" at "+StringFormat.getTimeFromCalendar(destinationSelectedDateTime)
+                                ;
+    		/*String requestAlert = "From "+pickup+ " ";
     		requestAlert = requestAlert+pickupSelectedDateTime.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
     				GregorianCalendar.LONG, Locale.getDefault()) + " " +
     				(pickupSelectedDateTime.get(GregorianCalendar.MONTH)+1) + "/" + //GregorianCalendar Jan=0
@@ -212,7 +217,7 @@ public class RideRequestController implements Initializable {
     				destinationSelectedDateTime.get(GregorianCalendar.HOUR) + ":" +
     				destinationSelectedDateTime.get(GregorianCalendar.MINUTE) + " " +
     				destinationSelectedDateTime.getDisplayName(GregorianCalendar.AM_PM, 
-    						GregorianCalendar.LONG, Locale.getDefault());
+    						GregorianCalendar.LONG, Locale.getDefault());*/
         	alert.setTitle("Schedule Information");
         	alert.setHeaderText("New Ride Request Made!");
         	alert.setContentText(requestAlert);
@@ -315,15 +320,16 @@ public class RideRequestController implements Initializable {
         //setup dropdown of available rides
         request = new Request(member, startTime, endTime, pickup, destination, startType, endType);
         sc = new SchedulingContext();
-        List<Schedulable> drives = sc.getAvailable(request);   
+        List<Schedulable> drives = sc.getAvailable(request);
+        rideChoices.clear();
         rideChoices.addAll(drives);
         rideChoices.add("Don't see the ride you want? Make a New Ride Request");
         pickRideCombo.setItems(rideChoices);		
 	}
 
     private boolean checkData() {
-    	return (pickup != null && destination != null && pickupHourTime != null && destinationHourTime != null &&
-    			pickupMinuteTime != null && destinationMinuteTime != null && pickupTimeType != null && destinationTimeType != null);
+    	return (pickup != null && destination != null && ((pickupHourTime != null && pickupMinuteTime != null) || pickupTimeType == TimeType.Anytime) && 
+    			((destinationHourTime != null && destinationMinuteTime != null) || destinationTimeType == TimeType.Anytime) && pickupTimeType != null && destinationTimeType != null);
 
     }
 }

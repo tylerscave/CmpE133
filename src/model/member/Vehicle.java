@@ -20,13 +20,19 @@ public class Vehicle {
     private String manufacturer;
     private String model;
     private String color;
-	private String plateNumber;
-	private VehicleStyle style;
-	private int capacity;
+    private String plateNumber;
+    private VehicleStyle style;
+    private int capacity;
 	
-	public Vehicle(){
-		
-	}
+    public Vehicle(){
+        this.year = 2000;
+        this.manufacturer = "";
+        this.model = "";
+        this.color = "";
+        this.plateNumber = "";
+        this.style = VehicleStyle.Sedan;
+        this.capacity = 4;
+    }
 	
 	public Vehicle(int year, String manufacturer, String model, String color,String plateNumber, VehicleStyle style, int capacity){
 		this.year = year;

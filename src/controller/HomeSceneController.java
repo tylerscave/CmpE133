@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Context;
 
@@ -24,9 +25,13 @@ public class HomeSceneController implements Initializable {
     
     private Context context;
     
+    @FXML
+    private Text welcome;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         context = Context.getInstance();
+        welcome.setText("Welcome, "+context.getMember().getFirstName());
     }    
     
     @FXML
