@@ -110,6 +110,19 @@ public class HomeSceneController implements Initializable {
     } 
     
     @FXML
+    protected void handleProcessPaymentMenu(ActionEvent event) {
+        try {
+        	Parent root = FXMLLoader.load(getClass().getResource("/view/ProcessPaymentMenuScene.fxml"));
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }
+    
+    @FXML
     protected void handleLogoutButton(ActionEvent event) {
         context.getLogin().handleLogout();
         try {
