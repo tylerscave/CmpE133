@@ -78,19 +78,7 @@
                   <ComboBox fx:id="seatsCombo" onAction="#handleSeatsCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                </children>
             </GridPane>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" GridPane.halignment="RIGHT" />
-                  <Button mnemonicParsing="false" onAction="#handleSubmitButton" text="Submit and Return" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-               </children>
-            </GridPane>
+            <Label text="Payment Type:" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="7">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="224.0" />
@@ -108,7 +96,19 @@
                   </Text>
                </children>
             </GridPane>
-            <Label text="Payment Type:" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" GridPane.halignment="RIGHT" />
+                  <Button mnemonicParsing="false" onAction="#handleSubmitButton" text="Submit and Return" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+               </children>
+            </GridPane>
          </children>
       </GridPane>
    </children>
