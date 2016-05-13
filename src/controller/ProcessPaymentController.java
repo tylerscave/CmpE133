@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
  * Solves CmpE133 SpartanPool
  * @author Tyler Jones, David Lerner
 */
-public class ProcessPaymentMenuController extends Controller{
+public class ProcessPaymentController extends Controller{
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
