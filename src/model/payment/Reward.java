@@ -3,6 +3,7 @@ package model.payment;
 import java.util.ArrayList;
 import java.util.List;
 import model.Context;
+import model.DataHandler;
 import model.member.Member;
 import model.schedule.Ride;
 

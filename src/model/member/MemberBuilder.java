@@ -33,18 +33,13 @@ public class MemberBuilder {
     /**
      * Creates a new account with the attributes given and returns the unique
      * id number associated with it, if the login information already exits,
-     * it returns -1.
+     * it returns -1, and if the loginInfo is invalid, it returns -2 
      * 
-     * @return the unique id number of the member, -1 on failure
+     * @return the unique id number of the member, negative on failure
      */
     public int build() {
         if (loginInfo.getEmail().equals("") || loginInfo.getPassword().equals(""))
-            return -1;
-        List<Member> members = data.getMembers();
-        for (Member m : members) {
-            if (m.getLoginInfo().equals(loginInfo))
-                return -1;
-        }
+            return -2;
         Member member = new Member();
         member.setLoginInfo(loginInfo);
         member.setFirstName(firstName);

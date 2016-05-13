@@ -6,7 +6,10 @@ import java.util.List;
 import model.Context;
 import model.DataHandler;
 import model.StringFormat;
+import model.member.Driver;
 import model.member.Member;
+import model.payment.CreditCard;
+import model.payment.Reward;
 
 /**
  *
@@ -215,20 +218,35 @@ public class ScheduleViewer {
         Member member = data.getMember(m.getIdNumber());
         List<Ride> rides = new ArrayList<>();
         for (Ride r : member.getRides()) {
-            if (r.getRideStatus().isUnpaid())
-                rides.add(r);
-        }
+            if (!r.getRideStatus().isUnpaid())
+                continue;
+            Member driver = data.getMember(getDriveById(r.getDriveId()).getMemberId());
+            if (!driver.getDrivingType().isDriver())
+                continue;
+            Driver d = (Driver) driver.getDrivingType();
+            Reward reward = new CreditCard(null, d.getPayBy());
+            double amount = (Double)reward.findReward(driver, r);
+            r.setDescription(String.format("Amount to pay: $%.2f", amount));
+            rides.add(r);
+            }
         return rides;
     }
     
     public List<Ride> getRidesToBePaid(Member m) {
         Member member = data.getMember(m.getIdNumber());
         List<Ride> rides = new ArrayList<>();
+        if (!member.getDrivingType().isDriver())
+            return rides;
+        Driver driver = (Driver) member.getDrivingType();
+        Reward reward = new CreditCard(null, driver.getPayBy());
         for (Drive d : member.getDrives()) {
             for (int i = 0; i < d.numberOfRides(); i++) {
                 Ride ride = (Ride) data.getSchedulable(d.getRideId(i));
-                if (ride.getRideStatus().isUnpaid())
+                if (ride.getRideStatus().isUnpaid()) {
+                    double amount = (Double)reward.findReward(member, ride);
+                    ride.setDescription(String.format("Amount you are owed: $%.2f", amount));
                     rides.add(ride);
+                }
             }
         }
         return rides;

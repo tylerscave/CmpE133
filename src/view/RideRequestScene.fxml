@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RideRequestController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RideRequestController">
    <children>
       <GridPane prefHeight="398.0" prefWidth="600.0">
         <columnConstraints>
@@ -60,13 +60,13 @@
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </ComboBox>
-                  <Label text="Hour:" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Label fx:id="pickupHourLabel" text="Hour:" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                   <ComboBox fx:id="pickupHourCombo" onAction="#handleHourCombos" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </ComboBox>
-                  <Label text="Minute:" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                  <Label fx:id="pickupMinuteLabel" text="Minute:" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                   <ComboBox fx:id="pickupMinuteCombo" onAction="#handleMinuteCombos" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
@@ -98,13 +98,13 @@
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </ComboBox>
-                  <Label text="Hour:" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Label fx:id="destinationHourLabel" text="Hour:" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                   <ComboBox fx:id="destinationHourCombo" onAction="#handleHourCombos" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </ComboBox>
-                  <Label text="Minute:" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                  <Label fx:id="destinationMinuteLabel" text="Minute:" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                   <ComboBox fx:id="destinationMinuteCombo" onAction="#handleMinuteCombos" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />

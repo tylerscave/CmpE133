@@ -1,142 +1,65 @@
 package controller;
 
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import model.Context;
 
 /**
- *
- * @author David
+ * FXML controller for HomeScene
+ * @author David Lerner
  */
-public class HomeSceneController implements Initializable {
-    
-    private Context context;
+public class HomeSceneController extends Controller{
     
     @FXML
     private Text welcome;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        context = Context.getInstance();
+        super.initialize(url, rb);
+        
         welcome.setText("Welcome, "+context.getMember().getFirstName());
     }    
     
     @FXML
-    protected void handleUpdateMember(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleUpdateMember(ActionEvent event) {
+        changeScene(event, "/view/MemberInfoScene.fxml");
     } 
 
     @FXML
-    protected void handleUpdateSchedule(ActionEvent event) {
-        try {
-        	Parent root = FXMLLoader.load(getClass().getResource("/view/MemberScheduleScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleUpdateSchedule(ActionEvent event) {
+        changeScenePush(event, "/view/MemberScheduleScene.fxml");
     } 
     
     @FXML
-    protected void handleRideRequest(ActionEvent event) {
-        try {
-        	Parent root = FXMLLoader.load(getClass().getResource("/view/RideRequestScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleRideRequest(ActionEvent event) {
+        changeScenePush(event, "/view/RideRequestScene.fxml");
     } 
     
     @FXML
-    protected void handleDriveRequest(ActionEvent event) {
-        try {
-        	Parent root = FXMLLoader.load(getClass().getResource("/view/DriveRequestScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleDriveRequest(ActionEvent event) {
+        changeScenePush(event, "/view/DriveRequestScene.fxml");
     } 
     
     @FXML
-    protected void handleViewSchedule(ActionEvent event) {
-        try {
-            //currently links to info scene, must change to appropriate scene when it's implemented
-            Parent root = FXMLLoader.load(getClass().getResource("/view/ViewScheduleScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleViewSchedule(ActionEvent event) {
+        changeScenePush(event, "/view/ViewScheduleScene.fxml");
     } 
     
     @FXML
-    protected void handleNotificationMenu(ActionEvent event) {
-        try {
-        	Parent root = FXMLLoader.load(getClass().getResource("/view/NotificationMenuScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleNotificationMenu(ActionEvent event) {
+        changeScenePush(event, "/view/NotificationMenuScene.fxml");
     } 
     
     @FXML
-    protected void handleProcessPaymentMenu(ActionEvent event) {
-        try {
-        	Parent root = FXMLLoader.load(getClass().getResource("/view/ProcessPaymentMenuScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleProcessPaymentMenu(ActionEvent event) {
+        changeScenePush(event, "/view/ProcessPaymentMenuScene.fxml");
     }
     
     @FXML
-    protected void handleLogoutButton(ActionEvent event) {
+    private void handleLogoutButton(ActionEvent event) {
         context.getLogin().handleLogout();
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/LoginScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        changeScenePop(event);
     } 
 }

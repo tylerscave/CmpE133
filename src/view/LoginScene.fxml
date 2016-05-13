@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -15,13 +14,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginSceneController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginSceneController">
   <children>
     <GridPane alignment="CENTER" vgap="15.0">
       <children>
         <Text id="welcome-text" text="Welcome To SpartanPool" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
           <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
           </font>
         </Text>
         <Label text="Email:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
@@ -33,22 +32,14 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></PasswordField>
-        <Text fx:id="loginMessage" GridPane.rowIndex="6" />
         <Button onAction="#handleSubmitButton" prefHeight="0.0" prefWidth="72.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.rowSpan="1">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></Button>
-        <Group id="Group" GridPane.rowIndex="9" />
         <Label prefHeight="16.0" prefWidth="181.0" text="Don't have an account yet?" GridPane.columnIndex="1" GridPane.rowIndex="7" />
         <Button mnemonicParsing="false" onAction="#handleCreateAccountButton" prefHeight="26.0" prefWidth="169.0" text="Create Account" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-        <Button mnemonicParsing="false" onAction="#handleRetrieveAccount" prefHeight="26.0" prefWidth="169.0" text="Retrieve Account" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="8" />
-        <Group id="Group" GridPane.rowIndex="8" />
+        <Button mnemonicParsing="false" onAction="#handleRetrieveAccount" prefHeight="26.0" prefWidth="169.0" text="Send Password via Email" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="8" />
         <Label text="Password:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-        <ImageView id="McLxp8Gbi.gif" fitHeight="164.5078125" fitWidth="152.9998779296875" GridPane.columnIndex="3" GridPane.rowIndex="2">
-          <image>
-            <Image preserveRatio="true" smooth="true" url="@McLxp8Gbi.gif" />
-          </image>
-        </ImageView>
         <ImageView id="McLxp8Gbi.gif" fitHeight="138.78662109375" fitWidth="128.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
           <image>
             <Image url="@../images/McLxp8Gbi.gif" />
@@ -75,7 +66,7 @@
         <RowConstraints maxHeight="67.0" prefHeight="19.0" />
         <RowConstraints maxHeight="60.0" prefHeight="18.0" />
         <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="35.0" />
-        <RowConstraints maxHeight="49.0" minHeight="0.0" prefHeight="23.0" />
+        <RowConstraints maxHeight="43.0" minHeight="0.0" prefHeight="35.0" />
         <RowConstraints maxHeight="57.0" minHeight="8.0" prefHeight="21.0" />
       </rowConstraints>
     </GridPane>

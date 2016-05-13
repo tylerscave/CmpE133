@@ -8,8 +8,7 @@ public class Driver implements DrivingType {
     public static final double HOURLY_RATE = 12.50;
     public static final double PER_MILE_RATE = 2.99;
     public static final double FLAT_RATE = 25;
-    
-	private String DriverLicenseNumber;
+
 	private Vehicle vehicle;
         private double hourlyRate;
         private double perMileRate;
@@ -24,8 +23,7 @@ public class Driver implements DrivingType {
         vehicle = new Vehicle();
     }
 
-    public Driver(String DriverLicenseNumber, Vehicle vehicle) {
-        this.DriverLicenseNumber = DriverLicenseNumber;
+    public Driver(Vehicle vehicle) {
         this.vehicle = vehicle;
         this.hourlyRate = 0;
         this.perMileRate = 0;
@@ -35,10 +33,6 @@ public class Driver implements DrivingType {
 
     public Vehicle getVehicle() {
         return vehicle;
-    }
-
-    public String getDriverLicenseNumber() {
-        return DriverLicenseNumber;
     }
 
     public double getHourlyRate() {
@@ -68,10 +62,6 @@ public class Driver implements DrivingType {
     @Override
     public boolean isDriver() {
         return true;
-    }
-
-    public void setDriverLicenseNumber(String DriverLicenseNumber) {
-        this.DriverLicenseNumber = DriverLicenseNumber;
     }
 
     public void setVehicle(Vehicle vehicle) {

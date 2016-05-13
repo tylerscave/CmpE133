@@ -1,35 +1,24 @@
 package controller;
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import model.Context;
 import model.member.Driver;
-import model.member.Member;
 import model.member.Vehicle;
 import model.member.Vehicle.VehicleStyle;
 import model.payment.PayByDistCalculator;
 import model.payment.PayByTimeCalculator;
 import model.payment.PayFlatCalculator;
-import model.payment.RewardCalculator;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
@@ -37,10 +26,8 @@ import model.payment.RewardCalculator;
  * Solves CmpE133 SpartanPool
  * @author Tyler Jones,
 */
-public class VehicleInfoController implements Initializable {
+public class VehicleInfoController extends Controller{
 
-    private Context context;
-    private Member member;
     private int vehicleYear;
     private VehicleStyle vehicleStyle;
     private int vehicleSeats;
@@ -70,14 +57,13 @@ public class VehicleInfoController implements Initializable {
 	
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        context = Context.getInstance();
-        member = context.getMember();
+        super.initialize(url, rb);
         
         //setup year comboBox
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int minYear = 1960;
         for (int i = currentYear; i >= minYear ; i--) {
-        	years.add(i);
+            years.add(i);
         }
         yearCombo.setItems(years);
         
@@ -113,12 +99,13 @@ public class VehicleInfoController implements Initializable {
             modelField.setText(v.getModel());
             colorField.setText(v.getColor());
             plateNumberField.setText(v.getPlateNumber());
-            yearCombo.setValue(v.getYear());
-            styleCombo.setValue(v.getStyle());
-            seatsCombo.setValue(v.getCapacity());
-            vehicleSeats = seatsCombo.getSelectionModel().getSelectedItem();
-            vehicleStyle = styleCombo.getSelectionModel().getSelectedItem();
-            vehicleYear = yearCombo.getSelectionModel().getSelectedItem();
+            vehicleYear = v.getYear();
+            yearCombo.setValue(vehicleYear);
+            vehicleStyle = v.getStyle();
+            styleCombo.setValue(vehicleStyle);
+            vehicleSeats = v.getCapacity();
+            seatsCombo.setValue(vehicleSeats);
+            
             if (d.getPayBy() instanceof PayByDistCalculator)
                 payCombo.setValue("By distance");
             else if (d.getPayBy() instanceof PayByTimeCalculator)
@@ -132,32 +119,24 @@ public class VehicleInfoController implements Initializable {
         }
     }
 	
-	@FXML
-	private void handleYearCombo(ActionEvent event) {
-		vehicleYear = yearCombo.getSelectionModel().getSelectedItem();
-	}
+    @FXML
+    private void handleYearCombo(ActionEvent event) {
+        vehicleYear = yearCombo.getSelectionModel().getSelectedItem();
+    }
 	
-	@FXML
-	private void handleStyleCombo(ActionEvent event) {
-		vehicleStyle = styleCombo.getSelectionModel().getSelectedItem();
-	}
+    @FXML
+    private void handleStyleCombo(ActionEvent event) {
+        vehicleStyle = styleCombo.getSelectionModel().getSelectedItem();
+    }
 	
-	@FXML
-	private void handleSeatsCombo(ActionEvent event) {
-		vehicleSeats = seatsCombo.getSelectionModel().getSelectedItem();
-	}
+    @FXML
+    private void handleSeatsCombo(ActionEvent event) {
+        vehicleSeats = seatsCombo.getSelectionModel().getSelectedItem();
+    }
 	
-	@FXML
+    @FXML
     private void handleCancelButton(ActionEvent event) {
-    	try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        changeScenePop(event);
     }
 	
     @FXML
@@ -187,7 +166,7 @@ public class VehicleInfoController implements Initializable {
     	} 	
         member.setChanged();
         member.notifyObservers();
-    	handleCancelButton(event);
+    	changeScenePop(event);
     }
     
     @FXML

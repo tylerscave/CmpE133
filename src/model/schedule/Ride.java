@@ -73,6 +73,6 @@ public class Ride extends Schedulable{
     
     @Override
     public String toString() {
-    	return getMemberName()+"Ride on "+StringFormat.getDateFromCalendar(route.getEndTime())+". "+description;
+    	return getMemberName()+": Ride on "+StringFormat.getDateFromCalendar(route.getEndTime())+". "+description;
     }
 }

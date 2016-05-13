@@ -14,9 +14,11 @@ public class LoginHandler {
     
     private boolean loggedIn;
     private Context context;
+    private DataHandler data;
 
     public LoginHandler() {
         context = Context.getInstance();
+        data = context.getDataHandler();
         loggedIn = false;
     }
     
@@ -33,7 +35,6 @@ public class LoginHandler {
             return "Email field empty";
         if (loginInfo.getPassword().equals(""))
             return "Passord field empty";
-        DataHandler data = context.getDataHandler();
         List<Member> members = data.getMembers();
         for (Member m : members) {
             if (m.getLoginInfo().equals(loginInfo)) {
@@ -57,5 +58,12 @@ public class LoginHandler {
         return loggedIn;
     }
     
-    
+    public boolean emailAvailable(String email) {
+        List<Member> members = data.getMembers();
+        for (Member m : members) {
+            if (m.getLoginInfo().getEmail().equals(email))
+                return false;
+        }
+        return true;
+    }
 }

@@ -1,93 +1,47 @@
 package controller;
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
-import model.Context;
-import model.member.Member;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
  * The controller for the NotificationMenuScene
  * Solves CmpE133 SpartanPool
- * @author Tyler Jones,
+ * @author Tyler Jones, David Lerner
 */
-public class NotificationMenuController implements Initializable {
-
-    private Context context;
-    private Member member;
+public class NotificationMenuController extends Controller{
     
     @FXML
     private Button newNotifications;
 	
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        context = Context.getInstance();
-        member = context.getMember();
+        super.initialize(url, rb);
         
         newNotifications.setText("New Notifications ("+member.getNumberOfNewNotifications()+")");
     }     
     
     @FXML
-    protected void handleNewNotifications(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/NewNotificationScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleNewNotifications(ActionEvent event) {
+        changeScenePush(event, "/view/NewNotificationScene.fxml");
     } 
     
     @FXML
-    protected void handleOldNotifications(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/OldNotificationScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleOldNotifications(ActionEvent event) {
+        changeScenePush(event, "/view/OldNotificationScene.fxml");
     }
     
     @FXML
-    protected void handleSendNotification(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/SendNotificationScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+    private void handleSendNotification(ActionEvent event) {
+        changeScenePush(event, "/view/SendNotificationScene.fxml");
     }
     
     @FXML
     private void handleCancelButton(ActionEvent event) {
-    	try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/HomeScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        changeScenePop(event);
     }
 	
 }

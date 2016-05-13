@@ -107,9 +107,8 @@ public class CLIMain {
         if (loginHandler.isLoggedIn()) {
             menu();
             return;
-        }
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        }  
+        waitForInput();
     }
     
     private static void createAccount() {
@@ -125,16 +124,15 @@ public class CLIMain {
         System.out.println("1: No");
         int option = getOptionIntFromInput(2);
         if (option == 0) 
-            mb.setDrivingType(new Driver("", new Vehicle(2000, "", "", "", "", null, 4)));
+            mb.setDrivingType(new Driver());
         else
             mb.setDrivingType(new Passenger());
         
-        if (mb.build() == -1)
+        if (mb.build() < 0)
             System.out.println("Failed to create new account");
         else
             System.out.println("New Account created!");
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
         if (loginHandler.isLoggedIn())
             loginHandler.handleLogout();
         System.out.println(loginHandler.handleLogin(new LoginInformation(email, pw)));
@@ -146,8 +144,7 @@ public class CLIMain {
         System.out.println("Enter email to send password to:");
         (new PasswordSender()).sendPassword(in.nextLine());
         System.out.println("Email sent");
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
     
     private static void cheatLogin() {
@@ -321,8 +318,7 @@ public class CLIMain {
         }
         else
             System.out.println(fail);
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
 
     private static void viewRideRequest() {        
@@ -428,8 +424,7 @@ public class CLIMain {
             else
                 System.out.println(fail);
         }
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
     
     private static void setWeekly() {
@@ -482,8 +477,7 @@ public class CLIMain {
             System.out.println("Weekly Schedule Saved!");
         else
             System.out.println(fail);
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
 
     private static void setDailySchedule(int day, WeeklySchedule ws) {
@@ -503,14 +497,12 @@ public class CLIMain {
     private static void viewSchedule() {
         Member member = context.getMember();
         System.out.print((new ScheduleViewer()).getScheduleText(member));
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
     
     private static void viewMap() {
         System.out.println(map);
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
     
     private static void notifications() {
@@ -540,8 +532,7 @@ public class CLIMain {
             System.out.println(notifications.get(i).getMessage());
             System.out.println();
         }
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
     
     private static void sendNotification(Member member) {
@@ -552,8 +543,7 @@ public class CLIMain {
         NotificationSender ns = new NotificationSender(member);
         ns.send(toMember.getLoginInfo().getEmail(), message);
         System.out.println("Notification Sent!");
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
     
     private static void payments() {
@@ -577,7 +567,7 @@ public class CLIMain {
             System.out.println("Select a ride to pay for:");
             System.out.println("0: Return to menu");
             for (int i = 0; i < rides.size(); i++) {
-                System.out.println(Integer.toString(i+1)+": Ride on "+getDateFromCalendar(rides.get(i).getEndTime()));
+                System.out.println(Integer.toString(i+1)+rides.get(i));
             }
             int option = getOptionIntFromInput(rides.size()+1);
             if (option == 0)
@@ -603,8 +593,7 @@ public class CLIMain {
         Member driver = data.getMember(sv.getDriveById(r.getDriveId()).getMemberId());
         if (!driver.getDrivingType().isDriver()) {
             System.out.println("$0, not a driver");
-            System.out.println("Press Enter to continue...");
-            in.nextLine();
+            waitForInput();
             return;
         }
         Driver d = (Driver) driver.getDrivingType();
@@ -622,8 +611,7 @@ public class CLIMain {
                 System.out.println("Payment accepted!");
             else
                 System.out.println("Payment failed!");
-            System.out.println("Press Enter to continue...");
-            in.nextLine();
+            waitForInput();
         }
         else if (option == 2) {
             reward = new BankAccount(member.getBankAccountInfo(), d.getPayBy());
@@ -631,16 +619,14 @@ public class CLIMain {
                 System.out.println("Payment accepted!");
             else
                 System.out.println("Payment failed!");
-            System.out.println("Press Enter to continue...");
-            in.nextLine();
+            waitForInput();
         }
         else if (option == 3) {
             NotificationSender ns = new NotificationSender(member);
             System.out.println("Enter message to send:");
             ns.send(driver.getLoginInfo().getEmail(), in.nextLine());
             System.out.println("Message sent");
-            System.out.println("Press Enter to continue...");
-            in.nextLine();
+            waitForInput();
         }
     }
     
@@ -653,7 +639,7 @@ public class CLIMain {
             System.out.println("Select a ride:");
             System.out.println("0: Return to menu");
             for (int i = 0; i < rides.size(); i++) {
-                System.out.println(Integer.toString(i+1)+": Ride on "+getDateFromCalendar(rides.get(i).getEndTime()));
+                System.out.println(Integer.toString(i+1)+rides.get(i));
             }
             int option = getOptionIntFromInput(rides.size()+1);
             if (option == 0)
@@ -692,16 +678,14 @@ public class CLIMain {
         if (option == 1) {
             reward.waiveReward(r);
             System.out.println("Payment waived");
-            System.out.println("Press Enter to continue...");
-            in.nextLine();
+            waitForInput();
         }
         else if (option == 2) {
             NotificationSender ns = new NotificationSender(member);
             System.out.println("Enter message to send:");
             ns.send(data.getMember(r.getMemberId()).getLoginInfo().getEmail(), in.nextLine());
             System.out.println("Message sent");
-            System.out.println("Press Enter to continue...");
-            in.nextLine();
+            waitForInput();
         }
     }
     
@@ -851,14 +835,12 @@ public class CLIMain {
     	System.out.print("Are you going to drive?(0) or ride(1)? ");
     	int type = getOptionIntFromInput(2);
     	if(type == 0){
-    		System.out.print("Enter your driver License number: ");
-    		String licenseNumber = in.nextLine();
     		Vehicle vehicle = updateVehicle();
-    		member.setDrivingType(new Driver(licenseNumber, vehicle));
+    		member.setDrivingType(new Driver(vehicle));
                 setPayBy(member);
     	}
     	else
-    		member.setDrivingType(new Passenger());
+            member.setDrivingType(new Passenger());
     }
 
     private static void setPayBy(Member member) {
@@ -889,8 +871,7 @@ public class CLIMain {
             default:
                 break;
         }
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
     
     private static void updateMemberType(Member member) {
@@ -969,8 +950,7 @@ public class CLIMain {
     		System.out.println("Driving Type: Driver");
     	else
     		System.out.println("Driving Type: Passenger");
-        System.out.println("Press Enter to continue...");
-        in.nextLine();
+        waitForInput();
     }
 
     private static void updatePaymentInfo(Member member) {
@@ -1015,8 +995,7 @@ public class CLIMain {
                 System.out.println("Security code: "+code);
                 System.out.println("Expiration date: "+mon+"/"+year);
                 System.out.println();
-                System.out.println("Press Enter to continue...");
-                in.nextLine();
+                waitForInput();
             }
             else if (option == 2) {
                 System.out.println("Enter name on Account:");
@@ -1035,10 +1014,13 @@ public class CLIMain {
                 System.out.println("Bank account number: "+number);
                 System.out.println("Routing number: "+routing);
                 System.out.println();
-                System.out.println("Press Enter to continue...");
-                in.nextLine();
+                waitForInput();
             }
         }
     }
 
+    private static void waitForInput() {
+        System.out.println("Press Enter to continue...");
+        in.nextLine();
+    }
 }

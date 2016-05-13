@@ -1,37 +1,22 @@
 package controller;
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JOptionPane;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import model.Context;
 import model.LoginHandler;
 import model.member.LoginInformation;
-import model.member.Member;
 import model.member.MemberBuilder;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
  * The controller for the CreateAccountScene
  * Solves CmpE133 SpartanPool
- * @author Tyler Jones,
+ * @author Tyler Jones, David Lerner
 */
-public class CreateAccountController implements Initializable {
-
-    private Context context;
+public class CreateAccountController extends Controller{
     
     @FXML
     private TextField email;
@@ -39,23 +24,15 @@ public class CreateAccountController implements Initializable {
     private PasswordField password;
     @FXML
     private PasswordField confirmPassword;
-	
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        context = Context.getInstance();		
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
     }
-	
+
     @FXML
-    public void handleCancelButton(ActionEvent event) throws Exception {
-    	try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/LoginScene.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void handleCancelButton(ActionEvent event) {
+    	   changeScenePop(event);
     }
 
     @FXML
@@ -69,31 +46,39 @@ public class CreateAccountController implements Initializable {
     }
     
     private void createAccount(ActionEvent event) {
-        //check to make sure passwords match
-	if(!(password.getText().equals(confirmPassword.getText()))) {
+        //check to make sure fields are not empty and that passwords match
+        String em = email.getText();
+        String pw = password.getText();
+        String cp = confirmPassword.getText();
+        if(em.equals("")) {
+            email.setStyle("-fx-text-box-border: red ; -fx-focus-color: red ;");
+            Alerts.showError("Email field must be filled");
+        } else if(pw.equals("")) {
+            password.setStyle("-fx-text-box-border: red ; -fx-focus-color: red ;");
+            Alerts.showError("Password field must be filled");
+        } else if(cp.equals("")) {
             confirmPassword.setStyle("-fx-text-box-border: red ; -fx-focus-color: red ;");
-            JOptionPane.showMessageDialog(null, "Passwords must match!", "Error", JOptionPane.ERROR_MESSAGE);
+            Alerts.showError("Confirm password field must be filled");
+        } else if(!(password.getText().equals(confirmPassword.getText()))) {
+            confirmPassword.setStyle("-fx-text-box-border: red ; -fx-focus-color: red ;");
+            Alerts.showError("Passwords must match");
 	} else {
             MemberBuilder mb = new MemberBuilder();
-            LoginInformation newInfo = new LoginInformation(email.getText(), password.getText()); 
+            LoginInformation newInfo = new LoginInformation(em, pw); 
             mb.setLoginInfo(newInfo);
-            if (mb.build() == -1)
+            if (mb.build() < 0) {
+                Alerts.showError("An account with this email already exists");
                 return;
+            }
             LoginHandler loginHandler = context.getLogin();
             if (loginHandler.isLoggedIn())
                 loginHandler.handleLogout();
             loginHandler.handleLogin(newInfo);
-            if (!loginHandler.isLoggedIn())
+            if (!loginHandler.isLoggedIn()) {
+                Alerts.showError("Login failed");
                 return;
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/view/MemberInfoScene.fxml"));
-                Scene scene = new Scene(root);
-                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                primaryStage.setScene(scene);
-                primaryStage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            changeScene(event, "/view/MemberInfoScene.fxml");
         }
     }
 }
