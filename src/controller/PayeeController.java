@@ -70,6 +70,7 @@ public class PayeeController extends Controller{
             changeScenePop(event);
         }
         else if (notificationRadio.isSelected()) {
+            Controller.setInfo(context.getDataHandler().getMember(payFor.getMemberId()).getLoginInfo().getEmail());
             changeScenePush(event, "/view/SendNotificationScene.fxml");
     	}
     }

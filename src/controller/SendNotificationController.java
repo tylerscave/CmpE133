@@ -22,6 +22,8 @@ public class SendNotificationController extends Controller{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
+        
+        notificationField.setText(Controller.getInfo());
     }
 	
     @FXML

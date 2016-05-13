@@ -67,45 +67,41 @@ public class PayerController extends Controller{
             Alerts.showError("No ride selected");
             return;
         }
-    	if (creditRadio.isSelected()) {
-            ScheduleViewer sv = new ScheduleViewer();
-            Member driver = context.getDataHandler().getMember(sv.getDriveById(payFor.getDriveId()).getMemberId());
+        
+        ScheduleViewer sv = new ScheduleViewer();
+        Member driver = context.getDataHandler().getMember(sv.getDriveById(payFor.getDriveId()).getMemberId());
+    	
+        if (creditRadio.isSelected()) {         
             if (!driver.getDrivingType().isDriver()) {
                 Alerts.showError("Member is not a driver");
                 return;
             }
             Driver d = (Driver) driver.getDrivingType();
             Reward reward = new CreditCard(member.getCreditCardInfo(), d.getPayBy());
-            double amount = (Double)reward.findReward(driver, payFor);
-            if (reward.payReward(driver, payFor, amount))
-                Alerts.showInfo("Payment accepted", null, "You have paid for the folloing ride: \n"+payFor.toString());
-            else {
-                Alerts.showError("Payment failed");
-                return;
-            }
-            changeScenePop(event);
-            
-    	} else if (bankRadio.isSelected()){
-            ScheduleViewer sv = new ScheduleViewer();
-            Member driver = context.getDataHandler().getMember(sv.getDriveById(payFor.getDriveId()).getMemberId());
+            payReward(driver, reward, event);       
+    	} else if (bankRadio.isSelected()){   
             if (!driver.getDrivingType().isDriver()) {
                 Alerts.showError("Member is not a driver");
                 return;
             }
             Driver d = (Driver) driver.getDrivingType();
             Reward reward = new BankAccount(member.getBankAccountInfo(), d.getPayBy());
-            double amount = (Double)reward.findReward(driver, payFor);
-            if (reward.payReward(driver, payFor, amount))
-                Alerts.showInfo("Payment accepted", null, "You have paid for the folloing ride: \n"+payFor.toString());
-            else {
-                Alerts.showError("Payment failed");
-                return;
-            }
-            changeScenePop(event);
-            
+            payReward(driver, reward, event);           
     	} else if (notificationRadio.isSelected()) {
+            Controller.setInfo(driver.getLoginInfo().getEmail());
             changeScenePush(event, "/view/SendNotificationScene.fxml");
     	}
+    }
+    
+    private void payReward(Member driver, Reward reward, ActionEvent event) {
+        double amount = (Double)reward.findReward(driver, payFor);
+        if (reward.payReward(driver, payFor, amount))
+            Alerts.showInfo("Payment accepted", null, "You have paid for the folloing ride: \n"+payFor.toString());
+        else {
+            Alerts.showError("Payment failed");
+            return;
+        }
+        changeScenePop(event);
     }
 }
 

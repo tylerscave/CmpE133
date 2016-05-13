@@ -36,6 +36,7 @@ public class NotificationMenuController extends Controller{
     
     @FXML
     private void handleSendNotification(ActionEvent event) {
+        Controller.setInfo("");
         changeScenePush(event, "/view/SendNotificationScene.fxml");
     }
     

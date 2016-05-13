@@ -29,6 +29,7 @@ public class Controller implements Initializable{
 
     private static String currentScenePath = "/view/LoginScene.fxml";    
     private static Deque<String> sceneStack = new ArrayDeque<>();
+    private static String info = "";
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -96,6 +97,14 @@ public class Controller implements Initializable{
         } catch (IOException ex) {
             Logger.getLogger(LoginSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void setInfo(String info) {
+        Controller.info = info;
+    }
+
+    public static String getInfo() {
+        return info;
     }
 
 }
