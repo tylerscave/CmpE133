@@ -10,9 +10,10 @@ import model.payment.StubCreditCard;
 import model.schedule.Location;
 
 /**
- *
- * Follows Singleton design pattern. Used to hold user information.
- * @author David
+ * This class represents the core of the application.
+ * Follows Singleton design pattern. Holds important user information.
+ * Defines which of the interface implementations the program will use. 
+ * @author David Lerner
  */
 public class Context {
     private static Context instance = null;
@@ -22,8 +23,7 @@ public class Context {
     private DataHandler dataHandler;
     private Tracker tracker;
     private Location central;
-    private ParkingNotifier parkingNotifier;
-    
+    private ParkingNotifier parkingNotifier;   
     private CreditCardHandler cardHandler;
     private BankHandler bankHandler;
     
@@ -57,6 +57,10 @@ public class Context {
         this.member = member;
     }
     
+    /**
+     * Returns the member that is currently logged in
+     * @return
+     */
     public Member getMember() {
         if (this.member == null)
             this.member = new Member();

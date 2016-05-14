@@ -12,8 +12,8 @@ import java.util.Observer;
 import model.schedule.Request;
 
 /**
- *
- * @author David
+ * The class that will save the application data must implement this interface.
+ * @author David Lerner
  */
 public interface DataHandler extends Observer {
     

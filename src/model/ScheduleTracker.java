@@ -6,7 +6,7 @@ import model.schedule.ScheduleViewer;
 
 /**
  * Uses the scheduled times to simulate the actual times 
- * @author David
+ * @author David Lerner
  */
 public class ScheduleTracker implements Tracker{
 

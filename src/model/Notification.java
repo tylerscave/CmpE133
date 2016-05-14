@@ -3,8 +3,8 @@ package model;
 import java.util.GregorianCalendar;
 
 /**
- *
- * @author David
+ * The notifications a member can have. They can be sent by both the system and users.
+ * @author David Lerner
  */
 public class Notification {
     private String message;
@@ -15,10 +15,18 @@ public class Notification {
         this.time = new GregorianCalendar();
     }
 
+    /**
+     *
+     * @return the notification message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     *
+     * @return the time the notification was created
+     */
     public GregorianCalendar getTime() {
         return time;
     }

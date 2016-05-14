@@ -5,11 +5,15 @@ import model.member.Member;
 
 /**
  *
- * @author David
+ * @author David Lerner
  */
 public class NotificationSender {
     private Member member;
 
+    /**
+     * Constructor for NotificationSender.
+     * @param member the member who will be sending notifications
+     */
     public NotificationSender(Member member) {
         this.member = member;
     }

@@ -4,8 +4,8 @@ import model.member.Member;
 import model.schedule.Location;
 
 /**
- *
- * @author David
+ * Simulation of a parking notifier. An empty string is always returned. 
+ * @author David Lerner
  */
 public class NewParkingNotifier extends ParkingNotifier{
 

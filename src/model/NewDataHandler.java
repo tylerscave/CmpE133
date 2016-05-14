@@ -13,8 +13,8 @@ import java.util.Observable;
 import model.schedule.Request;
 
 /**
- *
- * @author David
+ * Simulation of database. All Information disappears when application is closed.
+ * @author David Lerner
  */
 public class NewDataHandler implements DataHandler {
     

@@ -7,8 +7,8 @@ import model.schedule.Request;
 import model.schedule.WeeklyScheduler;
 
 /**
- *
- * @author David
+ * Handles logging in/out
+ * @author David Lerner
  */
 public class LoginHandler {
     
@@ -48,16 +48,28 @@ public class LoginHandler {
         return "Account with that email and password combination not found";
     }
     
+    /**
+     * Logs out.
+     */
     public void handleLogout() {
         loggedIn = false;
         context.getMember().deleteObservers();
         context.setMember(new Member());
     }
 
+    /**
+     *
+     * @return whether currently logged in 
+     */
     public boolean isLoggedIn() {
         return loggedIn;
     }
     
+    /**
+     * Checks if email address is available
+     * @param email
+     * @return whether the email address is available
+     */
     public boolean emailAvailable(String email) {
         List<Member> members = data.getMembers();
         for (Member m : members) {
