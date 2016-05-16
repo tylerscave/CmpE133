@@ -16,9 +16,9 @@ import model.schedule.Request;
 
 /**
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
- * The model for the member
+ * The model for the member. Uses observer pattern to update the dataHandler.
  * Solves CmpE133 Assignment 2
- * @author Tyler Jones, Hyesung Ko,
+ * @author Tyler Jones, Hyesung Ko, David Lerner
 */
 public class Member extends Observable {
     private LoginInformation loginInfo;
@@ -28,7 +28,6 @@ public class Member extends Observable {
     private String phoneNumber;
     private DrivingType drivingType;
     private MemberType memberType;
-    //private Vehicle vehicle;
     private List<Drive> drives;
     private List<Ride> rides;
     private List<ParkingTime> parkingTimes;
@@ -37,7 +36,6 @@ public class Member extends Observable {
     private List<Notification> newNotifications;
     private WeeklySchedule weeklySchedule;
     private int idNumber;
-    
     private CreditCardInfo creditCardInfo;
     private BankAccountInfo bankAccountInfo;
 
@@ -48,7 +46,7 @@ public class Member extends Observable {
         this.address = new Address("", "", "", "", "");
         this.phoneNumber = "";
         this.drivingType = new Passenger();
-        this.memberType = new Student("000000000");
+        this.memberType = new Student();
         this.drives = new ArrayList<>();
         this.rides = new ArrayList<>();
         this.parkingTimes = new ArrayList<>();

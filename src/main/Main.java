@@ -11,7 +11,7 @@ import javafx.stage.WindowEvent;
 import model.Context;
 
 /**
- * Application starts here.
+ * Application starts here. GUI version uses JavaFX.
  * @author David Lerner
  */
 public class Main extends Application

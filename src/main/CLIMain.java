@@ -35,11 +35,10 @@ import model.schedule.ScheduleViewer;
 import model.schedule.Scheduler;
 import model.schedule.SchedulingContext;
 import model.schedule.WeeklySchedule;
-import model.schedule.WeeklyScheduler;
 
 /**
- *
- * @author David
+ * The command line version of the application.
+ * @author David Lerner, Hyesung Ko
  */
 public class CLIMain {
 
@@ -878,11 +877,11 @@ public class CLIMain {
     	System.out.print("Are you a staff(0), faculty(1), or student(2)?");
     	int type = getOptionIntFromInput(3);
     	if(type == 0)
-    		member.setMemberType(new Staff());
+            member.setMemberType(new Staff());
     	else if (type == 1)
-    		member.setMemberType(new Faculty());
+            member.setMemberType(new Faculty());
     	else
-    		member.setMemberType(new Student());
+            member.setMemberType(new Student());
     }
     
     private static Vehicle updateVehicle(){

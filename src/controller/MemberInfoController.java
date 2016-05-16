@@ -71,7 +71,7 @@ public class MemberInfoController extends Controller{
         } else {
             student.setSelected(true);
             idNum.setText(((Student)member.getMemberType()).getStudentID());
-            memberType = new Student("000000000");
+            memberType = new Student();
         }
         if(member.getDrivingType().isDriver()) {
             driver.setSelected(true);

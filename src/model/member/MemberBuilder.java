@@ -1,12 +1,11 @@
 package model.member;
 
-import java.util.List;
 import model.Context;
 import model.DataHandler;
 
 /**
- *
- * @author David
+ * Class that builds a new member then adds it to the dataHandler.
+ * @author David Lerner
  */
 public class MemberBuilder {
     private DataHandler data;
@@ -25,7 +24,7 @@ public class MemberBuilder {
         this.address = new Address("", "", "", "", "");
         this.phoneNumber = "";
         this.drivingType = new Passenger();
-        this.memberType = new Student("000000000");
+        this.memberType = new Student();
         
         this.data = Context.getInstance().getDataHandler();
     }

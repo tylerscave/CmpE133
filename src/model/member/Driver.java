@@ -3,17 +3,20 @@ package model.member;
 import model.payment.PayFlatCalculator;
 import model.payment.RewardCalculator;
 
-
+/**
+ * Class for holding driver information.
+ * @author David Lerner
+ */
 public class Driver implements DrivingType {
     public static final double HOURLY_RATE = 12.50;
     public static final double PER_MILE_RATE = 2.99;
     public static final double FLAT_RATE = 25;
 
-	private Vehicle vehicle;
-        private double hourlyRate;
-        private double perMileRate;
-        private double flatrate;
-        private RewardCalculator payBy;
+    private Vehicle vehicle;
+    private double hourlyRate;
+    private double perMileRate;
+    private double flatrate;
+    private RewardCalculator payBy;
         
     public Driver() {
         this.hourlyRate = 0;
