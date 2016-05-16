@@ -14,7 +14,6 @@ public class CreditCard extends Reward {
     private CreditCardInfo info;
     private double balance;
 
-    
     public CreditCard(CreditCardInfo info, RewardCalculator rewardCalculator) {
         super(rewardCalculator);
         this.info = info;
@@ -28,8 +27,7 @@ public class CreditCard extends Reward {
     }
 
     @Override
-    public boolean resolveReward(Member recipient, Ride ride, Object compensation) {
-        
+    public boolean resolveReward(Member recipient, Ride ride, Object compensation) {       
         if (Context.getInstance().getCardHandler().makePayment(info, balance))
             return rewardCalculator.payReward(recipient, ride, compensation);
         return false;

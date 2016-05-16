@@ -6,8 +6,8 @@ import model.member.Driver;
 import model.member.Member;
 
 /**
- *
- * @author David
+ * Class for paying by time.
+ * @author David Lerner
  */
 public class PayByTimeCalculator implements RewardCalculator{
 

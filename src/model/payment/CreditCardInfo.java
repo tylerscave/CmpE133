@@ -13,12 +13,13 @@ public class CreditCardInfo {
         Discover,
         AmericanExpress;
     }
-	private String nameOnCard;
-	private CardType cardType;
-	private String cardNumber;
-	private String cardSecurityCode;
-	private int expMonth;
-	private int expYear;
+	
+    private String nameOnCard;
+    private CardType cardType;
+    private String cardNumber;
+    private String cardSecurityCode;
+    private int expMonth;
+    private int expYear;
 	
     public CreditCardInfo(String nameOnCard, CardType cardType, String cardNumber, 
     		String cardSecurityCode, int expMonth, int expYear) {

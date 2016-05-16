@@ -6,8 +6,8 @@ import model.member.Member;
 import model.schedule.Ride;
 
 /**
- *
- * @author David
+ * Class for paying by distance.
+ * @author David Lerner
  */
 public class PayByDistCalculator implements RewardCalculator{
 

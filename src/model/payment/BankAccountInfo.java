@@ -1,8 +1,8 @@
 package model.payment;
 
 /**
- *
- * @author David
+ * Class for holding bank account info.
+ * @author David Lerner
  */
 public class BankAccountInfo {
     String nameOnAccount;

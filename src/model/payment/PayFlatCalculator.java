@@ -6,8 +6,8 @@ import model.member.Member;
 import model.schedule.Ride;
 
 /**
- *
- * @author David
+ * Class for paying a flat fee.
+ * @author David Lerner
  */
 public class PayFlatCalculator implements RewardCalculator{
 

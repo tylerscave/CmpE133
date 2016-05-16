@@ -1,8 +1,8 @@
 package model.payment;
 
 /**
- *
- * @author David
+ * Stub class for simulating bank account payments; payments always successful.
+ * @author David Lerner
  */
 public class StubBankAccount implements BankHandler{
 

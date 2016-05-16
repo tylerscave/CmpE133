@@ -4,8 +4,8 @@ import model.member.Member;
 import model.schedule.Ride;
 
 /**
- *
- * @author David
+ * Class for calculating payment due.
+ * @author David Lerner
  */
 public interface RewardCalculator {
     

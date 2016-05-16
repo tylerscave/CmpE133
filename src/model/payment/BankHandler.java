@@ -1,10 +1,16 @@
 package model.payment;
 
 /**
- *
- * @author David
+ * Interface for a class that implements bank payments. 
+ * @author David Lerner
  */
 public interface BankHandler {
-    public boolean makePayment(BankAccountInfo info, double amount);
-    
+
+    /**
+     * Make a payment via bank account.
+     * @param info the bank account info
+     * @param amount amount to pay
+     * @return
+     */
+    public boolean makePayment(BankAccountInfo info, double amount); 
 }

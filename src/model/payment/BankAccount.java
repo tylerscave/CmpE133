@@ -2,14 +2,16 @@ package model.payment;
 
 import model.Context;
 import model.member.Member;
-import model.payment.RewardCalculator;
-import model.payment.Reward;
 import model.schedule.Ride;
 
+/**
+ * Class representing bank account payments.
+ * @author David Lerner
+ */
 public class BankAccount extends Reward{
 	
-        private double payment;
-        private BankAccountInfo info;
+    private double payment;
+    private BankAccountInfo info;
 
     public BankAccount(BankAccountInfo info, RewardCalculator rewardCalculator) {
         super(rewardCalculator);

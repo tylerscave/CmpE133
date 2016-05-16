@@ -1,8 +1,8 @@
 package model.payment;
 
 /**
- *
- * @author David
+ * Stub class for simulating credit card payments; payments always successful.
+ * @author David Lerner
  */
 public class StubCreditCard implements CreditCardHandler{
 
