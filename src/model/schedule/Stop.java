@@ -1,11 +1,10 @@
 package model.schedule;
 
-import model.schedule.Location;
 import java.util.GregorianCalendar;
 
 /**
- *
- * @author David
+ * A container class to match locations with times.
+ * @author David Lerner
  */
 public class Stop implements Comparable<Stop> {
     
@@ -25,6 +24,7 @@ public class Stop implements Comparable<Stop> {
         return location;
     }
 
+    //compares stops by time
     @Override
     public int compareTo(Stop t) {
         return this.getTime().compareTo(t.getTime());

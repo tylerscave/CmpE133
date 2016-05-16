@@ -6,14 +6,15 @@ import model.Notification;
 import model.member.Member;
 
 /**
- *
- * @author David
+ * Scheduler for one-time parking.
+ * @author David Lerner
  */
 public class ParkingScheduler extends Scheduler {
 
     @Override
     public String schedule(Request request, Schedulable s) {
         String fail = correctData(request);
+        //make sure data is correct
         if (!fail.equals(SUCCESS))
             return fail;
         if (!(s instanceof ParkingTime))
@@ -23,7 +24,7 @@ public class ParkingScheduler extends Scheduler {
         //get latest member data
         Member member = data.getMember(s.getMemberId());
         List<ParkingTime> parkingTimes = data.getParkingTimes();
-        
+        //check if no conflicts
         if (!noParkingConflicts(park, parkingTimes))
             return "Failure: Parking spot already reserved";
         
@@ -45,21 +46,29 @@ public class ParkingScheduler extends Scheduler {
         park.setIdNumber(data.getNewSchedulableId());
         member.getParkingTimes().add(park);
         
+        //auto-send notification
         StringBuilder sb = new StringBuilder();
         sb.append("You have reserved a parking spot at ").append(park.getLocation()).append(" on ").append(getDateFromCalendar(park.getStartTime())).append(System.lineSeparator());
         sb.append("Details: ").append(park.getParkingSpot()).append(". From ").append(getTimeFromCalendar(park.getStartTime())).append(" to ").append(getTimeFromCalendar(park.getEndTime()));
         member.addNewNotification(new Notification(sb.toString()));
 
+        //update & return
         member.setChanged();
         member.notifyObservers();
         
         return SUCCESS;
     }
 
+    /**
+     * Returns a list of available parking spots based on the parking request.
+     * @param request
+     * @return a list of available parking spots based on the parking request
+     */
     @Override
     public List<Schedulable> getAvailable(Request request) {
         List<Schedulable> available = new ArrayList<>();
         String fail = correctData(request);
+        //make sure data is correct
         if (!fail.equals(SUCCESS))
             return available;
         Member member = request.getMember();
@@ -67,13 +76,14 @@ public class ParkingScheduler extends Scheduler {
         List<ParkingSpot> parkingSpots = request.getStartLocation().getParkingSpots();
         List<ParkingTime> parkingTimes = data.getParkingTimes();
         boolean timeConflictChecked = false;
+        //make sure there are no conflicts
         for (ParkingSpot ps : parkingSpots) {
             ParkingTime park = new ParkingTime(member, request.getStartTime(), request.getEndTime(), request.getStartLocation(), ps);
             if (noParkingConflicts(park, parkingTimes))
                 available.add(park);
             if (timeConflictChecked)
                 continue;
-            //may not want to check for this 
+            /*//may not want to check for this 
             for (Drive d : member.getDrives()) {
                 if (d.conflicts(park))
                     return new ArrayList<>();
@@ -87,12 +97,18 @@ public class ParkingScheduler extends Scheduler {
             for (ParkingTime p : member.getParkingTimes()) {
                 if (p.conflicts(park))
                     return new ArrayList<>();
-            } 
+            }*/ 
             timeConflictChecked = true;
         }
         return available;
     }
 
+    /**
+     * Returns whether park has any time/space conflicts with pts.
+     * @param park the parking time in question
+     * @param pts a list of other parking times
+     * @return whether park has any time/space conflicts with pts 
+     */
     private boolean noParkingConflicts(ParkingTime park, List<ParkingTime> pts) {
         for (ParkingTime p : pts) {
             if (p.conflicts(park) && (p.getLocation().equals(park.getLocation()) && p.getParkingSpot().equals(park.getParkingSpot())))

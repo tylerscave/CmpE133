@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * This state represents the ride being paid. A terminal state.
+ * @author David Lerner
  */
 public class PaidState  extends RideState{
     

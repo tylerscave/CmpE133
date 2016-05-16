@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * This state represents the ride being canceled. A terminal state.
+ * @author David Lerner
  */
 public class CanceledState extends RideState{
 

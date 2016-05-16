@@ -2,7 +2,6 @@ package model;
 
 import model.member.Member;
 import model.schedule.Schedulable;
-import model.schedule.RideRequest;
 import model.schedule.Ride;
 import model.schedule.ParkingTime;
 import model.schedule.Drive;
@@ -63,12 +62,6 @@ public interface DataHandler extends Observer {
      * @return the schedulable
      */
     public Schedulable getSchedulable(int scheduleId);
-    
-    /**
-     * (Legacy)
-     * @return list of pending ride requests
-     */
-    public List<RideRequest> getRideRequests();
     
     /**
      * (Legacy)

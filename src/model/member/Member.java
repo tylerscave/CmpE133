@@ -1,6 +1,5 @@
 package model.member;
 
-import model.schedule.RideRequest;
 import model.schedule.Ride;
 import model.schedule.ParkingTime;
 import model.schedule.WeeklySchedule;
@@ -12,7 +11,6 @@ import java.util.Observer;
 import model.Context;
 import model.Notification;
 import model.payment.BankAccountInfo;
-import model.payment.CreditCard;
 import model.payment.CreditCardInfo;
 import model.schedule.Request;
 
@@ -35,9 +33,6 @@ public class Member extends Observable {
     private List<Ride> rides;
     private List<ParkingTime> parkingTimes;
     private List<Request> requests;
-    //legacy
-    private List<RideRequest> rideRequests;
-    //
     private List<Notification> oldNotifications;
     private List<Notification> newNotifications;
     private WeeklySchedule weeklySchedule;
@@ -58,9 +53,6 @@ public class Member extends Observable {
         this.rides = new ArrayList<>();
         this.parkingTimes = new ArrayList<>();
         this.requests = new ArrayList<>();
-        //legacy
-        this.rideRequests = new ArrayList<>();
-        //
         this.oldNotifications = new ArrayList<>();
         this.newNotifications = new ArrayList<>();
         this.newNotifications.add(new Notification("Welcome to SpartanPool!"));
@@ -80,7 +72,6 @@ public class Member extends Observable {
         this.drives = new ArrayList<>();
         this.rides = new ArrayList<>();
         this.parkingTimes = new ArrayList<>();
-        this.rideRequests = new ArrayList<>();
         this.oldNotifications = new ArrayList<>();
         this.newNotifications = new ArrayList<>();
         this.newNotifications.add(new Notification("Welcome to SpartanPool!"));
@@ -160,11 +151,6 @@ public class Member extends Observable {
 
     public List<Request> getRequests() {
         return requests;
-    }
-
-    //legacy
-    public List<RideRequest> getRideRequests() {
-        return rideRequests;
     }
 
     /**

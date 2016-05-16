@@ -9,8 +9,8 @@ import model.StringFormat;
 import model.member.Member;
 
 /**
- *
- * @author David
+ * The one-time scheduled drive that can carry passengers.
+ * @author David Lerner
  */
 public class Drive extends Schedulable{
     
@@ -18,6 +18,11 @@ public class Drive extends Schedulable{
     private List<Integer> rideIds;
     private Route route;
     
+    /**
+     * Constructor.
+     * @param numSeats the number of available seats for passengers
+     * @param member the driver
+     */
     public Drive(int numSeats, Member member) {
         super(member);
         this.numSeats = numSeats;
@@ -40,6 +45,10 @@ public class Drive extends Schedulable{
         this.route = route;
     }
     
+    /**
+     * Add a rider to this drive
+     * @param ride
+     */
     public void addRide(Ride ride) {
         this.rideIds.add(ride.getIdNumber());
         numSeats --;
@@ -47,6 +56,10 @@ public class Drive extends Schedulable{
             route.addStopInRoute(l);
     }
     
+    /**
+     * Remove a passenger from this drive by unique ride id.
+     * @param rideId the unique schedulable id of the ride
+     */
     public void removeRideById(int rideId) {
         int index = -1;
         for (int i = 0; i < rideIds.size(); i++) {
@@ -59,6 +72,10 @@ public class Drive extends Schedulable{
             this.rideIds.remove(index);
     }
     
+    /**
+     * Returns the number of passengers in this drive.
+     * @return the number of passengers in this drive
+     */
     public int numberOfRides() {
         return this.rideIds.size();
     }
@@ -113,10 +130,15 @@ public class Drive extends Schedulable{
         return route.getEndTime();
     }
     
+    /**
+     * Returns a list of the stops this drive will have.
+     * @return a list of the stops this drive will have
+     */
     public List<Location> getStops() {
         return route.getStops();
     }
-    //Adding to string to populate comboBoxes with actual drive objects
+    
+    //Adding toString() to populate comboBoxes with actual drive objects
     @Override
     public String toString() {
     	return getMemberName()+": "+numSeats+" seats available. "+StringFormat.getTimeFromCalendar(route.getStartTime())+" to "+StringFormat.getTimeFromCalendar(route.getEndTime());

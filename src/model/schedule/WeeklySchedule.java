@@ -3,14 +3,14 @@ package model.schedule;
  *COPYRIGHT (C) 2016 CmpE133_7. All Rights Reserved.
  * The model for the member weekly schedule
  * Solves CmpE133 Assignment 2
- * @author Tyler Jones,
+ * @author Tyler Jones, David Lerner
 */
 
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class WeeklySchedule{
-    //new    
+       
     private Location pickupLocation;
     private GregorianCalendar startTime, endTime, lastUpdate;
     
@@ -33,300 +33,148 @@ public class WeeklySchedule{
         lastUpdate = null;
     }
 
+    /**
+     * Returns true if the weekly schedule has been created. 
+     * @return whether the weekly schedule has been created
+     */
     public boolean isSet() {
         return (pickupLocation != null && startTime != null && endTime != null);
     }
     
     /**
-     *
+     * Returns true if there is a schedule for that dayOfWeek.
      * @param dayOfWeek use the weekday constants from the Calendar class
-     * @return
+     * @return whether there is a schedule for that dayOfWeek
      */
     public boolean isValid(int dayOfWeek) {
         return (arrive[dayOfWeek-OFFSET] != null && depart[dayOfWeek-OFFSET] != null);
     }
     
      /**
-     *
+     * Returns true if member is available to drive that dayOfWeek.
      * @param dayOfWeek use the weekday constants from the Calendar class
-     * @return
+     * @return whether member is available to drive that dayOfWeek
      */
     public boolean isDrive(int dayOfWeek) {
         return drive[dayOfWeek-OFFSET];
     }
 
     /**
-     *
+     * Sets if member is available to drive that dayOfWeek.
      * @param dayOfWeek use the weekday constants from the Calendar class
-     * @param isDrive
+     * @param isDrive whether member can drive
      */
     public void setDrive(int dayOfWeek, boolean isDrive) {
         drive[dayOfWeek-OFFSET] = isDrive;
     }
 
     /**
-     *
+     * Returns the arrival time on dayOfWeek.
      * @param dayOfWeek use the weekday constants from the Calendar class
-     * @return
+     * @return the arrival time on dayOfWeek
      */
     public GregorianCalendar getArrive(int dayOfWeek) {
         return arrive[dayOfWeek-OFFSET];
     }
 
     /**
-     *
+     * Sets the arrival time on dayOfWeek.
      * @param dayOfWeek use the weekday constants from the Calendar class
-     * @param arrive
+     * @param arrive arrival time
      */
     public void setArrive(int dayOfWeek, GregorianCalendar arrive) {
         this.arrive[dayOfWeek-OFFSET] = arrive;
     }
     
-    /**
-     *
+   /**
+     * Returns the departure time on dayOfWeek.
      * @param dayOfWeek use the weekday constants from the Calendar class
-     * @return
+     * @return the departure time on dayOfWeek
      */
     public GregorianCalendar getDepart(int dayOfWeek) {
         return depart[dayOfWeek-OFFSET];
     }
 
     /**
-     *
+     * Sets the departure time on dayOfWeek.
      * @param dayOfWeek use the weekday constants from the Calendar class
-     * @param depart
+     * @param depart departure time
      */
     public void setDepart(int dayOfWeek, GregorianCalendar depart) {
         this.depart[dayOfWeek-OFFSET] = depart;
     }
     
+    /**
+     * Returns the start date of the weekly schedule.
+     * @return the start date of the weekly schedule
+     */
     public GregorianCalendar getStartTime() {
         return startTime;
     }
 
+    /**
+     * Returns the end date of the weekly schedule.
+     * @return the end date of the weekly schedule
+     */
     public GregorianCalendar getEndTime() {
         return endTime;
     }
 
+    /**
+     * Returns the last time individual rides/drives/parks were scheduled based on this weekly schedule.
+     * @return the last time individual rides/drives/parks were scheduled based on this weekly schedule
+     */
     public GregorianCalendar getLastUpdate() {
         return lastUpdate;
     }
 
+    /**
+     * Sets start date of weekly schedule.
+     * @param startTime
+     */
     public void setStartTime(GregorianCalendar startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     * Sets end date of weekly schedule.
+     * @param endTime
+     */
     public void setEndTime(GregorianCalendar endTime) {
         this.endTime = endTime;
     }
 
+    /**
+     * Sets the last time individual rides/drives/parks were scheduled based on this weekly schedule.
+     * @param lastUpdate the last time individual rides/drives/parks were scheduled based on this weekly schedule
+     */
     public void setLastUpdate(GregorianCalendar lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
+    /**
+     * Clears weekly schedule and cancels individually scheduled rides/drives/parks
+     * STUB
+     */
     public void remove() {
         //todo
     }
+    
+    /**
+     * Get location that member will leave to/arrive from central location.
+     * @return location that member will leave to/arrive from central location
+     */
     public Location getPickupLocation() {
         return pickupLocation;
     }
-
+    
+    /**
+     * Set location that member will leave to/arrive from central location.
+     * @param pickupLocation location that member will leave to/arrive from central location
+     */
     public void setPickupLocation(Location pickupLocation) {
         this.pickupLocation = pickupLocation;
     }
     
-    //rest of code is legacy
-        
-        //declare all variables for member schedule
-	private GregorianCalendar monArrive, tuesArrive, wedArrive, thursArrive, friArrive;
-	private GregorianCalendar monDepart, tuesDepart, wedDepart, thursDepart, friDepart;
-	private boolean monDrive = false; 
-	private boolean tuesDrive = false;
-	private boolean wedDrive = false; 
-	private boolean thursDrive = false;
-	private boolean friDrive = false;
-        
-	//using default constructor for now...
-
-//*********************************MONDAY*************************************
-	
-	public GregorianCalendar getMonArrive() {
-		return monArrive;
-	}
-	
-	public void setMonArrive(GregorianCalendar monArrive) {
-		this.monArrive = monArrive;
-	}
-	
-	public GregorianCalendar getMonDepart() {
-		return monDepart;
-	}
-	
-	public void setMonDepart(GregorianCalendar monDepart) {
-		this.monDepart = monDepart;
-	}
-	
-	public boolean getMonDrive() {
-		return monDrive;
-	}
-	
-	public void setMonDrive(boolean drive) {
-		this.monDrive = drive;
-	}
-//*********************************TUESDAY*************************************
-	
-	public GregorianCalendar getTuesArrive() {
-		return tuesArrive;
-	}
-	
-	public void setTuesArrive(GregorianCalendar tuesArrive) {
-		this.tuesArrive = tuesArrive;
-	}
-	
-	public GregorianCalendar getTuesDepart() {
-		return tuesDepart;
-	}
-	
-	public void setTuesDepart(GregorianCalendar tuesDepart) {
-		this.tuesDepart = tuesDepart;
-	}
-	
-	public boolean getTuesDrive() {
-		return tuesDrive;
-	}
-	
-	public void setTuesDrive(boolean drive) {
-		this.tuesDrive = drive;
-	}
-//*********************************WEDNESDAY***********************************
-	
-	public GregorianCalendar getWedArrive() {
-		return wedArrive;
-	}
-	
-	public void setWedArrive(GregorianCalendar wedArrive) {
-		this.wedArrive = wedArrive;
-	}
-	
-	public GregorianCalendar getWedDepart() {
-		return wedDepart;
-	}
-	
-	public void setWedDepart(GregorianCalendar wedDepart) {
-		this.wedDepart = wedDepart;
-	}
-	
-	public boolean getWedDrive() {
-		return wedDrive;
-	}
-	
-	public void setWedDrive(boolean drive) {
-		this.wedDrive = drive;
-	}
-//*********************************THURSDAY***********************************
-
-	public GregorianCalendar getThursArrive() {
-		return thursArrive;
-	}
-	
-	public void setThursArrive(GregorianCalendar thursArrive) {
-		this.thursArrive = thursArrive;
-	}
-	
-	public GregorianCalendar getThursDepart() {
-		return thursDepart;
-	}
-	
-	public void setThursDepart(GregorianCalendar thursDepart) {
-		this.thursDepart = thursDepart;
-	}
-	
-	public boolean getThursDrive() {
-		return thursDrive;
-	}
-	
-	public void setThursDrive(boolean drive) {
-		this.thursDrive = drive;
-	}
-//*********************************FRIDAY*************************************
-	
-	public GregorianCalendar getFriArrive() {
-		return friArrive;
-	}
-	
-	public void setFriArrive(GregorianCalendar friArrive) {
-		this.friArrive = friArrive;
-	}
-	
-	public GregorianCalendar getFriDepart() {
-		return friDepart;
-	}
-	
-	public void setFriDepart(GregorianCalendar friDepart) {
-		this.friDepart = friDepart;
-	}
-	
-	public boolean getFriDrive() {
-		return friDrive;
-	}
-	
-	public void setFriDrive(boolean drive) {
-		this.friDrive = drive;
-	}
-	
-	//TEST METHOD TO SEE WHATS BEING SAVED --- DELETE LATER
-	public void test() {
-		//test - remove later
-		if(pickupLocation!=null)
-		System.out.println("pickup loc = " + pickupLocation);
-		
-		if(monArrive != null)
-		System.out.println("mon arrive = " + monArrive + " " +
-				monArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		if(monDepart != null)
-		System.out.println("mon depart = " + monDepart + " " +
-				monDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		if(tuesArrive != null)
-		System.out.println("tues arrive = " + tuesArrive + " " +
-				tuesArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		if(tuesDepart != null)
-		System.out.println("tues depart = " + tuesDepart + " " +
-				tuesDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		if(wedArrive != null)
-		System.out.println("wed arrive = " + wedArrive + " " +
-				wedArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		if(wedDepart != null)
-		System.out.println("wed depart = " + wedDepart + " " +
-				wedDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		if(thursArrive != null)
-		System.out.println("thurs arrive = " + thursArrive + " " +
-				thursArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		if(thursDepart != null)
-		System.out.println("thurs depart = " + thursDepart + " " +
-				thursDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		if(friArrive != null)
-		System.out.println("fri arrive = " + friArrive + " " +
-				friArrive.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		if(friDepart != null)
-		System.out.println("fri depart = " + friDepart + " " +
-				friDepart.getDisplayName(GregorianCalendar.DAY_OF_WEEK, 
-				GregorianCalendar.LONG, Locale.getDefault()));
-		
-		System.out.println("monDriveCheck = " + monDrive);
-		System.out.println("tuesDriveCheck = " + tuesDrive);
-		System.out.println("wedDriveCheck = " + wedDrive);
-		System.out.println("thursDriveCheck = " + thursDrive);
-		System.out.println("friDriveCheck = " + friDrive);	
-	}
-
 }
 

@@ -4,8 +4,8 @@ import java.util.GregorianCalendar;
 import model.member.Member;
 
 /**
- *
- * @author David
+ * The request data used by the scheduling classes to generate schedules.
+ * @author David Lerner
  */
 public class Request {
     
@@ -64,7 +64,7 @@ public class Request {
      * @param startLocation
      * @param endLocation
      * @param timeType
-     * @param byStartTime
+     * @param byStartTime true if time is the start time, false if time is the end time
      */
     public Request(Member member, GregorianCalendar time, Location startLocation,  
             Location endLocation, TimeType timeType, boolean byStartTime) {

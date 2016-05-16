@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * This state represents the passenger currently riding in the car.
+ * @author David Lerner
  */
 public class EnrouteState extends RideState{
 

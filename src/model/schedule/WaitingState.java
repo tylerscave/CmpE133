@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * This state represents the driver waiting for the passenger at the pickup location.
+ * @author David Lerner
  */
 public class WaitingState extends RideState{
 

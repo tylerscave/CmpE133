@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * This state represents the ride being completed but not yet paid.
+ * @author David Lerner
  */
 public class UnpaidState extends RideState{
 

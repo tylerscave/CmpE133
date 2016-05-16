@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * A class representing a parking spot.
+ * @author David Lerner
  */
 public class ParkingSpot {
 

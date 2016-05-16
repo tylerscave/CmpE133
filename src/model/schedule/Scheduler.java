@@ -7,8 +7,8 @@ import model.DataHandler;
 import model.StringFormat;
 
 /**
- *
- * @author David
+ * An abstract class representing schedulers.
+ * @author David Lerner
  */
 public abstract class Scheduler {
     protected DataHandler data;
@@ -21,10 +21,26 @@ public abstract class Scheduler {
         data = context.getDataHandler();
     }
     
+    /**
+     * Returns a list of schedulables based on the request r.
+     * @param r
+     * @return a list of schedulables based on the request r
+     */
     public abstract List<Schedulable> getAvailable(Request r);
     
+    /**
+     * Updates member schedule based on request r and schedulable s
+     * @param r
+     * @param s
+     * @return SUCCESS if scheduling succeeded, some other String containing an error message otherwise
+     */
     public abstract String schedule(Request r, Schedulable s);
     
+    /**
+     * Checks if the request has correct data
+     * @param r the request
+     * @return SUCCESS if correct data, some other String containing an error message otherwise
+     */
     protected String correctData(Request r) {
         if (r == null)
             return "Failure: No request given";

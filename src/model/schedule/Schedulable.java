@@ -4,14 +4,18 @@ import java.util.GregorianCalendar;
 import model.member.Member;
 
 /**
- *
- * @author David
+ * Abstract class representing things that can be scheduled.
+ * @author David Lerner
  */
 public abstract class Schedulable {
     private int idNumber;
     private int memberId;
     private String memberName; 
 
+    /**
+     * Constructor
+     * @param member the member who has this in their schedule
+     */
     public Schedulable(Member member) {
         this.memberId = member.getIdNumber();
         this.memberName = member.toString();
@@ -42,5 +46,8 @@ public abstract class Schedulable {
                 ||(!s.getEndTime().after(getEndTime()) && s.getEndTime().after(getStartTime())));
     }
     
+    /**
+     * Remove this from the schedule
+     */
     public abstract void remove();
 }

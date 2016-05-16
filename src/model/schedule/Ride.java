@@ -6,8 +6,8 @@ import model.StringFormat;
 import model.member.Member;
 
 /**
- *
- * @author David
+ * The one-time scheduled ride as a passenger.
+ * @author David Lerner
  */
 public class Ride extends Schedulable{
     private Route route;
@@ -22,6 +22,10 @@ public class Ride extends Schedulable{
         description = "";
     }
 
+    /**
+     * Returns the unique schedulable id of the drive of this ride.
+     * @return the unique schedulable id of the drive of this ride
+     */
     public int getDriveId() {
         return driveId;
     }
@@ -59,10 +63,18 @@ public class Ride extends Schedulable{
         rideStatus.setRideId(idNumber);
     }
 
+    /**
+     * Returns the rideStatus that has the current ride state.
+     * @return the rideStatus that has the current ride state
+     */
     public RideStatus getRideStatus() {
         return rideStatus;
     }
 
+    /**
+     * Add additional text to toString().
+     * @param description 
+     */
     public void setDescription(String description) {
         this.description = description;
     }

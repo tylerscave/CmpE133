@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * This state represents the ride being scheduled but not yet started. The starting state.
+ * @author David Lerner
  */
 public class ScheduledState extends RideState{
 

@@ -2,7 +2,6 @@ package model;
 
 import model.member.Member;
 import model.schedule.Schedulable;
-import model.schedule.RideRequest;
 import model.schedule.Ride;
 import model.schedule.ParkingTime;
 import model.schedule.Drive;
@@ -26,16 +25,6 @@ public class NewDataHandler implements DataHandler {
         members = new ArrayList<>();
         schedulables = new HashMap<>();
         schedulableId = 0;
-    }
-
-    //legacy
-    @Override
-    public List<RideRequest> getRideRequests() {
-        List<RideRequest> rideRequests = new ArrayList<>();
-        for (Member member : members) {
-            rideRequests.addAll(member.getRideRequests());
-        }
-        return rideRequests;
     }
     
     @Override

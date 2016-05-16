@@ -8,8 +8,8 @@ import model.Context;
 import model.LocationMap;
 
 /**
- *
- * @author David
+ * A class representing the route on the map for a drive/ride.
+ * @author David Lerner
  */
 public class Route {
     
@@ -19,7 +19,8 @@ public class Route {
     private LocationMap map;
     private List<Stop> realStops;
 
-    public Route(GregorianCalendar startTime, GregorianCalendar endTime, Location start, Location end) {
+    //constructor used when generating a new route with createSubroute() 
+    private Route(GregorianCalendar startTime, GregorianCalendar endTime, Location start, Location end) {
         this.map = Context.getInstance().getMap();
         this.startTime = startTime;
         this.endTime = endTime;
@@ -37,10 +38,17 @@ public class Route {
         this.realStops = new ArrayList<>();
     }
     
+    /**
+     * Returns a new route that begins and ends within this route or null if not possible.
+     * @param start start location of new route
+     * @param end end location of new route
+     * @return a new route that begins and ends within this route, null if not possible.
+     */
     public Route createSubroute(Location start, Location end) {
-        List<Location> locations = getStops();
+        //get start/stop from route
         GregorianCalendar leave = TimeOfStop(this.stops, start);
         GregorianCalendar arrive = TimeOfStop(this.stops, end);
+        //get from map if start/stop are not already in route
         if (leave == null || arrive == null)
         {
             List<Location> tempLocations = new ArrayList<>();
@@ -50,11 +58,13 @@ public class Route {
             leave = TimeOfStop(TempStops, start);
             arrive = TimeOfStop(TempStops, end);
         }
+        //if not in route, return null
         if (leave == null || arrive == null)
             return null;
         return new Route(leave, arrive, start, end);
     }
     
+    //returns a time at location within stops
     private GregorianCalendar TimeOfStop(List<Stop> stops, Location location) {
         for (Stop stop : stops) {
             if (stop.getLocation().equals(location)) {
@@ -64,6 +74,7 @@ public class Route {
         return null;
     }
     
+    //returns whether a start and stop loaction are within (in order) a list of stops
     private boolean inStops(List<Stop> stops, Location start, Location end) {
         for (int i = 0; i < stops.size(); i++) {
             if (stops.get(i).getLocation().equals(start)) {
@@ -77,6 +88,12 @@ public class Route {
         return false;
     }
     
+    /**
+     * Returns whether a start and end location are within this route.
+     * @param start start location
+     * @param end end location
+     * @return whether a start and end location are within this route
+     */
     public boolean onRoute(Location start, Location end) {
         if (inStops(this.stops, start, end))
             return true;
@@ -87,6 +104,11 @@ public class Route {
         return inStops(tempStops, start, end);
     }
     
+    /**
+     * Returns the time in this route at a location.
+     * @param location
+     * @return the time in this route at a location
+     */
     public GregorianCalendar getTimeAtStop(Location location) {
         GregorianCalendar time = TimeOfStop(this.stops, location);
         if (time != null)
@@ -96,6 +118,10 @@ public class Route {
         return TimeOfStop(map.getStops(startTime, stops.get(0).getLocation(), stops.get(stops.size()-1).getLocation(), tempLocations), location);
     }
     
+    /**
+     * Returns a list of locations of this routes stops.
+     * @return a list of locations of this routes stops
+     */
     public List<Location> getStops() {
         ArrayList<Location> locations = new ArrayList<>();
         for (Stop stop : stops) {
@@ -104,7 +130,12 @@ public class Route {
         return locations;
     }
     
+    /**
+     * Adds a new location to the route, if possible.
+     * @param location
+     */
     public void addStopInRoute(Location location) {
+        //check to make sure location isn't already in stops
         for (Stop stop : stops) {
             if (stop.getLocation().equals(location))
                 return;
@@ -113,6 +144,7 @@ public class Route {
         for (int i = 1; i < stops.size()-1; i++) {
             tempLocations.add(stops.get(i).getLocation());
         }
+        //add new location anf generate new list of stops
         tempLocations.add(location);
         stops = map.getStops(startTime, stops.get(0).getLocation(), stops.get(stops.size()-1).getLocation(), tempLocations);
     }
@@ -125,6 +157,11 @@ public class Route {
         return endTime;
     }
     
+    /**
+     * Check if this route has a time conflict with another route
+     * @param route the other route
+     * @return if this route has a time conflict with another route
+     */
     public boolean conflicts(Route route) {
         return ((!route.getStartTime().before(this.startTime) && route.getStartTime().before(this.endTime)) 
                 ||(!route.getEndTime().after(this.endTime) && route.getEndTime().after(this.startTime)));
@@ -177,6 +214,10 @@ public class Route {
         return 0;
     }
     
+    /**
+     * Returns the total time traveled in miles.
+     * @return the total time traveled in miles
+     */
     public double getRouteMiles() {
         List<Location> l = new ArrayList<>();
         for (Stop s : realStops) {

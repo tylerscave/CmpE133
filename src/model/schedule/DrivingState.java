@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * This state represents the driver being on route for pickup.
+ * @author David Lerner
  */
 public class DrivingState extends RideState{
 

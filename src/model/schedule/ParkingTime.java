@@ -4,8 +4,8 @@ import java.util.GregorianCalendar;
 import model.member.Member;
 
 /**
- *
- * @author David
+ * The one-time scheduled parking spot reservation
+ * @author David Lerner
  */
 public class ParkingTime extends Schedulable {
     private GregorianCalendar startTime;

@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * This state represents the ride being late.
+ * @author David Lerner
  */
 public class LateState extends RideState{
 

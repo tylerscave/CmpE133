@@ -1,8 +1,8 @@
 package model.schedule;
 
 /**
- *
- * @author David
+ * The client class of the state pattern representing a rides state.
+ * @author David Lerner
  */
 public class RideStatus {
     private RideState rideState;
@@ -37,11 +37,17 @@ public class RideStatus {
         return rideState.getStatus();
     }
     
+    /**
+     * Attempt to cancel the ride.
+     */
     public void cancel() {
         rideState.update();
         rideState.cancel();
     }
     
+    /**
+     * Attempt to pay for the ride.
+     */
     public void pay() {
         rideState.update();
         rideState.pay();

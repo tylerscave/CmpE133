@@ -44,7 +44,7 @@ public interface Tracker {
     public boolean isDone(int rideId);
     
      /**
-     * Returns the last visited location of the car, null if the drive han't begun.
+     * Returns the last visited location of the car, null if the drive hasn't begun.
      * @param rideId the unique id number of the ride
      * @return the last visited location of the car
      */
