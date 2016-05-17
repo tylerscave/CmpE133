@@ -23,7 +23,7 @@ public class SendNotificationController extends Controller{
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
         
-        notificationField.setText(Controller.getInfo());
+        recipiantEmailField.setText(Controller.getInfo());
     }
 	
     @FXML

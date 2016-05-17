@@ -1,9 +1,0 @@
-String email, String password, String lastname, String firstname, String address, String phone, MemberType memberType, String paymentMethod, 
-shubaan_taheri@yahoo.com, password, taheri, shubaan, 1111 cherry street fremont ca 95555, 123456789, student, payment, 
-shubaan_taheri@yahoo.com, password, taheri, shubaan, 1111 cherry street fremont ca 95555, 123456789, student, payment, 
-shubaan_taheri@yahoo.com, password, Taheri, Shubaan, 1234 Paseo Padre Pkwy Fremont CA 94555, 9994565555, student, payment method, 
-qWFD, DF, DVwvwEV, QCQSW, CA, , student, payment method, 
-, , , , CA, , student, payment method, 
-, , , , CA, , student, payment method, 
-, , , ,   CA , , student, payment method, 
-saved 

@@ -17,7 +17,8 @@ public class ScheduleTracker implements Tracker{
 
     @Override
     public Location currentLocation(int rideId) {
-        return (new ScheduleViewer()).getRideById(rideId).getRoute().getLocationAtTime(new GregorianCalendar());
+        ScheduleViewer sv = new ScheduleViewer();
+        return sv.getDriveById(sv.getRideById(rideId).getDriveId()).getRoute().getLocationAtTime(new GregorianCalendar());
     }
 
     @Override
