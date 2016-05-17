@@ -3,6 +3,7 @@ package model.payment;
 import java.util.ArrayList;
 import java.util.List;
 import model.Context;
+import model.Notification;
 import model.member.Member;
 import model.schedule.Ride;
 
@@ -39,9 +40,14 @@ public abstract class Reward {
                     break;
                 }
             }
+            //send notifications
+            member.addNewNotification(new Notification("You have paid "+compensation+" for "+ride));
+            recipient.addNewNotification(new Notification("You have been paid "+compensation+" for "+ride));
             //update status
+            List<Member> changed = new ArrayList<>();
+            changed.add(recipient);
             member.setChanged();
-            member.notifyObservers();
+            member.notifyObservers(changed);
             return true;
         }
         return false;
@@ -60,7 +66,10 @@ public abstract class Reward {
                 break;
             }
         }
-        
+        //send notifications
+        member.addNewNotification(new Notification("You have paid waived payment for "+ride));
+        m.addNewNotification(new Notification("You have been payment has been waived for "+ride));
+        //update status
         List<Member> changed = new ArrayList<>();
         changed.add(m);
         member.setChanged();

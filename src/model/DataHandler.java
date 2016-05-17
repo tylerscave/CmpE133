@@ -93,4 +93,14 @@ public interface DataHandler extends Observer {
      * @param notification the notification to send
      */
     public void notify(int memberId, Notification notification);
+    
+    /**
+     * This method is called whenever the observed object is changed. 
+     * An application calls an Observable object's notifyObservers method 
+     * to have all the object's observers notified of the change.
+     * @param o the observable object (Member).
+     * @param o1 an argument passed to the notifyObservers method (list of Member objects)
+     */
+    @Override
+    public void update(Observable o, Object o1);
 }
